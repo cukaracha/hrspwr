@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "vehicleType": "PC"
+  },
+  {
+    "id": 2,
+    "vehicleType": "CV"
+  },
+  {
+    "id": 3,
+    "vehicleType": "Motorcycle"
+  },
+  {
+    "id": 4,
+    "vehicleType": "LCV"
+  },
+  {
+    "id": 5,
+    "vehicleType": "DriverCab"
+  },
+  {
+    "id": 6,
+    "vehicleType": "Axle"
+  },
+  {
+    "id": 7,
+    "vehicleType": "Engine"
+  },
+  {
+    "id": 8,
+    "vehicleType": "Bus"
+  },
+  {
+    "id": 9,
+    "vehicleType": "Aftermarket"
+  },
+  {
+    "id": 10,
+    "vehicleType": "Tractor"
+  },
+  {
+    "id": 11,
+    "vehicleType": "Virtual OEM"
+  }
+]

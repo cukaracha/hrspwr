@@ -1,0 +1,3 @@
+{
+  "select_model": "<veh>\n{vehicle_info}\n</veh>\n\n<models>\n{models}\n</models>\n\nYou are given the vehicle information in <veh></veh> tags above and a list of candidate models that match the vehicle's year in <models></models> tags above.\n\nYour task is to analyze the vehicle information and match it to the best candidate model select the most appropriate modelId from the candidate models.\n\nOutput the best matching modelId within <modelId></modelId> tags."
+}

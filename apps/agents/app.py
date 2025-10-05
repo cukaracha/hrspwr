@@ -13,7 +13,7 @@ st.write("Welcome to the AI Agent Tools suite. Choose a tool from the sidebar to
 st.divider()
 
 # Feature cards
-col1, col2, col3 = st.columns(3)
+col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("🔍 Image Search")
@@ -31,7 +31,17 @@ with col2:
     st.markdown("- Vehicle year, make, model lookup")
     st.markdown("- Powered by AWS Textract & Bedrock")
 
+col3, col4 = st.columns(2)
+
 with col3:
+    st.subheader("🔧 Parts Lookup")
+    st.write("Upload a VIN image to extract vehicle info and retrieve available parts categories.")
+    st.markdown("**Features:**")
+    st.markdown("- VIN extraction + vehicle lookup")
+    st.markdown("- Auto parts catalog integration")
+    st.markdown("- JSON response with category tree")
+
+with col4:
     st.subheader("🔄 Reverse Image Search")
     st.write("Upload an image to find similar images or sources online.")
     st.markdown("**Features:**")

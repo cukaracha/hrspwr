@@ -1,0 +1,1134 @@
+{
+  "austria": {
+    "id": 1,
+    "couCode": "A"
+  },
+  "yemen (people's democratic republic)": {
+    "id": 2,
+    "couCode": "ADN"
+  },
+  "except europe": {
+    "id": 3,
+    "couCode": "AEU"
+  },
+  "afghanistan": {
+    "id": 4,
+    "couCode": "AFG"
+  },
+  "anguilla": {
+    "id": 5,
+    "couCode": "AIA"
+  },
+  "africa": {
+    "id": 6,
+    "couCode": "AK"
+  },
+  "albania": {
+    "id": 7,
+    "couCode": "AL"
+  },
+  "central america": {
+    "id": 8,
+    "couCode": "AM"
+  },
+  "netherlands antilles": {
+    "id": 9,
+    "couCode": "AN"
+  },
+  "andorra": {
+    "id": 10,
+    "couCode": "AND"
+  },
+  "angola": {
+    "id": 11,
+    "couCode": "ANG"
+  },
+  "australia and new zealand": {
+    "id": 12,
+    "couCode": "ANZ"
+  },
+  "asia/pacific": {
+    "id": 13,
+    "couCode": "APA"
+  },
+  "antarctica": {
+    "id": 14,
+    "couCode": "AQ"
+  },
+  "armenia": {
+    "id": 15,
+    "couCode": "ARM"
+  },
+  "south america": {
+    "id": 16,
+    "couCode": "AS"
+  },
+  "asean": {
+    "id": 17,
+    "couCode": "ASE"
+  },
+  "american samoa": {
+    "id": 18,
+    "couCode": "ASM"
+  },
+  "antigua": {
+    "id": 19,
+    "couCode": "ATG"
+  },
+  "australia": {
+    "id": 20,
+    "couCode": "AUS"
+  },
+  "aruba": {
+    "id": 21,
+    "couCode": "AW"
+  },
+  "aland islands": {
+    "id": 22,
+    "couCode": "AX"
+  },
+  "aserbaidjan": {
+    "id": 23,
+    "couCode": "AZ"
+  },
+  "belgium": {
+    "id": 24,
+    "couCode": "B"
+  },
+  "baltic countries": {
+    "id": 25,
+    "couCode": "BAL"
+  },
+  "bangladesh": {
+    "id": 26,
+    "couCode": "BD"
+  },
+  "barbados": {
+    "id": 27,
+    "couCode": "BDS"
+  },
+  "benelux": {
+    "id": 28,
+    "couCode": "BEN"
+  },
+  "burkina faso": {
+    "id": 29,
+    "couCode": "BF"
+  },
+  "bulgaria": {
+    "id": 30,
+    "couCode": "BG"
+  },
+  "belize": {
+    "id": 31,
+    "couCode": "BH"
+  },
+  "bosnia-herzegovina": {
+    "id": 32,
+    "couCode": "BIH"
+  },
+  "saint barthélemy (saint barts)": {
+    "id": 33,
+    "couCode": "BL"
+  },
+  "bermuda": {
+    "id": 34,
+    "couCode": "BMU"
+  },
+  "bolivia": {
+    "id": 35,
+    "couCode": "BOL"
+  },
+  "bonaire, saint eustatius and saba": {
+    "id": 36,
+    "couCode": "BQ"
+  },
+  "brazil": {
+    "id": 37,
+    "couCode": "BR"
+  },
+  "bahrain": {
+    "id": 38,
+    "couCode": "BRN"
+  },
+  "brunei": {
+    "id": 39,
+    "couCode": "BRU"
+  },
+  "bahamas": {
+    "id": 40,
+    "couCode": "BS"
+  },
+  "bhutan": {
+    "id": 41,
+    "couCode": "BTN"
+  },
+  "burma": {
+    "id": 42,
+    "couCode": "BUR"
+  },
+  "bouvet islands": {
+    "id": 43,
+    "couCode": "BV"
+  },
+  "belorussia": {
+    "id": 44,
+    "couCode": "BY"
+  },
+  "cuba": {
+    "id": 45,
+    "couCode": "C"
+  },
+  "california": {
+    "id": 46,
+    "couCode": "CAL"
+  },
+  "cocos (keeling) islands": {
+    "id": 47,
+    "couCode": "CC"
+  },
+  "(democratic republic of the) congo": {
+    "id": 48,
+    "couCode": "CD"
+  },
+  "canada": {
+    "id": 49,
+    "couCode": "CDN"
+  },
+  "switzerland": {
+    "id": 50,
+    "couCode": "CH"
+  },
+  "(republic of) côte d'ivoire": {
+    "id": 51,
+    "couCode": "CI"
+  },
+  "cook islands": {
+    "id": 52,
+    "couCode": "CK"
+  },
+  "sri lanka": {
+    "id": 53,
+    "couCode": "CL"
+  },
+  "cameroon": {
+    "id": 54,
+    "couCode": "CM"
+  },
+  "colombia": {
+    "id": 55,
+    "couCode": "CO"
+  },
+  "cape verde": {
+    "id": 56,
+    "couCode": "CP"
+  },
+  "costa rica": {
+    "id": 57,
+    "couCode": "CR"
+  },
+  "curaçao": {
+    "id": 58,
+    "couCode": "CW"
+  },
+  "christmas island": {
+    "id": 59,
+    "couCode": "CX"
+  },
+  "cyprus": {
+    "id": 60,
+    "couCode": "CY"
+  },
+  "cayman islands": {
+    "id": 61,
+    "couCode": "CYM"
+  },
+  "czech republic": {
+    "id": 62,
+    "couCode": "CZ"
+  },
+  "germany": {
+    "id": 63,
+    "couCode": "D"
+  },
+  "dach": {
+    "id": 64,
+    "couCode": "DAC"
+  },
+  "djibouti": {
+    "id": 65,
+    "couCode": "DJ"
+  },
+  "denmark": {
+    "id": 66,
+    "couCode": "DK"
+  },
+  "dominican republic": {
+    "id": 67,
+    "couCode": "DOM"
+  },
+  "benin": {
+    "id": 68,
+    "couCode": "DY"
+  },
+  "algeria": {
+    "id": 69,
+    "couCode": "DZ"
+  },
+  "spain": {
+    "id": 70,
+    "couCode": "E"
+  },
+  "kenya": {
+    "id": 71,
+    "couCode": "EAK"
+  },
+  "tanzania": {
+    "id": 72,
+    "couCode": "EAT"
+  },
+  "uganda": {
+    "id": 73,
+    "couCode": "EAU"
+  },
+  "ecuador": {
+    "id": 74,
+    "couCode": "EC"
+  },
+  "europe plus efta and micro-states": {
+    "id": 75,
+    "couCode": "EEM"
+  },
+  "countries of the european union": {
+    "id": 76,
+    "couCode": "EG"
+  },
+  "western sahara": {
+    "id": 77,
+    "couCode": "EH"
+  },
+  "eritrea": {
+    "id": 78,
+    "couCode": "ER"
+  },
+  "el salvador": {
+    "id": 79,
+    "couCode": "ES"
+  },
+  "egypt": {
+    "id": 80,
+    "couCode": "ET"
+  },
+  "ethiopia": {
+    "id": 81,
+    "couCode": "ETH"
+  },
+  "europe": {
+    "id": 82,
+    "couCode": "EU"
+  },
+  "europa (un m-49)": {
+    "id": 83,
+    "couCode": "EUN"
+  },
+  "estonia": {
+    "id": 84,
+    "couCode": "EW"
+  },
+  "france": {
+    "id": 85,
+    "couCode": "F"
+  },
+  "fidji": {
+    "id": 86,
+    "couCode": "FJI"
+  },
+  "liechtenstein": {
+    "id": 87,
+    "couCode": "FL"
+  },
+  "falkland islands": {
+    "id": 88,
+    "couCode": "FLK"
+  },
+  "micronesia": {
+    "id": 89,
+    "couCode": "FM"
+  },
+  "far east": {
+    "id": 90,
+    "couCode": "FO"
+  },
+  "faeroes": {
+    "id": 91,
+    "couCode": "FR"
+  },
+  "gabon": {
+    "id": 92,
+    "couCode": "GA"
+  },
+  "great britain": {
+    "id": 93,
+    "couCode": "GB"
+  },
+  "guernsey": {
+    "id": 94,
+    "couCode": "GBG"
+  },
+  "jersey": {
+    "id": 95,
+    "couCode": "GBJ"
+  },
+  "isle of man": {
+    "id": 96,
+    "couCode": "GBM"
+  },
+  "gibraltar": {
+    "id": 97,
+    "couCode": "GBZ"
+  },
+  "guatemala": {
+    "id": 98,
+    "couCode": "GCA"
+  },
+  "french guyana": {
+    "id": 99,
+    "couCode": "GF"
+  },
+  "ghana": {
+    "id": 100,
+    "couCode": "GH"
+  },
+  "greenland": {
+    "id": 101,
+    "couCode": "GL"
+  },
+  "guinea": {
+    "id": 102,
+    "couCode": "GN"
+  },
+  "georgia": {
+    "id": 103,
+    "couCode": "GO"
+  },
+  "gulf countries": {
+    "id": 104,
+    "couCode": "GOL"
+  },
+  "guadeloupe": {
+    "id": 105,
+    "couCode": "GP"
+  },
+  "equatorial guinea": {
+    "id": 106,
+    "couCode": "GQ"
+  },
+  "greece": {
+    "id": 107,
+    "couCode": "GR"
+  },
+  "south georgia and the south sandwich islands": {
+    "id": 108,
+    "couCode": "GS"
+  },
+  "guam": {
+    "id": 109,
+    "couCode": "GU"
+  },
+  "community of independent states": {
+    "id": 110,
+    "couCode": "GUS"
+  },
+  "guyana": {
+    "id": 111,
+    "couCode": "GUY"
+  },
+  "guinea-bissau": {
+    "id": 112,
+    "couCode": "GW"
+  },
+  "hungary": {
+    "id": 113,
+    "couCode": "H"
+  },
+  "hong kong, sar of china": {
+    "id": 114,
+    "couCode": "HK"
+  },
+  "heard and mcdonald islands": {
+    "id": 115,
+    "couCode": "HM"
+  },
+  "honduras": {
+    "id": 116,
+    "couCode": "HN"
+  },
+  "croatia": {
+    "id": 117,
+    "couCode": "HR"
+  },
+  "italy": {
+    "id": 118,
+    "couCode": "I"
+  },
+  "iberian peninsula": {
+    "id": 119,
+    "couCode": "IBE"
+  },
+  "israel": {
+    "id": 120,
+    "couCode": "IL"
+  },
+  "india": {
+    "id": 121,
+    "couCode": "IND"
+  },
+  "british indian ocean territory": {
+    "id": 122,
+    "couCode": "IO"
+  },
+  "iran": {
+    "id": 123,
+    "couCode": "IR"
+  },
+  "ireland": {
+    "id": 124,
+    "couCode": "IRL"
+  },
+  "iraq": {
+    "id": 125,
+    "couCode": "IRQ"
+  },
+  "iceland": {
+    "id": 126,
+    "couCode": "IS"
+  },
+  "japan": {
+    "id": 127,
+    "couCode": "J"
+  },
+  "jamaica": {
+    "id": 128,
+    "couCode": "JA"
+  },
+  "jordan": {
+    "id": 129,
+    "couCode": "JOR"
+  },
+  "cambodia": {
+    "id": 130,
+    "couCode": "K"
+  },
+  "kazakhstan": {
+    "id": 131,
+    "couCode": "KAS"
+  },
+  "kiribati": {
+    "id": 132,
+    "couCode": "KI"
+  },
+  "comores": {
+    "id": 133,
+    "couCode": "KM"
+  },
+  "saint kitts and nevis": {
+    "id": 134,
+    "couCode": "KN"
+  },
+  "democratic people's republic of korea": {
+    "id": 135,
+    "couCode": "KP"
+  },
+  "kirgistan": {
+    "id": 136,
+    "couCode": "KS"
+  },
+  "kuwait": {
+    "id": 137,
+    "couCode": "KWT"
+  },
+  "luxembourg": {
+    "id": 138,
+    "couCode": "L"
+  },
+  "laos": {
+    "id": 139,
+    "couCode": "LAO"
+  },
+  "libya": {
+    "id": 140,
+    "couCode": "LAR"
+  },
+  "liberia": {
+    "id": 141,
+    "couCode": "LB"
+  },
+  "lesotho": {
+    "id": 142,
+    "couCode": "LS"
+  },
+  "lithuania": {
+    "id": 143,
+    "couCode": "LT"
+  },
+  "latvia": {
+    "id": 144,
+    "couCode": "LV"
+  },
+  "left-hand traffic": {
+    "id": 145,
+    "couCode": "LVK"
+  },
+  "malta": {
+    "id": 146,
+    "couCode": "M"
+  },
+  "morocco": {
+    "id": 147,
+    "couCode": "MA"
+  },
+  "macau, sar of china": {
+    "id": 148,
+    "couCode": "MAC"
+  },
+  "malaysia": {
+    "id": 149,
+    "couCode": "MAL"
+  },
+  "monaco": {
+    "id": 150,
+    "couCode": "MC"
+  },
+  "republic of moldova": {
+    "id": 151,
+    "couCode": "MD"
+  },
+  "middle east": {
+    "id": 152,
+    "couCode": "MEA"
+  },
+  "mexico": {
+    "id": 153,
+    "couCode": "MEX"
+  },
+  "saint martin (french part)": {
+    "id": 154,
+    "couCode": "MF"
+  },
+  "marshall islands": {
+    "id": 155,
+    "couCode": "MH"
+  },
+  "macedonia": {
+    "id": 156,
+    "couCode": "MK"
+  },
+  "mongolia": {
+    "id": 157,
+    "couCode": "MN"
+  },
+  "montenegro": {
+    "id": 158,
+    "couCode": "MNE"
+  },
+  "middle east 2": {
+    "id": 159,
+    "couCode": "MO"
+  },
+  "northern mariana islands": {
+    "id": 160,
+    "couCode": "MP"
+  },
+  "martinique": {
+    "id": 161,
+    "couCode": "MQ"
+  },
+  "mauritius": {
+    "id": 162,
+    "couCode": "MS"
+  },
+  "montserrat": {
+    "id": 163,
+    "couCode": "MSR"
+  },
+  "maldives": {
+    "id": 164,
+    "couCode": "MV"
+  },
+  "malawi": {
+    "id": 165,
+    "couCode": "MW"
+  },
+  "mozambique": {
+    "id": 166,
+    "couCode": "MZ"
+  },
+  "norway": {
+    "id": 167,
+    "couCode": "N"
+  },
+  "namibia": {
+    "id": 168,
+    "couCode": "NA"
+  },
+  "north africa": {
+    "id": 169,
+    "couCode": "NAF"
+  },
+  "north america": {
+    "id": 170,
+    "couCode": "NAM"
+  },
+  "new caledonia": {
+    "id": 171,
+    "couCode": "NC"
+  },
+  "norfolk island": {
+    "id": 172,
+    "couCode": "NF"
+  },
+  "nafta": {
+    "id": 173,
+    "couCode": "NFT"
+  },
+  "nicaragua": {
+    "id": 174,
+    "couCode": "NIC"
+  },
+  "the netherlands": {
+    "id": 175,
+    "couCode": "NL"
+  },
+  "nepal": {
+    "id": 176,
+    "couCode": "NPL"
+  },
+  "nauru": {
+    "id": 177,
+    "couCode": "NR"
+  },
+  "niue": {
+    "id": 178,
+    "couCode": "NU"
+  },
+  "new zealand": {
+    "id": 179,
+    "couCode": "NZ"
+  },
+  "oceania": {
+    "id": 180,
+    "couCode": "OCE"
+  },
+  "eastern europe": {
+    "id": 181,
+    "couCode": "OE"
+  },
+  "oman": {
+    "id": 182,
+    "couCode": "OM"
+  },
+  "portugal": {
+    "id": 183,
+    "couCode": "P"
+  },
+  "panama": {
+    "id": 184,
+    "couCode": "PA"
+  },
+  "peru": {
+    "id": 185,
+    "couCode": "PE"
+  },
+  "french polynesia": {
+    "id": 186,
+    "couCode": "PF"
+  },
+  "pakistan": {
+    "id": 187,
+    "couCode": "PK"
+  },
+  "poland": {
+    "id": 188,
+    "couCode": "PL"
+  },
+  "saint pierre and miquelon": {
+    "id": 189,
+    "couCode": "PM"
+  },
+  "pitcairn islands": {
+    "id": 190,
+    "couCode": "PN"
+  },
+  "papua new guinea": {
+    "id": 191,
+    "couCode": "PNG"
+  },
+  "puerto rico": {
+    "id": 192,
+    "couCode": "PR"
+  },
+  "palestine": {
+    "id": 193,
+    "couCode": "PS"
+  },
+  "palau": {
+    "id": 194,
+    "couCode": "PW"
+  },
+  "paraguay": {
+    "id": 195,
+    "couCode": "PY"
+  },
+  "qatar": {
+    "id": 196,
+    "couCode": "Q"
+  },
+  "argentina": {
+    "id": 197,
+    "couCode": "RA"
+  },
+  "botswana": {
+    "id": 198,
+    "couCode": "RB"
+  },
+  "taiwan, china": {
+    "id": 199,
+    "couCode": "RC"
+  },
+  "central african republic": {
+    "id": 200,
+    "couCode": "RCA"
+  },
+  "congo": {
+    "id": 201,
+    "couCode": "RCB"
+  },
+  "chile": {
+    "id": 202,
+    "couCode": "RCH"
+  },
+  "reunion": {
+    "id": 203,
+    "couCode": "RE"
+  },
+  "haiti": {
+    "id": 204,
+    "couCode": "RH"
+  },
+  "europe rhd": {
+    "id": 205,
+    "couCode": "RHD"
+  },
+  "indonesia": {
+    "id": 206,
+    "couCode": "RI"
+  },
+  "mauritania": {
+    "id": 207,
+    "couCode": "RIM"
+  },
+  "lebanon": {
+    "id": 208,
+    "couCode": "RL"
+  },
+  "madagascar": {
+    "id": 209,
+    "couCode": "RM"
+  },
+  "mali": {
+    "id": 210,
+    "couCode": "RMM"
+  },
+  "niger": {
+    "id": 211,
+    "couCode": "RN"
+  },
+  "romania": {
+    "id": 212,
+    "couCode": "RO"
+  },
+  "korea (republic)": {
+    "id": 213,
+    "couCode": "ROK"
+  },
+  "uruguay": {
+    "id": 214,
+    "couCode": "ROU"
+  },
+  "philippines": {
+    "id": 215,
+    "couCode": "RP"
+  },
+  "san marino": {
+    "id": 216,
+    "couCode": "RSM"
+  },
+  "burundi": {
+    "id": 217,
+    "couCode": "RU"
+  },
+  "russia": {
+    "id": 218,
+    "couCode": "RUS"
+  },
+  "rwanda": {
+    "id": 219,
+    "couCode": "RWA"
+  },
+  "sweden": {
+    "id": 220,
+    "couCode": "S"
+  },
+  "saudi arabia": {
+    "id": 221,
+    "couCode": "SA"
+  },
+  "serbia and montenegro": {
+    "id": 222,
+    "couCode": "SCG"
+  },
+  "sudan": {
+    "id": 223,
+    "couCode": "SD"
+  },
+  "finland": {
+    "id": 224,
+    "couCode": "SF"
+  },
+  "singapore": {
+    "id": 225,
+    "couCode": "SGP"
+  },
+  "saint helena": {
+    "id": 226,
+    "couCode": "SH"
+  },
+  "svalbard and jan mayen": {
+    "id": 227,
+    "couCode": "SJ"
+  },
+  "slovakia": {
+    "id": 228,
+    "couCode": "SK"
+  },
+  "scandinavia": {
+    "id": 229,
+    "couCode": "SKA"
+  },
+  "salomon islands": {
+    "id": 230,
+    "couCode": "SLB"
+  },
+  "slovenia": {
+    "id": 231,
+    "couCode": "SLO"
+  },
+  "surinam": {
+    "id": 232,
+    "couCode": "SME"
+  },
+  "senegal": {
+    "id": 233,
+    "couCode": "SN"
+  },
+  "somalia": {
+    "id": 234,
+    "couCode": "SP"
+  },
+  "serbia": {
+    "id": 235,
+    "couCode": "SRB"
+  },
+  "sub-sahara africa": {
+    "id": 236,
+    "couCode": "SSA"
+  },
+  "south sudan": {
+    "id": 237,
+    "couCode": "SSD"
+  },
+  "sao tome and principe": {
+    "id": 238,
+    "couCode": "ST"
+  },
+  "sint maarten (dutch part)": {
+    "id": 239,
+    "couCode": "SX"
+  },
+  "seychelles": {
+    "id": 240,
+    "couCode": "SY"
+  },
+  "syria": {
+    "id": 241,
+    "couCode": "SYR"
+  },
+  "eswatini": {
+    "id": 242,
+    "couCode": "SZ"
+  },
+  "thailand": {
+    "id": 243,
+    "couCode": "T"
+  },
+  "turks and caicos islands": {
+    "id": 244,
+    "couCode": "TC"
+  },
+  "chad": {
+    "id": 245,
+    "couCode": "TD"
+  },
+  "french southern and antarctic territories": {
+    "id": 246,
+    "couCode": "TF"
+  },
+  "togo": {
+    "id": 247,
+    "couCode": "TG"
+  },
+  "china": {
+    "id": 248,
+    "couCode": "TJ"
+  },
+  "tajikistan": {
+    "id": 249,
+    "couCode": "TJK"
+  },
+  "tokelau": {
+    "id": 250,
+    "couCode": "TK"
+  },
+  "timor-leste": {
+    "id": 251,
+    "couCode": "TL"
+  },
+  "turkmenistan": {
+    "id": 252,
+    "couCode": "TM"
+  },
+  "tunisia": {
+    "id": 253,
+    "couCode": "TN"
+  },
+  "tonga": {
+    "id": 254,
+    "couCode": "TON"
+  },
+  "turkey": {
+    "id": 255,
+    "couCode": "TR"
+  },
+  "trinidad and tobago": {
+    "id": 256,
+    "couCode": "TT"
+  },
+  "tuvalu": {
+    "id": 257,
+    "couCode": "TUV"
+  },
+  "ukraine": {
+    "id": 258,
+    "couCode": "UA"
+  },
+  "united arab emirates": {
+    "id": 259,
+    "couCode": "UAE"
+  },
+  "united states minor outlying islands": {
+    "id": 260,
+    "couCode": "UM"
+  },
+  "united states of america": {
+    "id": 261,
+    "couCode": "USA"
+  },
+  "usbekistan": {
+    "id": 262,
+    "couCode": "UZ"
+  },
+  "vatican city": {
+    "id": 263,
+    "couCode": "V"
+  },
+  "british virgin islands": {
+    "id": 264,
+    "couCode": "VG"
+  },
+  "united states virgin islands": {
+    "id": 265,
+    "couCode": "VI"
+  },
+  "vietnam": {
+    "id": 266,
+    "couCode": "VN"
+  },
+  "vanuatu": {
+    "id": 267,
+    "couCode": "VU"
+  },
+  "gambia": {
+    "id": 268,
+    "couCode": "WAG"
+  },
+  "sierra leone": {
+    "id": 269,
+    "couCode": "WAL"
+  },
+  "nigeria": {
+    "id": 270,
+    "couCode": "WAN"
+  },
+  "dominica": {
+    "id": 271,
+    "couCode": "WD"
+  },
+  "western europe (total)": {
+    "id": 272,
+    "couCode": "WEG"
+  },
+  "western europe (without germany)": {
+    "id": 273,
+    "couCode": "WEO"
+  },
+  "wallis and futuna": {
+    "id": 274,
+    "couCode": "WF"
+  },
+  "grenada": {
+    "id": 275,
+    "couCode": "WG"
+  },
+  "santa lucia": {
+    "id": 276,
+    "couCode": "WL"
+  },
+  "samoa islands": {
+    "id": 277,
+    "couCode": "WS"
+  },
+  "st. vincent and grenadines": {
+    "id": 278,
+    "couCode": "WV"
+  },
+  "mayotte": {
+    "id": 279,
+    "couCode": "YT"
+  },
+  "venezuela": {
+    "id": 280,
+    "couCode": "YV"
+  },
+  "zambia": {
+    "id": 281,
+    "couCode": "Z"
+  },
+  "south africa": {
+    "id": 282,
+    "couCode": "ZA"
+  },
+  "zimbabwe": {
+    "id": 283,
+    "couCode": "ZW"
+  }
+}

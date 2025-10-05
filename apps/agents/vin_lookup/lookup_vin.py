@@ -105,7 +105,7 @@ def _extract_vin_with_textract(image_bytes: bytes) -> str:
 
 def _lookup_vehicle_info(vin: str) -> Dict[str, Any]:
     """
-    Look up vehicle information using carapi.app VIN decoder API.
+    Look up vehicle information using RapidAPI TecDoc VIN decoder API.
 
     Args:
         vin: Vehicle Identification Number (17 characters)
@@ -114,56 +114,36 @@ def _lookup_vehicle_info(vin: str) -> Dict[str, Any]:
         Dictionary containing year, make, model, and trim
 
     Raises:
-        ValueError: If required environment variables are not set
+        ValueError: If required environment variable is not set
         RuntimeError: If API call fails
     """
-    # api_token = os.environ.get('CARAPI_TOKEN')
-    # api_secret = os.environ.get('CARAPI_SECRET')
-    api_token = "7d863819-7319-4197-9f31-fc6cec2226fc"
-    api_secret = "f2efb25a31ee9782182437de98dec9d9"
+    # api_key = os.environ.get('RAPIDAPI_KEY')
+    api_key = "7f52966767mshdd7d2b2b14b58ddp13eeaajsn057c1530cd1c"
 
-    if not api_token or not api_secret:
-        raise ValueError(
-            "CARAPI_TOKEN and CARAPI_SECRET environment variables must be set")
+    if not api_key:
+        raise ValueError("RAPIDAPI_KEY environment variable must be set")
 
     try:
         import requests
 
-        # Authenticate to get JWT token
-        auth_url = "https://carapi.app/api/auth/login"
-        auth_payload = {
-            "api_token": api_token,
-            "api_secret": api_secret
-        }
-
-        auth_response = requests.post(auth_url, json=auth_payload)
-        auth_response.raise_for_status()
-
-        jwt_token = auth_response.text.strip('"')  # Response is plain text JWT
-
-        # Look up VIN
-        vin_url = f"https://carapi.app/api/vin/{vin}"
+        # Look up VIN using RapidAPI
+        vin_url = f"https://tecdoc-catalog.p.rapidapi.com/vin/decoder-v2/{vin}"
         headers = {
-            "Authorization": f"Bearer {jwt_token}",
-            "Accept": "application/json"
+            "x-rapidapi-host": "tecdoc-catalog.p.rapidapi.com",
+            "x-rapidapi-key": api_key
         }
 
         vin_response = requests.get(vin_url, headers=headers)
         vin_response.raise_for_status()
 
         vehicle_data = vin_response.json()
-        print(f"CarAPI raw response: {json.dumps(vehicle_data, indent=2)}")
+        print(f"RapidAPI raw response: {json.dumps(vehicle_data, indent=2)}")
 
-        # Extract relevant fields
-        return {
-            "year": vehicle_data.get("year"),
-            "make": vehicle_data.get("make"),
-            "model": vehicle_data.get("model"),
-            "trim": vehicle_data.get("trim")
-        }
+        # Return entire API response
+        return vehicle_data
 
     except requests.RequestException as e:
-        raise RuntimeError(f"CarAPI request failed: {str(e)}")
+        raise RuntimeError(f"RapidAPI request failed: {str(e)}")
     except Exception as e:
         raise RuntimeError(f"Vehicle lookup failed: {str(e)}")
 
