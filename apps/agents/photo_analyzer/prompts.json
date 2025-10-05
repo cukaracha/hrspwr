@@ -1,0 +1,7 @@
+{
+  "system": "You are an expert automotive parts identifier with decades of experience in identifying car parts from images.",
+
+  "detect_objects": "You are given a photo that contains one or more automotive parts. Your task is to analyze the photo in detail and identify all the automotive parts that are present.\n\nYou must be specific and precise in your identifications and you must output each identified part on a separate line within <parts></parts> tags.\n\nHere is an example of the expected output format:\n<parts>\npart 1\npart 2\n...\n</parts>",
+
+  "verify_match": "You are given several images. The first image is a photo that contains one or more automotive parts. The remaining images are examples of {part}.\n\nYour task is to analyze the example images of {part} to understand what it looks like and then analyze the first photo to determine if {part} is one of the automotive parts present in the photo.\n\nIf {part} is present in the first photo, output exactly one word YES within <ans></ans> tags. Otherwise, output NO within <ans></ans> tags."
+}
