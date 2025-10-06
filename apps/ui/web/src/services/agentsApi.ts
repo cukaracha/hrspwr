@@ -19,6 +19,13 @@ export interface ApiError {
 }
 
 /**
+ * Response from the parts categories lookup API
+ */
+export interface PartsCategoriesResponse {
+  [key: string]: any; // Raw parts categories tree from RapidAPI
+}
+
+/**
  * Get the current user's authentication token
  */
 async function getAuthToken(): Promise<string> {
@@ -88,5 +95,45 @@ export async function vinLookup(base64Image: string): Promise<VinLookupResponse>
       throw error;
     }
     throw new Error('VIN lookup failed');
+  }
+}
+
+/**
+ * Call the parts categories lookup API with vehicle information
+ *
+ * @param vehicleInfo - Vehicle information from VIN lookup
+ * @returns Parts categories tree
+ * @throws Error if API call fails
+ */
+export async function partsCategoriesLookup(
+  vehicleInfo: VinLookupResponse
+): Promise<PartsCategoriesResponse> {
+  try {
+    const token = await getAuthToken();
+
+    const response = await fetch(`${API_URL}agents/parts-categories`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        vehicle_info: vehicleInfo,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      const error = data as ApiError;
+      throw new Error(error.error || `API error: ${response.status}`);
+    }
+
+    return data as PartsCategoriesResponse;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error('Parts categories lookup failed');
   }
 }

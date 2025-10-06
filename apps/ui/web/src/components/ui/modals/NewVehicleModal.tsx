@@ -7,7 +7,12 @@ import {
   GlassCardHeader,
   GlassCardTitle,
 } from '../cards/glasscard/GlassCard';
-import { vinLookup, fileToBase64, VinLookupResponse } from '../../../services/agentsApi';
+import {
+  vinLookup,
+  fileToBase64,
+  VinLookupResponse,
+  partsCategoriesLookup,
+} from '../../../services/agentsApi';
 import { ModalBackdrop } from './ModalBackdrop';
 import { CloseButton } from '../buttons/closebutton/CloseButton';
 import { Alert } from '../alerts/Alert';
@@ -15,7 +20,7 @@ import { Alert } from '../alerts/Alert';
 export interface NewVehicleModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onVehicleAdded?: (vehicleData: VinLookupResponse) => void;
+  onVehicleAdded?: (vehicleData: VinLookupResponse, partsCategories?: any) => void;
 }
 
 export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
@@ -26,8 +31,10 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [loadingMessage, setLoadingMessage] = React.useState('Decoding VIN...');
   const [error, setError] = React.useState<string | null>(null);
   const [successData, setSuccessData] = React.useState<VinLookupResponse | null>(null);
+  const [partsCategoriesError, setPartsCategoriesError] = React.useState<string | null>(null);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -49,6 +56,7 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
 
     setIsLoading(true);
     setError(null);
+    setLoadingMessage('Decoding VIN...');
 
     try {
       // Convert file to base64
@@ -57,11 +65,26 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
       // Call VIN lookup API
       const response = await vinLookup(base64Image);
 
-      // Set success data to show success state
-      setSuccessData(response);
+      // Now lookup parts categories
+      setLoadingMessage('Looking up parts categories...');
+      try {
+        const categoriesResponse = await partsCategoriesLookup(response);
 
-      // Notify parent component
-      onVehicleAdded?.(response);
+        // Both APIs succeeded - set success state and notify parent
+        setSuccessData(response);
+        onVehicleAdded?.(response, categoriesResponse);
+      } catch (categoriesErr) {
+        // Parts categories lookup failed, but VIN decode succeeded
+        const errorMessage =
+          categoriesErr instanceof Error
+            ? categoriesErr.message
+            : 'Failed to load parts categories';
+        setPartsCategoriesError(errorMessage);
+
+        // Still set success state and notify parent with VIN data only
+        setSuccessData(response);
+        onVehicleAdded?.(response);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to decode VIN');
     } finally {
@@ -74,6 +97,8 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
     setPreviewUrl(null);
     setError(null);
     setSuccessData(null);
+    setPartsCategoriesError(null);
+    setLoadingMessage('Decoding VIN...');
 
     // Clear file input
     const fileInput = document.getElementById('modal-vin-image-input') as HTMLInputElement;
@@ -109,6 +134,14 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
                 title='Vehicle Added Successfully!'
                 message={`${successData.model_year || ''} ${successData.make || ''} ${successData.model || ''}`.trim()}
               />
+              {/* Warning for partial failure */}
+              {partsCategoriesError && (
+                <Alert
+                  variant='warning'
+                  title='Parts Categories Unavailable'
+                  message={partsCategoriesError}
+                />
+              )}
               <GlassButton
                 onClick={handleClose}
                 variant='default'
@@ -185,7 +218,7 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
                 className='w-full h-12'
               >
                 {!isLoading && <Upload className='mr-2 h-5 w-5' />}
-                {isLoading ? 'Decoding VIN...' : 'Decode VIN'}
+                {isLoading ? loadingMessage : 'Decode VIN'}
               </GlassButton>
             </>
           )}

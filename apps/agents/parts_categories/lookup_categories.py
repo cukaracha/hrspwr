@@ -1,12 +1,11 @@
 import json
 import os
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional
 import requests
-import boto3
-import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from lib.secrets import load_secrets
 from lib.restapi import _cached_api_request
+from lib import bedrock
 
 
 # Constants
@@ -31,36 +30,6 @@ def _load_prompts() -> Dict[str, str]:
             return json.load(f)
     except Exception as e:
         raise RuntimeError(f"Failed to load prompts: {str(e)}")
-
-
-def _invoke_bedrock_converse(messages: List[Dict[str, Any]]) -> str:
-    """
-    Call Amazon Bedrock's converse API with formatted messages.
-
-    Args:
-        messages: List of message dictionaries in Bedrock converse format
-                 Example: [{"role": "user", "content": [{"text": "..."}]}]
-
-    Returns:
-        Response text from the model
-
-    Raises:
-        RuntimeError: If Bedrock invocation fails
-    """
-    try:
-        bedrock_client = boto3.client('bedrock-runtime')
-
-        # Call Bedrock Converse API
-        response = bedrock_client.converse(
-            modelId="global.anthropic.claude-sonnet-4-20250514-v1:0",
-            messages=messages
-        )
-
-        # Extract and return response text
-        return response['output']['message']['content'][0]['text'].strip()
-
-    except Exception as e:
-        raise RuntimeError(f"Bedrock converse API call failed: {str(e)}")
 
 
 def _load_country_id_lookup() -> Dict[str, Any]:
@@ -261,15 +230,11 @@ def _get_model_id(vehicle_info: Dict[str, Any], type_id: int, lang_id: int,
 
         messages = [{"role": "user", "content": [{"text": prompt}]}]
         print(f"Calling Bedrock to select best model...")
-        response_text = _invoke_bedrock_converse(messages)
+        response_text = bedrock._converse(messages)
         print(f"Bedrock response: {response_text}")
 
         # Extract modelId from XML tags
-        match = re.search(r'<modelId>(\d+)</modelId>', response_text)
-        if not match:
-            raise ValueError(f"Could not extract modelId from Bedrock response: {response_text}")
-
-        model_id = int(match.group(1))
+        model_id = int(bedrock._parse_xml_tag(response_text, "modelId"))
 
         # Find the selected model for logging
         selected_model = next((m for m in year_filtered if m["modelId"] == model_id), None)
@@ -546,15 +511,11 @@ def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
 
         messages = [{"role": "user", "content": [{"text": prompt}]}]
         print(f"Calling Bedrock to select best vehicle from {len(shortlisted_vehicles)} candidates...")
-        response_text = _invoke_bedrock_converse(messages)
+        response_text = bedrock._converse(messages)
         print(f"Bedrock response: {response_text}")
 
         # Extract vehicleId from XML tags
-        match = re.search(r'<vehicleId>(\d+)</vehicleId>', response_text)
-        if not match:
-            raise ValueError(f"Could not extract vehicleId from Bedrock response: {response_text}")
-
-        selected_vehicle_id = int(match.group(1))
+        selected_vehicle_id = int(bedrock._parse_xml_tag(response_text, "vehicleId"))
 
         # Find the selected vehicle for logging
         selected_vehicle = shortlisted_vehicles.get(selected_vehicle_id)

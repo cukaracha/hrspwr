@@ -4,7 +4,7 @@ import { CreateVehicleCard } from '../components/ui/cards/createcard/CreateVehic
 import { CardCarousel } from '../components/layouts/cardcarousel/CardCarousel';
 import { NewVehicleModal } from '../components/ui/modals/NewVehicleModal';
 import { VehicleDetailsModal } from '../components/ui/modals/VehicleDetailsModal';
-import { VinLookupResponse } from '../services/agentsApi';
+import { VinLookupResponse, PartsCategoriesResponse } from '../services/agentsApi';
 
 // Mock vehicles data - replace with API call later
 const mockVehicles: Vehicle[] = [
@@ -55,7 +55,10 @@ export default function Garage() {
     setIsNewVehicleModalOpen(true);
   };
 
-  const handleVehicleAdded = (vehicleData: VinLookupResponse) => {
+  const handleVehicleAdded = (
+    vehicleData: VinLookupResponse,
+    partsCategories?: PartsCategoriesResponse
+  ) => {
     // Create a new vehicle from the VIN lookup response with full API data
     const newVehicle: Vehicle = {
       id: Date.now().toString(), // Temporary ID - replace with API-generated ID
@@ -65,6 +68,7 @@ export default function Garage() {
       trim: vehicleData.trim,
       vin: vehicleData.vin,
       apiData: vehicleData, // Store full API response
+      partsCategories, // Store parts categories
       // TODO: Add imageUrl from API or allow user to upload
     };
 

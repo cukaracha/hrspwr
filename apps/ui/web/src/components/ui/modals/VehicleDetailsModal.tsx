@@ -86,6 +86,17 @@ export const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({
             </CollapsibleCard>
           )}
 
+          {/* Parts Categories - Collapsible */}
+          {vehicle.partsCategories && (
+            <CollapsibleCard title='Parts Categories' defaultOpen={false}>
+              <div className='space-y-4'>
+                <pre className='bg-black/5 rounded-lg p-4 overflow-x-auto text-xs text-glass-text/80 font-mono max-h-96 overflow-y-auto'>
+                  {JSON.stringify(vehicle.partsCategories, null, 2)}
+                </pre>
+              </div>
+            </CollapsibleCard>
+          )}
+
           {/* Find Parts Button */}
           <GlassButton
             variant='default'
