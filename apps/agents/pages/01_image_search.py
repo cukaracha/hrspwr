@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import io
-from photo_analyzer import image_search
+from apps.agents.lambda_layers.websearch import image_search
 
 
 st.set_page_config(

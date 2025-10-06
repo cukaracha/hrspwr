@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 import io
 import json
-from photo_analyzer.reverse_image_search import main as reverse_image_search
+from apps.agents.lambda_layers.websearch.reverse_image_search import main as reverse_image_search
 
 
 st.set_page_config(
@@ -43,7 +43,8 @@ if uploaded_file is not None:
                     results = reverse_image_search(image_bytes, cleanup=True)
 
                     # Display success message
-                    st.success(f"Found {len(results)} visually similar images!")
+                    st.success(
+                        f"Found {len(results)} visually similar images!")
 
                     # Display each result with image and metadata
                     st.markdown("### 🔍 Similar Images")
@@ -56,7 +57,8 @@ if uploaded_file is not None:
                             # Display the similar image if available
                             if result.get('image_bytes'):
                                 try:
-                                    similar_image = Image.open(io.BytesIO(result['image_bytes']))
+                                    similar_image = Image.open(
+                                        io.BytesIO(result['image_bytes']))
                                     st.image(similar_image, width="stretch")
                                 except Exception:
                                     st.write("⚠️ Image unavailable")
@@ -68,7 +70,8 @@ if uploaded_file is not None:
                                 st.caption(f"**{result['title']}**")
 
                             if result.get('source'):
-                                st.caption(f"🔗 [{result['source']}]({result['source']})")
+                                st.caption(
+                                    f"🔗 [{result['source']}]({result['source']})")
 
                             st.divider()
 
