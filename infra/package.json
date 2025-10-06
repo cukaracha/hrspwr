@@ -1,9 +1,9 @@
 {
-  "name": "autograder-infra",
+  "name": "hp-infra",
   "version": "0.1.0",
-  "description": "Infrastructure for Autograder",
+  "description": "Infrastructure for Hp",
   "bin": {
-    "autograder-infra": "bin/autograder-infra.js"
+    "hp-infra": "bin/hp-infra.js"
   },
   "scripts": {
     "build": "tsc",

@@ -16,7 +16,7 @@ export class UiStack extends cdk.Stack {
     super(scope, id, props);
 
     // Create React web app with environment variables from InfraStack
-    const webApp = new ReactWebApp(this, 'AutograderWebApp', {
+    const webApp = new ReactWebApp(this, 'HpWebApp', {
       userPoolId: props.userPoolId,
       userPoolClientId: props.userPoolClientId,
       apiEndpoint: props.apiEndpoint,
