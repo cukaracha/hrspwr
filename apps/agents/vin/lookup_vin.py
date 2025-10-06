@@ -1,9 +1,10 @@
 import json
 import os
 import base64
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any
 import boto3
 from lib.secrets import load_secrets
+from lib import bedrock
 
 
 def _load_prompts() -> Dict[str, str]:
@@ -22,36 +23,6 @@ def _load_prompts() -> Dict[str, str]:
             return json.load(f)
     except Exception as e:
         raise RuntimeError(f"Failed to load prompts: {str(e)}")
-
-
-def _invoke_bedrock_converse(messages: List[Dict[str, Any]]) -> str:
-    """
-    Call Amazon Bedrock's converse API with formatted messages.
-
-    Args:
-        messages: List of message dictionaries in Bedrock converse format
-                 Example: [{"role": "user", "content": [{"text": "..."}, {"image": {...}}]}]
-
-    Returns:
-        Response text from the model
-
-    Raises:
-        RuntimeError: If Bedrock invocation fails
-    """
-    try:
-        bedrock_client = boto3.client('bedrock-runtime')
-
-        # Call Bedrock Converse API
-        response = bedrock_client.converse(
-            modelId="global.anthropic.claude-sonnet-4-20250514-v1:0",
-            messages=messages
-        )
-
-        # Extract and return response text
-        return response['output']['message']['content'][0]['text'].strip()
-
-    except Exception as e:
-        raise RuntimeError(f"Bedrock converse API call failed: {str(e)}")
 
 
 def _extract_vin_with_textract(image_bytes: bytes) -> str:
@@ -89,7 +60,7 @@ def _extract_vin_with_textract(image_bytes: bytes) -> str:
         ]
 
         # Call Bedrock to extract VIN
-        vin = _invoke_bedrock_converse(messages)
+        vin = bedrock._converse(messages)
 
         # Validate VIN format (17 characters, alphanumeric)
         if len(vin) != 17:
