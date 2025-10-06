@@ -44,9 +44,68 @@ async function getAuthToken(): Promise<string> {
 }
 
 /**
+ * Resize an image to a maximum dimension while preserving aspect ratio
+ *
+ * @param file - Image file to resize
+ * @param maxDimension - Maximum width or height in pixels (default: 500)
+ * @returns Resized image as a Blob
+ */
+async function resizeImage(file: File | Blob, maxDimension: number = 500): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    if (!ctx) {
+      reject(new Error('Failed to get canvas context'));
+      return;
+    }
+
+    img.onload = () => {
+      let { width, height } = img;
+
+      // Calculate new dimensions while preserving aspect ratio
+      if (width > height) {
+        if (width > maxDimension) {
+          height = (height * maxDimension) / width;
+          width = maxDimension;
+        }
+      } else {
+        if (height > maxDimension) {
+          width = (width * maxDimension) / height;
+          height = maxDimension;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(
+        blob => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error('Failed to create blob from canvas'));
+          }
+        },
+        'image/jpeg',
+        0.9
+      );
+    };
+
+    img.onerror = () => reject(new Error('Failed to load image'));
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+/**
  * Convert a File or Blob to base64 string
  */
 export async function fileToBase64(file: File | Blob): Promise<string> {
+  // First resize the image
+  const resizedBlob = await resizeImage(file);
+
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -56,7 +115,7 @@ export async function fileToBase64(file: File | Blob): Promise<string> {
       resolve(base64);
     };
     reader.onerror = () => reject(new Error('Failed to read file'));
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(resizedBlob);
   });
 }
 
