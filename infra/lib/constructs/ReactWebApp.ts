@@ -34,7 +34,7 @@ export default class ReactWebApp extends Construct {
     }
 
     this.bucket = new s3.Bucket(this, 'WebsiteBucket', {
-      bucketName: `autograderai-${cdk.Stack.of(this).account}-${cdk.Stack.of(this).region}`,
+      bucketName: `hp-webapp-bucket-${cdk.Stack.of(this).account}-${cdk.Stack.of(this).region}`,
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'index.html',
       publicReadAccess: false,
@@ -46,11 +46,11 @@ export default class ReactWebApp extends Construct {
     // Create OAC (Origin Access Control)
     const oac = new cloudfront.CfnOriginAccessControl(this, 'OAC', {
       originAccessControlConfig: {
-        name: 'AutograderOAC',
+        name: 'HpOAC',
         originAccessControlOriginType: 's3',
         signingBehavior: 'always',
         signingProtocol: 'sigv4',
-        description: 'OAC for Autograder S3 bucket',
+        description: 'OAC for Hp S3 bucket',
       },
     });
 

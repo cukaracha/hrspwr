@@ -1,113 +1,18 @@
 import json
 import os
 from typing import Dict, Any, Optional, List
-from datetime import datetime, timedelta
 import requests
 import boto3
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import hashlib
-import threading
+from lib.secrets import load_secrets
+from lib.restapi import _cached_api_request
 
 
 # Constants
-RAPIDAPI_KEY = "7f52966767mshdd7d2b2b14b58ddp13eeaajsn057c1530cd1c"
 RAPIDAPI_HOST = "auto-parts-catalog.p.rapidapi.com"
 TYPE_ID = 1  # Passenger cars
 LANG_ID = 4  # English
-
-# Global lock for cache file operations to prevent race conditions
-_cache_lock = threading.Lock()
-
-
-def _cached_api_request(url: str, headers: Dict[str, str], cache_ttl_hours: int = 24) -> requests.Response:
-    """
-    Make a cached API request using local JSON file storage.
-
-    Args:
-        url: The full URL to request
-        headers: Request headers dictionary
-        cache_ttl_hours: Time-to-live for cache entries in hours (default: 24)
-
-    Returns:
-        requests.Response object (either from cache or fresh API call)
-
-    Raises:
-        requests.RequestException: If API request fails
-    """
-    # Generate cache key from URL and sorted headers
-    cache_key_content = url + json.dumps(sorted(headers.items()))
-    cache_key = hashlib.md5(cache_key_content.encode()).hexdigest()
-
-    # Cache file path in same directory as this script
-    cache_file_path = os.path.join(os.path.dirname(__file__), 'api_cache.json')
-
-    # Load existing cache with thread lock to prevent race conditions
-    cache = {}
-    cache_hit = False
-    cached_response = None
-
-    with _cache_lock:
-        if os.path.exists(cache_file_path):
-            try:
-                with open(cache_file_path, 'r') as f:
-                    cache = json.load(f)
-            except Exception as e:
-                print(f"Warning: Failed to load cache file, starting fresh: {str(e)}")
-                cache = {}
-
-        # Check cache hit
-        if cache_key in cache:
-            cached_entry = cache[cache_key]
-            cached_time = datetime.fromisoformat(cached_entry['timestamp'])
-            expiry_time = cached_time + timedelta(hours=cache_ttl_hours)
-
-            if datetime.now() < expiry_time:
-                print(f"Cache hit for URL: {url}")
-                cache_hit = True
-                # Create a mock Response object from cached data
-                cached_response = requests.Response()
-                cached_response.status_code = cached_entry['status_code']
-                cached_response._content = cached_entry['content'].encode('utf-8')
-                cached_response.headers.update(cached_entry['headers'])
-
-    # Return cached response if available (outside lock to minimize lock duration)
-    if cache_hit:
-        return cached_response
-
-    # Make fresh API request (outside lock to allow parallel API calls)
-    print(f"Making REST API request: {url}")
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-
-    # Only cache successful responses (2xx status codes)
-    if 200 <= response.status_code < 300:
-        with _cache_lock:
-            # Reload cache in case it was updated by another thread
-            if os.path.exists(cache_file_path):
-                try:
-                    with open(cache_file_path, 'r') as f:
-                        cache = json.load(f)
-                except Exception as e:
-                    print(f"Warning: Failed to reload cache before writing: {str(e)}")
-                    cache = {}
-
-            cache[cache_key] = {
-                'url': url,
-                'timestamp': datetime.now().isoformat(),
-                'status_code': response.status_code,
-                'content': response.text,
-                'headers': dict(response.headers)
-            }
-
-            # Save cache to file
-            try:
-                with open(cache_file_path, 'w') as f:
-                    json.dump(cache, f, indent=2)
-            except Exception as e:
-                print(f"Warning: Failed to save cache file: {str(e)}")
-
-    return response
 
 
 def _load_prompts() -> Dict[str, str]:
@@ -218,7 +123,7 @@ def _get_manufacturer_id(make: str, type_id: int, country_filter_id: int) -> int
         url = f"https://{RAPIDAPI_HOST}/manufacturers/list/type-id/{type_id}"
         headers = {
             "x-rapidapi-host": RAPIDAPI_HOST,
-            "x-rapidapi-key": RAPIDAPI_KEY
+            "x-rapidapi-key": os.environ.get('RAPIDAPI_KEY', '')
         }
 
         response = _cached_api_request(url, headers)
@@ -265,7 +170,7 @@ def _get_model_id(vehicle_info: Dict[str, Any], type_id: int, lang_id: int,
                f"country-filter-id/{country_filter_id}")
         headers = {
             "x-rapidapi-host": RAPIDAPI_HOST,
-            "x-rapidapi-key": RAPIDAPI_KEY
+            "x-rapidapi-key": os.environ.get('RAPIDAPI_KEY', '')
         }
 
         response = _cached_api_request(url, headers)
@@ -404,7 +309,7 @@ def _get_vehicle_details(vehicle_id: int, type_id: int, lang_id: int,
                f"country-filter-id/{country_filter_id}")
         headers = {
             "x-rapidapi-host": RAPIDAPI_HOST,
-            "x-rapidapi-key": RAPIDAPI_KEY
+            "x-rapidapi-key": os.environ.get('RAPIDAPI_KEY', '')
         }
 
         response = _cached_api_request(url, headers)
@@ -521,7 +426,7 @@ def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
                f"country-filter-id/{country_filter_id}")
         headers = {
             "x-rapidapi-host": RAPIDAPI_HOST,
-            "x-rapidapi-key": RAPIDAPI_KEY
+            "x-rapidapi-key": os.environ.get('RAPIDAPI_KEY', '')
         }
 
         response = _cached_api_request(url, headers)
@@ -687,7 +592,7 @@ def _get_categories(type_id: int, lang_id: int, vehicle_id: int) -> Dict[str, An
                f"products-groups-variant-3/{vehicle_id}/lang-id/{lang_id}")
         headers = {
             "x-rapidapi-host": RAPIDAPI_HOST,
-            "x-rapidapi-key": RAPIDAPI_KEY
+            "x-rapidapi-key": os.environ.get('RAPIDAPI_KEY', '')
         }
 
         response = _cached_api_request(url, headers)
@@ -784,3 +689,70 @@ def main(vehicle_info: Dict[str, Any]) -> Dict[str, Any]:
 
     except Exception as e:
         raise RuntimeError(f"Parts categories lookup failed: {str(e)}")
+
+
+def lambda_handler(event, context):
+    """
+    AWS Lambda handler for parts categories lookup.
+
+    Args:
+        event: API Gateway event containing vehicle info JSON in body
+        context: Lambda context object
+
+    Returns:
+        API Gateway response with parts categories
+    """
+    # CORS headers
+    headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': True,
+        'Content-Type': 'application/json'
+    }
+
+    try:
+        # Load secrets from Secrets Manager
+        secret_arn = os.environ.get('SECRET_ARN')
+        if secret_arn:
+            load_secrets(secret_arn)
+
+        # Parse request body
+        body = json.loads(event.get('body', '{}'))
+
+        # Validate required fields
+        vehicle_info = body.get('vehicle_info')
+        if not vehicle_info:
+            return {
+                'statusCode': 400,
+                'headers': headers,
+                'body': json.dumps({
+                    'error': 'Missing required field: vehicle_info'
+                })
+            }
+
+        # Process parts categories lookup
+        categories = main(vehicle_info)
+
+        return {
+            'statusCode': 200,
+            'headers': headers,
+            'body': json.dumps(categories)
+        }
+
+    except ValueError as e:
+        return {
+            'statusCode': 400,
+            'headers': headers,
+            'body': json.dumps({
+                'error': str(e)
+            })
+        }
+    except Exception as e:
+        print(f"Error in parts categories lookup: {str(e)}")
+        return {
+            'statusCode': 500,
+            'headers': headers,
+            'body': json.dumps({
+                'error': 'Parts categories lookup failed',
+                'details': str(e)
+            })
+        }

@@ -1,7 +1,9 @@
 import json
 import os
+import base64
 from typing import List, Dict, Any, Optional
 import boto3
+from lib.secrets import load_secrets
 
 
 def _load_prompts() -> Dict[str, str]:
@@ -116,8 +118,7 @@ def _lookup_vehicle_info(vin: str) -> Dict[str, Any]:
         ValueError: If required environment variable is not set
         RuntimeError: If API call fails
     """
-    # api_key = os.environ.get('RAPIDAPI_KEY')
-    api_key = "7f52966767mshdd7d2b2b14b58ddp13eeaajsn057c1530cd1c"
+    api_key = os.environ.get('RAPIDAPI_KEY')
 
     if not api_key:
         raise ValueError("RAPIDAPI_KEY environment variable must be set")
@@ -192,3 +193,73 @@ def main(image_bytes: bytes) -> Dict[str, Any]:
 
     except Exception as e:
         raise RuntimeError(f"Vehicle info extraction failed: {str(e)}")
+
+
+def lambda_handler(event, context):
+    """
+    AWS Lambda handler for VIN lookup from image.
+
+    Args:
+        event: API Gateway event containing base64-encoded image in body
+        context: Lambda context object
+
+    Returns:
+        API Gateway response with VIN and vehicle information
+    """
+    # CORS headers
+    headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': True,
+        'Content-Type': 'application/json'
+    }
+
+    try:
+        # Load secrets from Secrets Manager
+        secret_arn = os.environ.get('SECRET_ARN')
+        if secret_arn:
+            load_secrets(secret_arn)
+
+        # Parse request body
+        body = json.loads(event.get('body', '{}'))
+
+        # Extract and decode base64 image
+        base64_image = body.get('image')
+        if not base64_image:
+            return {
+                'statusCode': 400,
+                'headers': headers,
+                'body': json.dumps({
+                    'error': 'Missing required field: image (base64-encoded)'
+                })
+            }
+
+        # Decode base64 image to bytes
+        image_bytes = base64.b64decode(base64_image)
+
+        # Process VIN lookup
+        result = main(image_bytes)
+
+        return {
+            'statusCode': 200,
+            'headers': headers,
+            'body': json.dumps(result)
+        }
+
+    except ValueError as e:
+        return {
+            'statusCode': 400,
+            'headers': headers,
+            'body': json.dumps({
+                'error': str(e)
+            })
+        }
+    except Exception as e:
+        print(f"Error in VIN lookup: {str(e)}")
+        return {
+            'statusCode': 500,
+            'headers': headers,
+            'body': json.dumps({
+                'error': 'VIN lookup failed',
+                'details': str(e)
+            })
+        }

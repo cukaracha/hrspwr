@@ -1,18 +1,14 @@
 import * as cdk from 'aws-cdk-lib';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
-import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
-import * as path from 'path';
 import { Construct } from 'constructs';
 import { CognitoAuthorizer } from './CognitoAuthorizer';
-import * as iam from 'aws-cdk-lib/aws-iam';
-import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
-import * as s3 from 'aws-cdk-lib/aws-s3';
 
 export interface ApiGatewayProps {
   cognitoAuthorizer: CognitoAuthorizer;
-  apiKeysSecret: secretsmanager.Secret;
-  dataBucket: s3.IBucket;
+  vinLookupLambda: lambda.Function;
+  photoAnalyzerLambda: lambda.Function;
+  partsCategoriesLambda: lambda.Function;
 }
 
 export class ApiGateway extends Construct {
@@ -25,6 +21,7 @@ export class ApiGateway extends Construct {
     super(scope, id);
 
     this.api = new apigateway.RestApi(this, 'Api', {
+      restApiName: 'Hp-Api',
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS,
@@ -44,10 +41,10 @@ export class ApiGateway extends Construct {
 
     const defaultMethodOptions: apigateway.MethodOptions = {
       authorizer: props.cognitoAuthorizer.authorizer,
-      authorizationType: apigateway.AuthorizationType.CUSTOM,
+      authorizationType: apigateway.AuthorizationType.COGNITO,
     };
 
-    this.createAssignmentsEndpoints(defaultMethodOptions, props);
+    this.createAgentsEndpoints(defaultMethodOptions, props);
 
     this.apiId = this.api.restApiId.toString();
     this.stageName = this.api.deploymentStage.stageName.toString();
@@ -61,211 +58,34 @@ export class ApiGateway extends Construct {
     });
   }
 
-  private createAssignmentsEndpoints(
+  private createAgentsEndpoints(
     defaultMethodOptions: apigateway.MethodOptions,
     props: ApiGatewayProps
   ) {
-    // GET /assignments
-    const assignments = this.api.root.addResource('assignments');
-    const listAssignmentsLambda = new NodejsFunction(this, 'ListAssignmentsFunction', {
-      runtime: lambda.Runtime.NODEJS_18_X,
-      entry: path.join(
-        __dirname,
-        '../../../apps/apis/sample-todo-api/assignments/read/list-assignments.ts'
-      ),
-      handler: 'handler',
-      environment: {
-        NODE_ENV: 'production',
-        ASSIGNMENTS_TABLE: 'AssignmentsAccess',
-      },
-    });
+    // Create /agents resource
+    const agents = this.api.root.addResource('agents');
 
-    // Grant DynamoDB permissions to the Lambda
-    listAssignmentsLambda.addToRolePolicy(
-      new iam.PolicyStatement({
-        actions: ['dynamodb:Query', 'dynamodb:GetItem'],
-        resources: [
-          `arn:aws:dynamodb:${cdk.Stack.of(this).region}:${
-            cdk.Stack.of(this).account
-          }:table/AssignmentsAccess`,
-        ],
-      })
-    );
-
-    assignments.addMethod(
-      'GET',
-      new apigateway.LambdaIntegration(listAssignmentsLambda),
-      defaultMethodOptions
-    );
-
-    // POST /assignments
-    const createAssignmentLambda = new NodejsFunction(this, 'CreateAssignmentFunction', {
-      runtime: lambda.Runtime.NODEJS_18_X,
-      entry: path.join(
-        __dirname,
-        '../../../apps/apis/sample-todo-api/assignments/create/create-assignment.ts'
-      ),
-      handler: 'handler',
-      environment: {
-        NODE_ENV: 'production',
-        ASSIGNMENTS_TABLE: 'AssignmentsAccess',
-        ASSIGNMENTS_BUCKET: props.dataBucket.bucketName,
-      },
-    });
-
-    // Grant DynamoDB permissions to the Lambda
-    createAssignmentLambda.addToRolePolicy(
-      new iam.PolicyStatement({
-        actions: [
-          'dynamodb:PutItem',
-          'dynamodb:GetItem',
-          'dynamodb:UpdateItem',
-          'dynamodb:DeleteItem',
-          'dynamodb:Query',
-          'dynamodb:Scan',
-        ],
-        resources: [
-          `arn:aws:dynamodb:${cdk.Stack.of(this).region}:${
-            cdk.Stack.of(this).account
-          }:table/AssignmentsAccess`,
-        ],
-      })
-    );
-
-    assignments.addMethod(
+    // POST /agents/vin-lookup
+    const vinLookup = agents.addResource('vin-lookup');
+    vinLookup.addMethod(
       'POST',
-      new apigateway.LambdaIntegration(createAssignmentLambda),
+      new apigateway.LambdaIntegration(props.vinLookupLambda),
       defaultMethodOptions
     );
 
-    // POST /assignments/presigned-url
-    const presignedUrlLambda = new NodejsFunction(this, 'PresignedUrlFunction', {
-      runtime: lambda.Runtime.NODEJS_18_X,
-      entry: path.join(
-        __dirname,
-        '../../../apps/apis/sample-todo-api/assignments/create/generate-presigned-url.ts'
-      ),
-      handler: 'handler',
-      environment: {
-        NODE_ENV: 'production',
-        ASSIGNMENTS_BUCKET: props.dataBucket.bucketName,
-      },
-    });
-
-    // Grant S3 permissions to the Lambda
-    props.dataBucket.grantReadWrite(presignedUrlLambda);
-
-    const presignedUrl = assignments.addResource('presigned-url');
-    presignedUrl.addMethod(
+    // POST /agents/photo-analyzer
+    const photoAnalyzer = agents.addResource('photo-analyzer');
+    photoAnalyzer.addMethod(
       'POST',
-      new apigateway.LambdaIntegration(presignedUrlLambda),
+      new apigateway.LambdaIntegration(props.photoAnalyzerLambda),
       defaultMethodOptions
     );
 
-    // GET /assignments/{id}
-    const getAssignmentByIdLambda = new NodejsFunction(this, 'GetAssignmentByIdFunction', {
-      runtime: lambda.Runtime.NODEJS_18_X,
-      entry: path.join(
-        __dirname,
-        '../../../apps/apis/sample-todo-api/assignments/read/read-assignment.ts'
-      ),
-      handler: 'handler',
-      environment: {
-        NODE_ENV: 'production',
-        ASSIGNMENTS_TABLE: 'AssignmentsAccess',
-      },
-    });
-    getAssignmentByIdLambda.addToRolePolicy(
-      new iam.PolicyStatement({
-        actions: ['dynamodb:GetItem', 'dynamodb:Scan'],
-        resources: [
-          `arn:aws:dynamodb:${cdk.Stack.of(this).region}:${
-            cdk.Stack.of(this).account
-          }:table/AssignmentsAccess`,
-        ],
-      })
-    );
-    const assignmentById = assignments.addResource('{id}');
-    assignmentById.addMethod(
-      'GET',
-      new apigateway.LambdaIntegration(getAssignmentByIdLambda),
-      defaultMethodOptions
-    );
-
-    // DELETE /assignments/{id}
-    const deleteAssignmentLambda = new NodejsFunction(this, 'DeleteAssignmentFunction', {
-      runtime: lambda.Runtime.NODEJS_18_X,
-      entry: path.join(
-        __dirname,
-        '../../../apps/apis/sample-todo-api/assignments/delete/delete-assignment.ts'
-      ),
-      handler: 'handler',
-      environment: {
-        NODE_ENV: 'production',
-        ASSIGNMENTS_TABLE: 'AssignmentsAccess',
-        ASSIGNMENTS_BUCKET: props.dataBucket.bucketName,
-      },
-    });
-
-    // Grant DynamoDB permissions to the delete Lambda
-    deleteAssignmentLambda.addToRolePolicy(
-      new iam.PolicyStatement({
-        actions: ['dynamodb:DeleteItem', 'dynamodb:GetItem', 'dynamodb:Query', 'dynamodb:Scan'],
-        resources: [
-          `arn:aws:dynamodb:${cdk.Stack.of(this).region}:${
-            cdk.Stack.of(this).account
-          }:table/AssignmentsAccess`,
-        ],
-      })
-    );
-
-    // Grant S3 permissions to the delete Lambda
-    props.dataBucket.grantDelete(deleteAssignmentLambda);
-    props.dataBucket.grantRead(deleteAssignmentLambda);
-
-    assignmentById.addMethod(
-      'DELETE',
-      new apigateway.LambdaIntegration(deleteAssignmentLambda),
-      defaultMethodOptions
-    );
-
-    // POST /assignments/analyze
-    const analyzeAssignmentLayer = new lambda.LayerVersion(this, 'AnalyzeAssignmentLayer', {
-      code: lambda.Code.fromAsset(
-        path.join(
-          __dirname,
-          '../../../apps/apis/sample-todo-api/assignments/create/analyze-assignment/lambda_layer.zip'
-        )
-      ),
-      compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
-      description: 'Python dependencies for analyze-assignment Lambda',
-    });
-
-    const analyzeAssignmentLambda = new lambda.Function(this, 'AnalyzeAssignmentFunction', {
-      runtime: lambda.Runtime.PYTHON_3_11,
-      code: lambda.Code.fromAsset(
-        path.join(
-          __dirname,
-          '../../../apps/apis/sample-todo-api/assignments/create/analyze-assignment'
-        )
-      ),
-      handler: 'analyze-assignment.lambda_handler',
-      timeout: cdk.Duration.minutes(5),
-      memorySize: 1024,
-      environment: {
-        NODE_ENV: 'production',
-        SECRET_ARN: props.apiKeysSecret.secretArn,
-      },
-      layers: [analyzeAssignmentLayer],
-    });
-
-    // Grant permissions to read from the secret
-    props.apiKeysSecret.grantRead(analyzeAssignmentLambda);
-
-    const analyzeAssignment = assignments.addResource('analyze');
-    analyzeAssignment.addMethod(
+    // POST /agents/parts-categories
+    const partsCategories = agents.addResource('parts-categories');
+    partsCategories.addMethod(
       'POST',
-      new apigateway.LambdaIntegration(analyzeAssignmentLambda),
+      new apigateway.LambdaIntegration(props.partsCategoriesLambda),
       defaultMethodOptions
     );
   }

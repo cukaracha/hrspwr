@@ -5,7 +5,7 @@ import ChatLayout from './layouts/ChatLayout';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import LandingPage from './pages/LandingPage';
-import ChatLandingPage from './pages/ChatLandingPage';
+import VinDecoder from './pages/VinDecoder';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { queryClient } from './lib/query-client';
 import Profile from './pages/Profile';
@@ -28,7 +28,7 @@ function App() {
                   </ProtectedRoute>
                 }
               >
-                <Route index element={<ChatLandingPage />} />
+                <Route index element={<VinDecoder />} />
                 <Route path='profile' element={<Profile />} />
               </Route>
               <Route path='*' element={<Navigate to='/welcome' replace />} />

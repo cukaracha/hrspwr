@@ -1,7 +1,9 @@
 import json
 import os
+import base64
 from typing import Dict, List
 import boto3
+from lib.secrets import load_secrets
 
 
 def _load_prompts() -> dict:
@@ -158,3 +160,75 @@ def main(image_bytes: bytes) -> List[str]:
         return detected_parts
     except Exception as e:
         raise RuntimeError(f"Main workflow failed: {str(e)}")
+
+
+def lambda_handler(event, context):
+    """
+    AWS Lambda handler for photo object detection.
+
+    Args:
+        event: API Gateway event containing base64-encoded image in body
+        context: Lambda context object
+
+    Returns:
+        API Gateway response with detected parts list
+    """
+    # CORS headers
+    headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': True,
+        'Content-Type': 'application/json'
+    }
+
+    try:
+        # Load secrets from Secrets Manager
+        secret_arn = os.environ.get('SECRET_ARN')
+        if secret_arn:
+            load_secrets(secret_arn)
+
+        # Parse request body
+        body = json.loads(event.get('body', '{}'))
+
+        # Extract and decode base64 image
+        base64_image = body.get('image')
+        if not base64_image:
+            return {
+                'statusCode': 400,
+                'headers': headers,
+                'body': json.dumps({
+                    'error': 'Missing required field: image (base64-encoded)'
+                })
+            }
+
+        # Decode base64 image to bytes
+        image_bytes = base64.b64decode(base64_image)
+
+        # Process photo analysis
+        detected_parts = main(image_bytes)
+
+        return {
+            'statusCode': 200,
+            'headers': headers,
+            'body': json.dumps({
+                'parts': detected_parts
+            })
+        }
+
+    except ValueError as e:
+        return {
+            'statusCode': 400,
+            'headers': headers,
+            'body': json.dumps({
+                'error': str(e)
+            })
+        }
+    except Exception as e:
+        print(f"Error in photo analysis: {str(e)}")
+        return {
+            'statusCode': 500,
+            'headers': headers,
+            'body': json.dumps({
+                'error': 'Photo analysis failed',
+                'details': str(e)
+            })
+        }

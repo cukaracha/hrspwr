@@ -28,7 +28,7 @@ def _parse_xml_tag(response: str, tag: str) -> str:
     return content.strip()
 
 
-def _invoke_bedrock_converse(messages: List[Dict[str, Any]], system_prompt: str = None) -> str:
+def _converse(messages: List[Dict[str, Any]], system_prompt: str = None) -> str:
     """
     Call Amazon Bedrock's converse API with formatted messages.
 
