@@ -6,7 +6,7 @@ import ChatLayout from './layouts/ChatLayout';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import LandingPage from './pages/LandingPage';
-import VinDecoder from './pages/VinDecoder';
+import Garage from './pages/Garage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { queryClient } from './lib/query-client';
 import Profile from './pages/Profile';
@@ -30,7 +30,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 >
-                  <Route index element={<VinDecoder />} />
+                  <Route index element={<Garage />} />
                   <Route path='profile' element={<Profile />} />
                 </Route>
                 <Route path='*' element={<Navigate to='/welcome' replace />} />
