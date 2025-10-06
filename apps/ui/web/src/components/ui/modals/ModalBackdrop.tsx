@@ -22,7 +22,7 @@ export const ModalBackdrop: React.FC<ModalBackdropProps> = ({
     <>
       {/* Backdrop */}
       <div
-        className='fixed inset-0 bg-black/50 backdrop-blur-sm z-50 animate-in fade-in duration-200'
+        className='fixed inset-0 bg-glass-bg backdrop-blur-md z-50 animate-in fade-in duration-200'
         onClick={onClose}
       />
 

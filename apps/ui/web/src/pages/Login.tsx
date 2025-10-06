@@ -1,10 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { GlassButton } from '../components/ui/buttons/glassbutton/GlassButton';
+import { GlassInput } from '../components/ui/inputs/glassinput/GlassInput';
+import {
+  GlassCard,
+  GlassCardContent,
+  GlassCardDescription,
+  GlassCardHeader,
+  GlassCardTitle,
+} from '../components/ui/cards/glasscard/GlassCard';
+import { SignUpModal } from '../components/ui/modals/SignUpModal';
+import { Alert } from '../components/ui/alerts/Alert';
+import { GradientBackground } from '../components/layouts/backgrounds/gradientbackground/GradientBackground';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +21,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const { signIn, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,23 +67,23 @@ const Login = () => {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4'>
-      <Card className='w-full max-w-md'>
-        <CardHeader className='space-y-1'>
-          <CardTitle className='text-2xl text-center'>Welcome back</CardTitle>
-          <CardDescription className='text-center'>
+    <div className='min-h-screen flex items-center justify-center p-4'>
+      <GlassCard className='w-full max-w-md cursor-default active:scale-100'>
+        <GlassCardHeader className='space-y-1'>
+          <GlassCardTitle className='text-3xl text-center'>Welcome back</GlassCardTitle>
+          <GlassCardDescription className='text-center'>
             Enter your credentials to access your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          </GlassCardDescription>
+        </GlassCardHeader>
+        <GlassCardContent>
           <form onSubmit={handleSubmit} className='space-y-4'>
             <div className='space-y-2'>
-              <label htmlFor='email' className='text-sm font-medium'>
+              <label htmlFor='email' className='text-sm font-medium text-glass-text'>
                 Email
               </label>
               <div className='relative'>
-                <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4' />
-                <Input
+                <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-glass-text/40 h-4 w-4 z-10' />
+                <GlassInput
                   id='email'
                   type='email'
                   placeholder='Enter your email'
@@ -85,12 +95,12 @@ const Login = () => {
               </div>
             </div>
             <div className='space-y-2'>
-              <label htmlFor='password' className='text-sm font-medium'>
+              <label htmlFor='password' className='text-sm font-medium text-glass-text'>
                 Password
               </label>
               <div className='relative'>
-                <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4' />
-                <Input
+                <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-glass-text/40 h-4 w-4 z-10' />
+                <GlassInput
                   id='password'
                   type={showPassword ? 'text' : 'password'}
                   placeholder='Enter your password'
@@ -102,26 +112,47 @@ const Login = () => {
                 <button
                   type='button'
                   onClick={() => setShowPassword(!showPassword)}
-                  className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600'
+                  className='absolute right-3 top-1/2 transform -translate-y-1/2 text-glass-text/40 hover:text-glass-text z-10'
                 >
                   {showPassword ? <EyeOff className='h-4 w-4' /> : <Eye className='h-4 w-4' />}
                 </button>
               </div>
             </div>
-            {error && <div className='text-red-600 text-sm'>{error}</div>}
-            <Button type='submit' className='w-full' disabled={isLoading}>
+            {error && <Alert variant='error' message={error} />}
+            <GlassButton
+              type='submit'
+              className='w-full h-12'
+              disabled={isLoading}
+              loading={isLoading}
+              size='lg'
+            >
               {isLoading ? 'Signing in...' : 'Sign in'}
-            </Button>
+            </GlassButton>
           </form>
 
-          <div className='mt-4 text-center text-sm'>
+          <div className='mt-4 text-center text-sm text-glass-text'>
             Don&apos;t have an account?{' '}
-            <Link to='/signup' className='text-primary hover:underline'>
+            <button
+              onClick={() => setIsSignUpModalOpen(true)}
+              className='text-brand-primary hover:underline font-medium'
+            >
               Sign up
-            </Link>
+            </button>
           </div>
-        </CardContent>
-      </Card>
+        </GlassCardContent>
+      </GlassCard>
+
+      {/* Sign Up Modal */}
+      <SignUpModal
+        isOpen={isSignUpModalOpen}
+        onClose={() => setIsSignUpModalOpen(false)}
+        onSignUpSuccess={() => {
+          // Modal will close automatically, no need to do anything here
+        }}
+      />
+
+      {/* Gradient Background */}
+      <GradientBackground className='fixed inset-0 -z-10' />
     </div>
   );
 };
