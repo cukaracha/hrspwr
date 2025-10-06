@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Search } from 'lucide-react';
 import { ModalBackdrop } from './ModalBackdrop';
 import { CloseButton } from '../buttons/closebutton/CloseButton';
 import {
@@ -8,6 +9,7 @@ import {
   GlassCardTitle,
 } from '../cards/glasscard/GlassCard';
 import { CollapsibleCard } from '../cards/collapsiblecard/CollapsibleCard';
+import { GlassButton } from '../buttons/glassbutton/GlassButton';
 import { Vehicle } from '../cards/vehiclecard/VehicleCard';
 import {
   getPrimaryInfoFields,
@@ -83,6 +85,19 @@ export const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({
               </div>
             </CollapsibleCard>
           )}
+
+          {/* Find Parts Button */}
+          <GlassButton
+            variant='default'
+            size='lg'
+            className='w-full h-12'
+            onClick={() => {
+              // TODO: Implement parts search functionality
+            }}
+          >
+            <Search className='mr-2 h-5 w-5' />
+            Find Parts
+          </GlassButton>
         </GlassCardContent>
       </GlassCard>
     </ModalBackdrop>
