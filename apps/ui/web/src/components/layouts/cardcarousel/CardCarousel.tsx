@@ -56,7 +56,7 @@ const CardCarousel = React.forwardRef<HTMLDivElement, CardCarouselProps>(
         ref={containerRef}
         className={cn(
           // Horizontal scrolling container
-          'flex gap-6 overflow-x-auto overflow-y-hidden',
+          'flex justify-center gap-6 overflow-x-auto overflow-y-hidden',
           // Padding for cards to peek on edges
           'px-4 sm:px-8 md:px-12 lg:px-16',
           'py-8',
