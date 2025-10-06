@@ -4,14 +4,14 @@ import { cn } from '../../../../lib/utils';
 import { Loader2 } from 'lucide-react';
 
 const glassCardVariants = cva(
-  'relative rounded-2xl backdrop-blur-md transition-all duration-300 ease-in-out border border-white/20',
+  'relative rounded-2xl backdrop-blur-md transition-all duration-300 ease-in-out border border-glass-border',
   {
     variants: {
       variant: {
         default:
-          'bg-white/10 shadow-lg hover:bg-white/15 hover:shadow-xl hover:border-white/30 active:scale-[0.98]',
+          'bg-glass-bg shadow-lg hover:bg-glass-bg-hover hover:shadow-xl hover:border-glass-border active:scale-[0.98]',
         ghost:
-          'bg-white/5 shadow-md hover:bg-white/10 hover:shadow-lg hover:border-white/25 active:scale-[0.99]',
+          'bg-glass-bg/50 shadow-md hover:bg-glass-bg hover:shadow-lg hover:border-glass-border active:scale-[0.99]',
       },
       state: {
         normal: 'cursor-pointer',
@@ -46,8 +46,8 @@ const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
         {...props}
       >
         {loading && (
-          <div className='absolute inset-0 flex items-center justify-center bg-white/5 backdrop-blur-sm rounded-2xl z-10'>
-            <Loader2 className='h-8 w-8 animate-spin text-black/70' />
+          <div className='absolute inset-0 flex items-center justify-center bg-glass-bg/50 backdrop-blur-sm rounded-2xl z-10'>
+            <Loader2 className='h-8 w-8 animate-spin text-glass-text/70' />
           </div>
         )}
         {children}
@@ -70,7 +70,7 @@ const GlassCardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn('text-2xl font-semibold leading-none tracking-tight text-black', className)}
+    className={cn('text-2xl font-semibold leading-none tracking-tight text-glass-text', className)}
     {...props}
   />
 ));
@@ -80,13 +80,13 @@ const GlassCardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <p ref={ref} className={cn('text-sm text-black/70', className)} {...props} />
+  <p ref={ref} className={cn('text-sm text-glass-text/70', className)} {...props} />
 ));
 GlassCardDescription.displayName = 'GlassCardDescription';
 
 const GlassCardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('p-6 pt-0 text-black/90', className)} {...props} />
+    <div ref={ref} className={cn('p-6 pt-0 text-glass-text/90', className)} {...props} />
   )
 );
 GlassCardContent.displayName = 'GlassCardContent';

@@ -18,6 +18,20 @@ export default {
     },
     extend: {
       colors: {
+        // Brand colors (global, no theme variants)
+        brand: {
+          primary: 'hsl(var(--brand-primary))',
+          secondary: 'hsl(var(--brand-secondary))',
+          tertiary: 'hsl(var(--brand-tertiary))',
+        },
+        // Alert colors (global, no theme variants)
+        alert: {
+          success: 'hsl(var(--alert-success))',
+          warning: 'hsl(var(--alert-warning))',
+          error: 'hsl(var(--alert-error))',
+          info: 'hsl(var(--alert-info))',
+        },
+        // Theme-aware semantic colors
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -50,6 +64,13 @@ export default {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
+        },
+        // Glassmorphic (theme-aware)
+        glass: {
+          bg: 'hsl(var(--glass-bg))',
+          'bg-hover': 'hsl(var(--glass-bg-hover))',
+          border: 'hsl(var(--glass-border))',
+          text: 'hsl(var(--glass-text))',
         },
       },
       borderRadius: {

@@ -5,14 +5,14 @@ import { cn } from '../../../../lib/utils';
 import { Loader2 } from 'lucide-react';
 
 const glassButtonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-medium transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent backdrop-blur-md border border-white/20 text-black',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-medium transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glass-border focus-visible:ring-offset-2 focus-visible:ring-offset-transparent backdrop-blur-md border border-glass-border text-glass-text',
   {
     variants: {
       variant: {
         default:
-          'bg-white/10 shadow-lg hover:bg-white/15 hover:shadow-xl hover:border-white/30 active:scale-[0.98]',
+          'bg-glass-bg shadow-lg hover:bg-glass-bg-hover hover:shadow-xl hover:border-brand-primary active:scale-[0.98]',
         ghost:
-          'bg-white/5 shadow-md hover:bg-white/10 hover:shadow-lg hover:border-white/25 active:scale-[0.99]',
+          'bg-glass-bg/50 shadow-md hover:bg-glass-bg hover:shadow-lg hover:border-brand-primary active:scale-[0.99]',
       },
       state: {
         normal: 'cursor-pointer',
