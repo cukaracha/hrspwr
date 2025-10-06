@@ -3,6 +3,7 @@ import { VehicleCard, Vehicle } from '../components/ui/cards/vehiclecard/Vehicle
 import { CreateVehicleCard } from '../components/ui/cards/createcard/CreateVehicleCard';
 import { CardCarousel } from '../components/layouts/cardcarousel/CardCarousel';
 import { NewVehicleModal } from '../components/ui/modals/NewVehicleModal';
+import { VehicleDetailsModal } from '../components/ui/modals/VehicleDetailsModal';
 import { VinLookupResponse } from '../services/agentsApi';
 
 // Mock vehicles data - replace with API call later
@@ -41,12 +42,13 @@ const mockVehicles: Vehicle[] = [
 
 export default function Garage() {
   const [isNewVehicleModalOpen, setIsNewVehicleModalOpen] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [vehicles, setVehicles] = useState<Vehicle[]>(mockVehicles);
 
   const handleVehicleClick = (vehicle: Vehicle) => {
-    // eslint-disable-next-line no-console
-    console.log('Vehicle clicked:', vehicle);
-    // TODO: Navigate to vehicle details page or open detail modal
+    setSelectedVehicle(vehicle);
+    setIsDetailsModalOpen(true);
   };
 
   const handleCreateClick = () => {
@@ -54,7 +56,7 @@ export default function Garage() {
   };
 
   const handleVehicleAdded = (vehicleData: VinLookupResponse) => {
-    // Create a new vehicle from the VIN lookup response
+    // Create a new vehicle from the VIN lookup response with full API data
     const newVehicle: Vehicle = {
       id: Date.now().toString(), // Temporary ID - replace with API-generated ID
       year: vehicleData.model_year || 'Unknown',
@@ -62,6 +64,7 @@ export default function Garage() {
       model: vehicleData.model || 'Unknown',
       trim: vehicleData.trim,
       vin: vehicleData.vin,
+      apiData: vehicleData, // Store full API response
       // TODO: Add imageUrl from API or allow user to upload
     };
 
@@ -103,6 +106,13 @@ export default function Garage() {
         isOpen={isNewVehicleModalOpen}
         onClose={() => setIsNewVehicleModalOpen(false)}
         onVehicleAdded={handleVehicleAdded}
+      />
+
+      {/* Vehicle Details Modal */}
+      <VehicleDetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={() => setIsDetailsModalOpen(false)}
+        vehicle={selectedVehicle}
       />
     </div>
   );

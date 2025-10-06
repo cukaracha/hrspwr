@@ -27,6 +27,7 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [successData, setSuccessData] = React.useState<VinLookupResponse | null>(null);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -56,11 +57,11 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
       // Call VIN lookup API
       const response = await vinLookup(base64Image);
 
+      // Set success data to show success state
+      setSuccessData(response);
+
       // Notify parent component
       onVehicleAdded?.(response);
-
-      // Close modal
-      handleClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to decode VIN');
     } finally {
@@ -72,6 +73,7 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
     setSelectedFile(null);
     setPreviewUrl(null);
     setError(null);
+    setSuccessData(null);
 
     // Clear file input
     const fileInput = document.getElementById('modal-vin-image-input') as HTMLInputElement;
@@ -99,71 +101,94 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
 
         {/* Content */}
         <GlassCardContent className='space-y-6'>
-          {/* Upload Area */}
-          <div className='flex flex-col items-center justify-center border-3 border-dashed border-gray-300 rounded-2xl p-8 hover:border-blue-400 transition-all duration-300'>
-            <input
-              id='modal-vin-image-input'
-              type='file'
-              accept='image/*'
-              onChange={handleFileSelect}
-              className='hidden'
-            />
-            <label
-              htmlFor='modal-vin-image-input'
-              className='cursor-pointer flex flex-col items-center space-y-4 w-full'
-            >
-              {previewUrl ? (
-                <div className='relative w-full'>
-                  <img
-                    src={previewUrl}
-                    alt='VIN plate preview'
-                    className='max-w-full max-h-64 mx-auto rounded-lg shadow-lg'
-                  />
-                  <div className='absolute top-2 right-2'>
-                    <GlassButton
-                      type='button'
-                      size='sm'
-                      variant='ghost'
-                      onClick={e => {
-                        e.preventDefault();
-                        handleClear();
-                      }}
-                    >
-                      Clear
-                    </GlassButton>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <div className='w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center'>
-                    <ImageIcon className='h-10 w-10 text-blue-600' />
-                  </div>
-                  <div className='text-center'>
-                    <p className='text-lg font-semibold text-glass-text'>
-                      Click to upload VIN plate image
-                    </p>
-                    <p className='text-sm text-glass-text/60 mt-1'>PNG, JPG, or JPEG (max 5MB)</p>
-                  </div>
-                </>
-              )}
-            </label>
-          </div>
+          {/* Success State */}
+          {successData ? (
+            <>
+              <Alert
+                variant='success'
+                title='Vehicle Added Successfully!'
+                message={`${successData.model_year || ''} ${successData.make || ''} ${successData.model || ''}`.trim()}
+              />
+              <GlassButton
+                onClick={handleClose}
+                variant='default'
+                size='lg'
+                className='w-full h-12'
+              >
+                Close
+              </GlassButton>
+            </>
+          ) : (
+            <>
+              {/* Upload Area */}
+              <div className='flex flex-col items-center justify-center border-3 border-dashed border-gray-300 rounded-2xl p-8 hover:border-blue-400 transition-all duration-300'>
+                <input
+                  id='modal-vin-image-input'
+                  type='file'
+                  accept='image/*'
+                  onChange={handleFileSelect}
+                  className='hidden'
+                />
+                <label
+                  htmlFor='modal-vin-image-input'
+                  className='cursor-pointer flex flex-col items-center space-y-4 w-full'
+                >
+                  {previewUrl ? (
+                    <div className='relative w-full'>
+                      <img
+                        src={previewUrl}
+                        alt='VIN plate preview'
+                        className='max-w-full max-h-64 mx-auto rounded-lg shadow-lg'
+                      />
+                      <div className='absolute top-2 right-2'>
+                        <GlassButton
+                          type='button'
+                          size='sm'
+                          variant='ghost'
+                          onClick={e => {
+                            e.preventDefault();
+                            handleClear();
+                          }}
+                        >
+                          Clear
+                        </GlassButton>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className='w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center'>
+                        <ImageIcon className='h-10 w-10 text-blue-600' />
+                      </div>
+                      <div className='text-center'>
+                        <p className='text-lg font-semibold text-glass-text'>
+                          Click to upload VIN plate image
+                        </p>
+                        <p className='text-sm text-glass-text/60 mt-1'>
+                          PNG, JPG, or JPEG (max 5MB)
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </label>
+              </div>
 
-          {/* Error Display */}
-          {error && <Alert variant='error' message={error} />}
+              {/* Error Display */}
+              {error && <Alert variant='error' message={error} />}
 
-          {/* Action Button */}
-          <GlassButton
-            onClick={handleDecodeVin}
-            disabled={!selectedFile || isLoading}
-            loading={isLoading}
-            variant='default'
-            size='lg'
-            className='w-full h-12'
-          >
-            {!isLoading && <Upload className='mr-2 h-5 w-5' />}
-            {isLoading ? 'Decoding VIN...' : 'Decode VIN'}
-          </GlassButton>
+              {/* Action Button */}
+              <GlassButton
+                onClick={handleDecodeVin}
+                disabled={!selectedFile || isLoading}
+                loading={isLoading}
+                variant='default'
+                size='lg'
+                className='w-full h-12'
+              >
+                {!isLoading && <Upload className='mr-2 h-5 w-5' />}
+                {isLoading ? 'Decoding VIN...' : 'Decode VIN'}
+              </GlassButton>
+            </>
+          )}
         </GlassCardContent>
       </GlassCard>
     </ModalBackdrop>

@@ -4,6 +4,7 @@ import { cn } from '../../../../lib/utils';
 import { GlassCard } from '../glasscard/GlassCard';
 import { GlassBadge } from '../../badges/glassbadge/GlassBadge';
 import { GlassIconButton } from '../../buttons/glassiconbutton/GlassIconButton';
+import { VinLookupResponse } from '../../../../services/agentsApi';
 
 export interface Vehicle {
   id: string;
@@ -13,6 +14,7 @@ export interface Vehicle {
   trim?: string;
   imageUrl?: string;
   vin?: string;
+  apiData?: VinLookupResponse;
 }
 
 export interface VehicleCardProps extends React.HTMLAttributes<HTMLDivElement> {
