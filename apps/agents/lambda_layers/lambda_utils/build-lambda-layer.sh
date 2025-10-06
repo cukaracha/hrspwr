@@ -41,6 +41,13 @@ mkdir -p "$BUILD_DIR"
 # Copy requirements.txt to build directory
 cp "$LAYER_DIR/requirements.txt" "$BUILD_DIR/"
 
+# Check if lib directory exists and copy it
+if [[ -d "$LAYER_DIR/lib" ]]; then
+    echo -e "${YELLOW}Found lib directory, will include in layer...${NC}"
+    mkdir -p "$BUILD_DIR/python"
+    cp -r "$LAYER_DIR/lib" "$BUILD_DIR/python/"
+fi
+
 echo -e "${YELLOW}Installing dependencies using Amazon Linux Docker container...${NC}"
 
 # Use Docker to install dependencies on Amazon Linux
@@ -50,7 +57,7 @@ docker run --rm \
     --entrypoint="" \
     -v "$BUILD_DIR":/var/task \
     -w /var/task \
-    public.ecr.aws/lambda/python:3.11 \
+    public.ecr.aws/lambda/python:3.12 \
     bash -c "
         echo 'Installing Python dependencies...'
         pip install --upgrade pip
