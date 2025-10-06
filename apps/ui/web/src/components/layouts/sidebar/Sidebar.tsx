@@ -1,7 +1,8 @@
-import { X, LogOut, Car } from 'lucide-react';
+import { LogOut, Car } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
-import { Button } from '../../ui/button';
+import { GlassButton } from '../../ui/buttons/glassbutton/GlassButton';
+import { CloseButton } from '../../ui/buttons/closebutton/CloseButton';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -52,11 +53,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       >
         <div className='flex flex-col h-full'>
           {/* Header */}
-          <div className='flex items-center justify-between p-6 border-b border-gray-100'>
+          <div className='flex items-center justify-between p-6 border-b border-gray-100 relative'>
             <h2 className='text-xl font-semibold text-gray-900'>Menu</h2>
-            <Button variant='ghost' size='sm' onClick={onClose} className='hover:bg-gray-100'>
-              <X className='h-5 w-5' />
-            </Button>
+            <CloseButton onClick={onClose} variant='ghost' position='relative' />
           </div>
 
           {/* User Profile Section */}
@@ -80,27 +79,27 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           {/* Navigation Items */}
           <div className='flex-1 p-4'>
             <nav className='space-y-2'>
-              <Button
+              <GlassButton
                 variant='ghost'
                 className='w-full justify-start text-left hover:bg-gray-100'
                 onClick={handleMyGarage}
               >
                 <Car className='h-5 w-5 mr-3' />
                 My Garage
-              </Button>
+              </GlassButton>
             </nav>
           </div>
 
           {/* Bottom Actions */}
           <div className='p-4 border-t border-gray-100'>
-            <Button
+            <GlassButton
               variant='ghost'
               className='w-full justify-start text-left hover:bg-red-50 hover:text-red-600'
               onClick={handleSignOut}
             >
               <LogOut className='h-5 w-5 mr-3' />
               Sign Out
-            </Button>
+            </GlassButton>
           </div>
         </div>
       </div>

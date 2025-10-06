@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Menu } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { Button } from '../../ui/button';
+import { GlassButton } from '../../ui/buttons/glassbutton/GlassButton';
 
 export interface MenuButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   position?: 'top-left' | 'top-right';
@@ -16,7 +16,7 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
   ({ position = 'top-left', className, onClick, ...props }, ref) => {
     return (
       <div className={positionStyles[position]}>
-        <Button
+        <GlassButton
           ref={ref}
           variant='ghost'
           size='sm'
@@ -25,7 +25,7 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
           {...props}
         >
           <Menu className='h-5 w-5' />
-        </Button>
+        </GlassButton>
       </div>
     );
   }
