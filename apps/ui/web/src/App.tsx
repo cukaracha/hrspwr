@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp';
 import Garage from './pages/Garage';
 import { ProtectedRoute } from './components/utils/ProtectedRoute';
 import { queryClient } from './lib/query-client';
+import AppLayout from './components/layouts/appLayout/AppLayout';
 
 function App() {
   return (
@@ -16,16 +17,21 @@ function App() {
           <Router>
             <div className='min-h-screen'>
               <Routes>
+                {/* Public routes */}
                 <Route path='/login' element={<Login />} />
                 <Route path='/signup' element={<SignUp />} />
+
+                {/* Protected routes with layout */}
                 <Route
-                  path='/'
                   element={
                     <ProtectedRoute>
-                      <Garage />
+                      <AppLayout />
                     </ProtectedRoute>
                   }
-                />
+                >
+                  <Route path='/' element={<Garage />} />
+                </Route>
+
                 <Route path='*' element={<Navigate to='/login' replace />} />
               </Routes>
             </div>

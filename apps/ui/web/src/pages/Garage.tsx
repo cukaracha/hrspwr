@@ -1,13 +1,9 @@
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import Sidebar from '../components/layouts/sidebar/Sidebar';
 import { VehicleCard, Vehicle } from '../components/ui/cards/vehiclecard/VehicleCard';
 import { CreateVehicleCard } from '../components/ui/cards/createcard/CreateVehicleCard';
 import { CardCarousel } from '../components/layouts/cardcarousel/CardCarousel';
 import { NewVehicleModal } from '../components/ui/modals/NewVehicleModal';
 import { VinLookupResponse } from '../services/agentsApi';
-import { GradientBackground } from '../components/layouts/backgrounds/gradientbackground/GradientBackground';
-import { MenuButton } from '../components/layouts/sidebar/MenuButton';
 
 // Mock vehicles data - replace with API call later
 const mockVehicles: Vehicle[] = [
@@ -44,10 +40,8 @@ const mockVehicles: Vehicle[] = [
 ];
 
 export default function Garage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isNewVehicleModalOpen, setIsNewVehicleModalOpen] = useState(false);
   const [vehicles, setVehicles] = useState<Vehicle[]>(mockVehicles);
-  const { isAuthenticated } = useAuth();
 
   const handleVehicleClick = (vehicle: Vehicle) => {
     // eslint-disable-next-line no-console
@@ -77,46 +71,32 @@ export default function Garage() {
   };
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100'>
-      {/* Sidebar */}
-      {isAuthenticated && (
-        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-      )}
-
-      {/* Top Left Menu Button */}
-      {isAuthenticated && <MenuButton onClick={() => setIsSidebarOpen(true)} />}
-
-      {/* Main Content */}
-      <div className='flex flex-col min-h-screen px-4 sm:px-6 md:px-8 lg:px-12'>
-        {/* Header */}
-        <div className='flex-shrink-0 text-center pt-20 pb-8'>
-          <h1 className='text-5xl md:text-7xl font-bold bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent leading-normal pb-2'>
-            My Garage
-          </h1>
-        </div>
-
-        {/* Card Carousel */}
-        <div className='flex-1 flex items-center'>
-          <CardCarousel className='w-full'>
-            {vehicles.map(vehicle => (
-              <VehicleCard key={vehicle.id} vehicle={vehicle} onCardClick={handleVehicleClick} />
-            ))}
-            <CreateVehicleCard onCreateClick={handleCreateClick} />
-          </CardCarousel>
-        </div>
-
-        {/* Instructions - Mobile hint */}
-        <div className='flex-shrink-0 text-center pb-8'>
-          <p className='text-sm text-gray-500'>
-            {vehicles.length > 0
-              ? 'Swipe to browse your vehicles'
-              : 'Get started by adding your first vehicle'}
-          </p>
-        </div>
+    <div className='flex flex-col min-h-screen px-4 sm:px-6 md:px-8 lg:px-12'>
+      {/* Header */}
+      <div className='flex-shrink-0 text-center pt-20 pb-8'>
+        <h1 className='text-5xl md:text-7xl font-bold bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent leading-normal pb-2'>
+          My Garage
+        </h1>
       </div>
 
-      {/* Background decorative elements */}
-      <GradientBackground />
+      {/* Card Carousel */}
+      <div className='flex-1 flex items-center'>
+        <CardCarousel className='w-full'>
+          {vehicles.map(vehicle => (
+            <VehicleCard key={vehicle.id} vehicle={vehicle} onCardClick={handleVehicleClick} />
+          ))}
+          <CreateVehicleCard onCreateClick={handleCreateClick} />
+        </CardCarousel>
+      </div>
+
+      {/* Instructions - Mobile hint */}
+      <div className='flex-shrink-0 text-center pb-8'>
+        <p className='text-sm text-gray-500'>
+          {vehicles.length > 0
+            ? 'Swipe to browse your vehicles'
+            : 'Get started by adding your first vehicle'}
+        </p>
+      </div>
 
       {/* New Vehicle Modal */}
       <NewVehicleModal
