@@ -417,6 +417,85 @@ def _get_vehicle_details(vehicle_id: int, type_id: int, lang_id: int,
         raise RuntimeError(f"Vehicle details lookup failed: {str(e)}")
 
 
+def _process_vehicle(vehicle_id: int, type_id: int, lang_id: int,
+                    country_filter_id: int, model_year: int,
+                    input_cylinders: Optional[int], input_fuel_type: str) -> Optional[tuple]:
+    """
+    Fetch vehicle details and apply filters.
+
+    Args:
+        vehicle_id: Vehicle ID to process
+        type_id: Vehicle type ID
+        lang_id: Language ID
+        country_filter_id: Country filter ID
+        model_year: Target model year to match
+        input_cylinders: Target number of cylinders (None if not specified)
+        input_fuel_type: Target fuel type
+
+    Returns:
+        Tuple of (vehicle_id, vehicle_details) if all filters pass, None otherwise
+    """
+    try:
+        vehicle_details = _get_vehicle_details(vehicle_id, type_id, lang_id, country_filter_id)
+
+        # Filter 1: Check year range
+        try:
+            construction_start = vehicle_details.get("constructionIntervalStart", "")
+            construction_end = vehicle_details.get("constructionIntervalEnd", "")
+
+            year_from = None
+            year_to = None
+
+            if construction_start:
+                year_from = int(construction_start.partition("-")[0])
+
+            if construction_end:
+                year_to = int(construction_end.partition("-")[0])
+
+            is_within_range = False
+            if year_from:
+                if year_to:
+                    is_within_range = (year_from <= model_year <= year_to)
+                else:
+                    is_within_range = (model_year >= year_from)
+
+            if not is_within_range:
+                return None
+        except (KeyError, ValueError, TypeError) as e:
+            print(f"  Skipping vehicle ID {vehicle_id}: Year filter error - {str(e)}")
+            return None
+
+        # Filter 2: Check cylinder match
+        try:
+            if input_cylinders is not None:
+                vehicle_cylinders = vehicle_details.get("numberOfCylinders")
+                if vehicle_cylinders is not None:
+                    if int(vehicle_cylinders) != input_cylinders:
+                        return None
+        except (KeyError, ValueError, TypeError) as e:
+            print(f"  Skipping vehicle ID {vehicle_id}: Cylinder filter error - {str(e)}")
+            return None
+
+        # Filter 3: Check fuel type match
+        try:
+            if input_fuel_type:
+                vehicle_engine_type = vehicle_details.get("engineType", "")
+                if vehicle_engine_type:
+                    # Case-insensitive comparison
+                    if vehicle_engine_type.upper() != input_fuel_type.upper():
+                        return None
+        except (KeyError, ValueError, TypeError) as e:
+            print(f"  Skipping vehicle ID {vehicle_id}: Fuel type filter error - {str(e)}")
+            return None
+
+        # All filters passed
+        return (vehicle_id, vehicle_details)
+
+    except Exception as e:
+        print(f"Skipping vehicle ID {vehicle_id} due to error: {str(e)}")
+        return None
+
+
 def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
                     lang_id: int, country_filter_id: int) -> int:
     """
@@ -472,74 +551,15 @@ def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
             except (ValueError, TypeError):
                 print(f"Warning: Could not parse engine_number_of_cylinders: {engine_cylinders}")
 
-        # Helper function to fetch and filter a single vehicle
-        def process_vehicle(vehicle_id: int) -> Optional[tuple]:
-            """Fetch vehicle details and apply filters. Returns (vehicle_id, details) if all filters pass."""
-            try:
-                vehicle_details = _get_vehicle_details(vehicle_id, type_id, lang_id, country_filter_id)
-
-                # Filter 1: Check year range
-                try:
-                    construction_start = vehicle_details.get("constructionIntervalStart", "")
-                    construction_end = vehicle_details.get("constructionIntervalEnd", "")
-
-                    year_from = None
-                    year_to = None
-
-                    if construction_start:
-                        year_from = int(construction_start.partition("-")[0])
-
-                    if construction_end:
-                        year_to = int(construction_end.partition("-")[0])
-
-                    is_within_range = False
-                    if year_from:
-                        if year_to:
-                            is_within_range = (year_from <= model_year <= year_to)
-                        else:
-                            is_within_range = (model_year >= year_from)
-
-                    if not is_within_range:
-                        return None
-                except (KeyError, ValueError, TypeError) as e:
-                    print(f"  Skipping vehicle ID {vehicle_id}: Year filter error - {str(e)}")
-                    return None
-
-                # Filter 2: Check cylinder match
-                try:
-                    if input_cylinders is not None:
-                        vehicle_cylinders = vehicle_details.get("numberOfCylinders")
-                        if vehicle_cylinders is not None:
-                            if int(vehicle_cylinders) != input_cylinders:
-                                return None
-                except (KeyError, ValueError, TypeError) as e:
-                    print(f"  Skipping vehicle ID {vehicle_id}: Cylinder filter error - {str(e)}")
-                    return None
-
-                # Filter 3: Check fuel type match
-                try:
-                    if input_fuel_type:
-                        vehicle_engine_type = vehicle_details.get("engineType", "")
-                        if vehicle_engine_type:
-                            # Case-insensitive comparison
-                            if vehicle_engine_type.upper() != input_fuel_type.upper():
-                                return None
-                except (KeyError, ValueError, TypeError) as e:
-                    print(f"  Skipping vehicle ID {vehicle_id}: Fuel type filter error - {str(e)}")
-                    return None
-
-                # All filters passed
-                return (vehicle_id, vehicle_details)
-
-            except Exception as e:
-                print(f"Skipping vehicle ID {vehicle_id} due to error: {str(e)}")
-                return None
-
         # Fetch details for each vehicle ID and filter with max concurrency of 10
         shortlisted_vehicles = {}
         with ThreadPoolExecutor(max_workers=10) as executor:
-            # Submit all tasks
-            future_to_vehicle_id = {executor.submit(process_vehicle, vid): vid for vid in vehicle_ids}
+            # Submit all tasks - call module-level _process_vehicle function
+            future_to_vehicle_id = {
+                executor.submit(_process_vehicle, vid, type_id, lang_id, country_filter_id,
+                              model_year, input_cylinders, input_fuel_type): vid
+                for vid in vehicle_ids
+            }
 
             # Process results as they complete
             for future in as_completed(future_to_vehicle_id):
@@ -565,10 +585,81 @@ def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
             print(f"    Capacity: {details.get('capacityLt')}L, Cylinders: {details.get('numberOfCylinders')}, {details.get('fuelType')}")
             print()
 
-        # Return the first vehicle ID from shortlisted vehicles
-        first_vehicle_id = next(iter(shortlisted_vehicles.keys()))
-        print(f"Selected vehicle ID: {first_vehicle_id}")
-        return first_vehicle_id
+        # Early return if only one vehicle matches
+        if len(shortlisted_vehicles) == 1:
+            selected_vehicle_id = next(iter(shortlisted_vehicles.keys()))
+            print(f"Only one vehicle matches, selected vehicle ID: {selected_vehicle_id}")
+            return selected_vehicle_id
+
+        # Step 2: Use Bedrock to select the best matching vehicle
+        # Prepare shortlisted vehicles as a formatted string with detailed specs
+        shortlisted_vehicles_text = "\n".join([
+            f"- Vehicle ID: {vid}\n"
+            f"  Model: {details.get('manufacturerName', 'N/A')} {details.get('modelType', 'N/A')}\n"
+            f"  Engine: {details.get('typeEngineName', 'N/A')}\n"
+            f"  Construction: {details.get('constructionIntervalStart', 'N/A')} to {details.get('constructionIntervalEnd', 'N/A')}\n"
+            f"  Power: {details.get('powerKw', 'N/A')} kW / {details.get('powerPs', 'N/A')} PS\n"
+            f"  Capacity: {details.get('capacityLt', 'N/A')} L ({details.get('capacityTech', 'N/A')} cc)\n"
+            f"  Cylinders: {details.get('numberOfCylinders', 'N/A')}\n"
+            f"  Fuel: {details.get('fuelType', 'N/A')}\n"
+            f"  Engine Type: {details.get('engineType', 'N/A')}\n"
+            f"  Drive: {details.get('driveType', 'N/A')}"
+            for vid, details in shortlisted_vehicles.items()
+        ])
+
+        # Prepare vehicle info for prompt - include all available discriminating fields
+        vehicle_info_for_prompt = {
+            "model": vehicle_info.get("model", ""),
+            "series": vehicle_info.get("series", ""),
+            "trim": vehicle_info.get("trim", ""),
+            "year": model_year
+        }
+
+        # Add optional fields if available
+        optional_fields = [
+            "displacement_(l)",
+            "engine_number_of_cylinders",
+            "fuel_type_-_primary",
+            "engine_configuration",
+            "engine_model",
+            "transmission_style",
+            "transmission_speeds",
+            "drive_type",
+            "body_class",
+            "doors"
+        ]
+
+        for field in optional_fields:
+            if field in vehicle_info and vehicle_info[field]:
+                vehicle_info_for_prompt[field] = vehicle_info[field]
+
+        prompts = _load_prompts()
+        prompt = prompts["select_vehicle"].format(
+            vehicle_info=json.dumps(vehicle_info_for_prompt, indent=2),
+            vehicles=shortlisted_vehicles_text
+        )
+
+        messages = [{"role": "user", "content": [{"text": prompt}]}]
+        print(f"Calling Bedrock to select best vehicle from {len(shortlisted_vehicles)} candidates...")
+        response_text = _invoke_bedrock_converse(messages)
+        print(f"Bedrock response: {response_text}")
+
+        # Extract vehicleId from XML tags
+        match = re.search(r'<vehicleId>(\d+)</vehicleId>', response_text)
+        if not match:
+            raise ValueError(f"Could not extract vehicleId from Bedrock response: {response_text}")
+
+        selected_vehicle_id = int(match.group(1))
+
+        # Find the selected vehicle for logging
+        selected_vehicle = shortlisted_vehicles.get(selected_vehicle_id)
+        if selected_vehicle:
+            print(f"Selected vehicle: {selected_vehicle.get('manufacturerName')} {selected_vehicle.get('modelType')} "
+                  f"{selected_vehicle.get('typeEngineName')} (ID: {selected_vehicle_id})")
+        else:
+            print(f"Selected vehicle ID: {selected_vehicle_id}")
+
+        return selected_vehicle_id
 
     except requests.RequestException as e:
         raise RuntimeError(f"Vehicle API request failed: {str(e)}")

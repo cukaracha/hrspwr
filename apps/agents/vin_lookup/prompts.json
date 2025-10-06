@@ -1,5 +1,3 @@
 {
-  "identify_vin_object": "You are analyzing an image to determine if it contains a Vehicle Identification Number (VIN) plate. A VIN is a 17-character alphanumeric code typically found on a metal plate or sticker on a vehicle. It may be located on the dashboard visible through the windshield, on the driver's side door jamb, or in the engine compartment. Does this image show a VIN number plate? Respond with only 'yes' or 'no'.",
-  
   "extract_vin_from_textract": "You are given the JSON output from Amazon Textract's detect_document_text API call on an image of a Vehicle Identification Number (VIN) plate. A VIN is exactly 17 characters long and consists of uppercase letters and numbers (excluding I, O, and Q to avoid confusion with 1 and 0). Your task is to extract and return ONLY the VIN string from the Textract output. Look through the detected text blocks and identify the 17-character VIN. Return only the VIN string with no additional text, explanation, or formatting."
 }
