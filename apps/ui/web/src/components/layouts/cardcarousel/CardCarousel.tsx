@@ -9,6 +9,7 @@ const CardCarousel = React.forwardRef<HTMLDivElement, CardCarouselProps>(
   ({ children, className, ...props }, ref) => {
     const containerRef = React.useRef<HTMLDivElement>(null);
     const [isDesktop, setIsDesktop] = React.useState(false);
+    const [needsScroll, setNeedsScroll] = React.useState(false);
 
     React.useEffect(() => {
       // Detect if device supports hover (desktop)
@@ -22,6 +23,20 @@ const CardCarousel = React.forwardRef<HTMLDivElement, CardCarouselProps>(
       mediaQuery.addEventListener('change', handleChange);
       return () => mediaQuery.removeEventListener('change', handleChange);
     }, []);
+
+    React.useEffect(() => {
+      // Check if content overflows and needs scrolling
+      const checkOverflow = () => {
+        if (containerRef.current) {
+          const hasOverflow = containerRef.current.scrollWidth > containerRef.current.clientWidth;
+          setNeedsScroll(hasOverflow);
+        }
+      };
+
+      checkOverflow();
+      window.addEventListener('resize', checkOverflow);
+      return () => window.removeEventListener('resize', checkOverflow);
+    }, [children]);
 
     const handleCardHover = React.useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
@@ -56,7 +71,9 @@ const CardCarousel = React.forwardRef<HTMLDivElement, CardCarouselProps>(
         ref={containerRef}
         className={cn(
           // Horizontal scrolling container
-          'flex justify-center gap-6 overflow-x-auto overflow-y-hidden',
+          'flex gap-6 overflow-x-auto overflow-y-hidden',
+          // Center cards only when content fits in viewport
+          needsScroll ? 'justify-start' : 'justify-center',
           // Padding for cards to peek on edges
           'px-4 sm:px-8 md:px-12 lg:px-16',
           'py-8',
