@@ -1,8 +1,8 @@
 import streamlit as st
 from PIL import Image
 import json
-from vin_lookup import lookup_vin
-from parts_lookup.lookup_categories import get_parts_categories
+from vin import lookup_vin
+from parts_categories import lookup_categories
 
 
 st.set_page_config(
@@ -40,13 +40,15 @@ if uploaded_file is not None:
                     image_bytes = uploaded_file.read()
 
                     # Get vehicle info (includes VIN extraction and lookup)
-                    vehicle_info = lookup_vin.get_vehicle_info(image_bytes)
+                    vehicle_info = lookup_vin.main(image_bytes)
 
                     # Display VIN
-                    st.success(f"VIN extracted: **{vehicle_info.get('vin', 'N/A')}**")
+                    st.success(
+                        f"VIN extracted: **{vehicle_info.get('vin', 'N/A')}**")
 
                     # Display basic vehicle info
-                    st.write(f"**{vehicle_info.get('model_year', 'N/A')} {vehicle_info.get('make', 'N/A')} {vehicle_info.get('model', 'N/A')}**")
+                    st.write(
+                        f"**{vehicle_info.get('model_year', 'N/A')} {vehicle_info.get('make', 'N/A')} {vehicle_info.get('model', 'N/A')}**")
 
                 except ValueError as e:
                     st.error(f"Invalid input: {str(e)}")
@@ -61,7 +63,7 @@ if uploaded_file is not None:
             with st.spinner("Step 2/2: Fetching parts categories..."):
                 try:
                     # Get parts categories using the vehicle info
-                    categories_response = get_parts_categories(vehicle_info)
+                    categories_response = lookup_categories.main(vehicle_info)
 
                     st.success("Parts categories retrieved successfully!")
 
@@ -73,17 +75,20 @@ if uploaded_file is not None:
 
                     if categories:
                         for category_id, category_data in categories.items():
-                            parent_name = category_data.get("text", "Unknown Category")
+                            parent_name = category_data.get(
+                                "text", "Unknown Category")
 
                             # Get child categories (dict with numeric keys)
                             children = category_data.get("children", {})
                             if children:
                                 # Extract text from each child category
-                                child_names = [child_data.get("text", "") for child_data in children.values()]
+                                child_names = [child_data.get(
+                                    "text", "") for child_data in children.values()]
                                 children_text = ", ".join(child_names)
                                 st.write(f"**{parent_name}**: {children_text}")
                             else:
-                                st.write(f"**{parent_name}**: (no subcategories)")
+                                st.write(
+                                    f"**{parent_name}**: (no subcategories)")
                     else:
                         st.warning("No categories found in response")
 
@@ -105,7 +110,8 @@ if uploaded_file is not None:
                 except RuntimeError as e:
                     st.error(f"API request failed: {str(e)}")
                 except Exception as e:
-                    st.error(f"An unexpected error occurred during parts lookup: {str(e)}")
+                    st.error(
+                        f"An unexpected error occurred during parts lookup: {str(e)}")
                     st.exception(e)
 
 else:
