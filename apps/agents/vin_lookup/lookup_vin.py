@@ -1,7 +1,6 @@
 import json
 import os
-import base64
-from typing import List, Dict, Any, Optional, Union
+from typing import List, Dict, Any, Optional
 import boto3
 
 
