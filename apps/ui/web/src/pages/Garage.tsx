@@ -3,11 +3,11 @@ import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/layouts/sidebar/Sidebar';
 import { VehicleCard, Vehicle } from '../components/ui/cards/vehiclecard/VehicleCard';
 import { CreateVehicleCard } from '../components/ui/cards/createcard/CreateVehicleCard';
-import { CardCarousel } from '../components/ui/layouts/cardcarousel/CardCarousel';
+import { CardCarousel } from '../components/layouts/cardcarousel/CardCarousel';
 import { NewVehicleModal } from '../components/ui/modals/NewVehicleModal';
 import { VinLookupResponse } from '../services/agentsApi';
-import { GradientBackground } from '../components/ui/backgrounds/gradientbackground/GradientBackground';
-import { MenuButton } from '../components/ui/layouts/menubutton/MenuButton';
+import { GradientBackground } from '../components/layouts/backgrounds/gradientbackground/GradientBackground';
+import { MenuButton } from '../components/layouts/sidebar/MenuButton';
 
 // Mock vehicles data - replace with API call later
 const mockVehicles: Vehicle[] = [

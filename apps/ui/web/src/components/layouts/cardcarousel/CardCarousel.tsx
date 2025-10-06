@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from '../../../../lib/utils';
+import { cn } from '../../../lib/utils';
 
 export interface CardCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
