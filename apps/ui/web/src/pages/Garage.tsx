@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/layouts/sidebar/Sidebar';
 import { VehicleCard, Vehicle } from '../components/ui/cards/vehiclecard/VehicleCard';
 import { CreateVehicleCard } from '../components/ui/cards/createcard/CreateVehicleCard';
 import { CardCarousel } from '../components/ui/layouts/cardcarousel/CardCarousel';

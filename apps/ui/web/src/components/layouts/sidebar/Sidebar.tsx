@@ -1,7 +1,7 @@
-import { X, LogOut, Settings } from 'lucide-react';
+import { X, LogOut, Car } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { Button } from './ui/button';
+import { useAuth } from '../../../context/AuthContext';
+import { Button } from '../../ui/button';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -17,8 +17,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     onClose();
   };
 
-  const handleManageProfile = () => {
-    navigate('/profile');
+  const handleMyGarage = () => {
+    navigate('/');
     onClose();
   };
 
@@ -83,10 +83,10 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               <Button
                 variant='ghost'
                 className='w-full justify-start text-left hover:bg-gray-100'
-                onClick={handleManageProfile}
+                onClick={handleMyGarage}
               >
-                <Settings className='h-5 w-5 mr-3' />
-                Manage Profile
+                <Car className='h-5 w-5 mr-3' />
+                My Garage
               </Button>
             </nav>
           </div>
