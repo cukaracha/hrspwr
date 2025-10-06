@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { Menu, Upload, Image as ImageIcon } from 'lucide-react';
+import { Menu, Upload, Image as ImageIcon, ChevronDown } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../components/ui/collapsible';
 import Sidebar from '../components/Sidebar';
 import { vinLookup, fileToBase64, VinLookupResponse } from '../services/agentsApi';
 
@@ -12,6 +14,7 @@ export default function VinDecoder() {
   const [isLoading, setIsLoading] = useState(false);
   const [apiResponse, setApiResponse] = useState<VinLookupResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isAdditionalDetailsOpen, setIsAdditionalDetailsOpen] = useState(false);
   const { isAuthenticated } = useAuth();
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -181,36 +184,289 @@ export default function VinDecoder() {
                   </div>
                 )}
 
-                {/* API Response Display */}
+                {/* Vehicle Information Display */}
                 {apiResponse && (
-                  <div className='bg-gray-50 border-2 border-gray-200 rounded-xl p-6 space-y-4'>
-                    <div className='flex items-center justify-between'>
-                      <h3 className='text-xl font-bold text-gray-900'>API Response</h3>
-                      <Button
-                        size='sm'
-                        variant='outline'
-                        onClick={() => {
-                          navigator.clipboard.writeText(JSON.stringify(apiResponse, null, 2));
-                        }}
-                      >
-                        Copy JSON
-                      </Button>
-                    </div>
-                    <pre className='bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm font-mono max-h-96 overflow-y-auto'>
-                      {JSON.stringify(apiResponse, null, 2)}
-                    </pre>
+                  <div className='space-y-4'>
+                    {/* Primary Information Card */}
+                    <Card className='border-2 border-blue-200 bg-gradient-to-br from-white to-blue-50/30'>
+                      <CardHeader>
+                        <CardTitle className='text-2xl text-gray-900'>
+                          Vehicle Information
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className='space-y-4'>
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                          <InfoItem label='VIN' value={apiResponse.vin} />
+                          <InfoItem label='Year' value={apiResponse.model_year} />
+                          <InfoItem label='Make' value={apiResponse.make} />
+                          <InfoItem label='Model' value={apiResponse.model} />
+                          <InfoItem label='Trim' value={apiResponse.trim} />
+                          <InfoItem label='Series' value={apiResponse.series} />
+                          <InfoItem label='Body Class' value={apiResponse.body_class} />
+                          <InfoItem label='Vehicle Type' value={apiResponse.vehicle_type} />
+                          <InfoItem label='Manufacturer' value={apiResponse.manufacturer_name} />
+                          <InfoItem
+                            label='Plant Location'
+                            value={
+                              apiResponse.plant_city && apiResponse.plant_country
+                                ? `${apiResponse.plant_city}, ${apiResponse.plant_country}`
+                                : apiResponse.plant_city || apiResponse.plant_country
+                            }
+                          />
+                          <InfoItem label='Drive Type' value={apiResponse.drive_type} />
+                          <InfoItem
+                            label='Engine'
+                            value={
+                              apiResponse.engine_number_of_cylinders
+                                ? `${apiResponse.engine_number_of_cylinders} Cylinders`
+                                : undefined
+                            }
+                          />
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Additional Details - Collapsible */}
+                    <Collapsible
+                      open={isAdditionalDetailsOpen}
+                      onOpenChange={setIsAdditionalDetailsOpen}
+                    >
+                      <Card className='border-2 border-gray-200'>
+                        <CardHeader>
+                          <CollapsibleTrigger asChild>
+                            <button className='flex items-center justify-between w-full text-left hover:opacity-80 transition-opacity'>
+                              <CardTitle className='text-xl text-gray-900'>
+                                Additional Details
+                              </CardTitle>
+                              <ChevronDown
+                                className={`h-5 w-5 text-gray-600 transition-transform duration-200 ${
+                                  isAdditionalDetailsOpen ? 'transform rotate-180' : ''
+                                }`}
+                              />
+                            </button>
+                          </CollapsibleTrigger>
+                        </CardHeader>
+                        <CollapsibleContent>
+                          <CardContent className='space-y-6'>
+                            {/* Specifications */}
+                            <DetailSection
+                              title='Specifications'
+                              items={[
+                                { label: 'Doors', value: apiResponse.doors },
+                                { label: 'Seats', value: apiResponse.number_of_seats },
+                                { label: 'Seat Rows', value: apiResponse.number_of_seat_rows },
+                                {
+                                  label: 'Wheelbase',
+                                  value: apiResponse['wheel_base_(inches)_from']
+                                    ? `${apiResponse['wheel_base_(inches)_from']}"`
+                                    : undefined,
+                                },
+                                { label: 'Number of Wheels', value: apiResponse.number_of_wheels },
+                                {
+                                  label: 'Front Wheel Size',
+                                  value: apiResponse['wheel_size_front_(inches)']
+                                    ? `${apiResponse['wheel_size_front_(inches)']}"`
+                                    : undefined,
+                                },
+                                {
+                                  label: 'Rear Wheel Size',
+                                  value: apiResponse['wheel_size_rear_(inches)']
+                                    ? `${apiResponse['wheel_size_rear_(inches)']}"`
+                                    : undefined,
+                                },
+                                { label: 'Axles', value: apiResponse.axles },
+                                {
+                                  label: 'Steering Location',
+                                  value: apiResponse.steering_location,
+                                },
+                              ]}
+                            />
+
+                            {/* Engine & Performance */}
+                            <DetailSection
+                              title='Engine & Performance'
+                              items={[
+                                {
+                                  label: 'Cylinders',
+                                  value: apiResponse.engine_number_of_cylinders,
+                                },
+                                {
+                                  label: 'Displacement (L)',
+                                  value: apiResponse['displacement_(l)'],
+                                },
+                                {
+                                  label: 'Displacement (cc)',
+                                  value: apiResponse['displacement_(cc)'],
+                                },
+                                {
+                                  label: 'Displacement (ci)',
+                                  value: apiResponse['displacement_(ci)'],
+                                },
+                                { label: 'Fuel Type', value: apiResponse['fuel_type_-_primary'] },
+                                {
+                                  label: 'Horsepower',
+                                  value: apiResponse['engine_brake_(hp)_from']
+                                    ? `${apiResponse['engine_brake_(hp)_from']} HP`
+                                    : undefined,
+                                },
+                                {
+                                  label: 'Top Speed',
+                                  value: apiResponse['top_speed_(mph)']
+                                    ? `${apiResponse['top_speed_(mph)']} mph`
+                                    : undefined,
+                                },
+                              ]}
+                            />
+
+                            {/* Transmission */}
+                            <DetailSection
+                              title='Transmission'
+                              items={[
+                                {
+                                  label: 'Transmission Style',
+                                  value: apiResponse.transmission_style,
+                                },
+                                {
+                                  label: 'Transmission Speeds',
+                                  value: apiResponse.transmission_speeds
+                                    ? `${apiResponse.transmission_speeds}-Speed`
+                                    : undefined,
+                                },
+                              ]}
+                            />
+
+                            {/* Safety Features */}
+                            <DetailSection
+                              title='Safety Features'
+                              items={[
+                                {
+                                  label: 'ABS',
+                                  value: apiResponse['anti-lock_braking_system_(abs)'],
+                                },
+                                {
+                                  label: 'ESC',
+                                  value: apiResponse['electronic_stability_control_(esc)'],
+                                },
+                                { label: 'Traction Control', value: apiResponse.traction_control },
+                                {
+                                  label: 'TPMS Type',
+                                  value: apiResponse['tire_pressure_monitoring_system_(tpms)_type'],
+                                },
+                                { label: 'Seat Belt Type', value: apiResponse.seat_belt_type },
+                                { label: 'Pretensioner', value: apiResponse.pretensioner },
+                                {
+                                  label: 'Front Airbags',
+                                  value: apiResponse.front_air_bag_locations,
+                                },
+                                {
+                                  label: 'Side Airbags',
+                                  value: apiResponse.side_air_bag_locations,
+                                },
+                                {
+                                  label: 'Curtain Airbags',
+                                  value: apiResponse.curtain_air_bag_locations,
+                                },
+                                {
+                                  label: 'Knee Airbags',
+                                  value: apiResponse.knee_air_bag_locations,
+                                },
+                              ]}
+                            />
+
+                            {/* Driver Assistance */}
+                            <DetailSection
+                              title='Driver Assistance'
+                              items={[
+                                {
+                                  label: 'Adaptive Cruise Control',
+                                  value: apiResponse['adaptive_cruise_control_(acc)'],
+                                },
+                                {
+                                  label: 'Forward Collision Warning',
+                                  value: apiResponse['forward_collision_warning_(fcw)'],
+                                },
+                                {
+                                  label: 'Crash Imminent Braking',
+                                  value: apiResponse['crash_imminent_braking_(cib)'],
+                                },
+                                {
+                                  label: 'Dynamic Brake Support',
+                                  value: apiResponse['dynamic_brake_support_(dbs)'],
+                                },
+                                {
+                                  label: 'Blind Spot Warning',
+                                  value: apiResponse['blind_spot_warning_(bsw)'],
+                                },
+                                {
+                                  label: 'Lane Departure Warning',
+                                  value: apiResponse['lane_departure_warning_(ldw)'],
+                                },
+                                {
+                                  label: 'Lane Keeping Assistance',
+                                  value: apiResponse['lane_keeping_assistance_(lka)'],
+                                },
+                                { label: 'Backup Camera', value: apiResponse.backup_camera },
+                                { label: 'Parking Assist', value: apiResponse.parking_assist },
+                              ]}
+                            />
+
+                            {/* Convenience Features */}
+                            <DetailSection
+                              title='Convenience Features'
+                              items={[
+                                { label: 'Keyless Ignition', value: apiResponse.keyless_ignition },
+                                {
+                                  label: 'Auto-Reverse Windows/Sunroof',
+                                  value:
+                                    apiResponse['auto-reverse_system_for_windows_and_sunroofs'],
+                                },
+                                {
+                                  label: 'Daytime Running Lights',
+                                  value: apiResponse['daytime_running_light_(drl)'],
+                                },
+                                {
+                                  label: 'Automatic High Beams',
+                                  value: apiResponse.semiautomatic_headlamp_beam_switching,
+                                },
+                                {
+                                  label: 'Adaptive Driving Beam',
+                                  value: apiResponse['adaptive_driving_beam_(adb)'],
+                                },
+                                {
+                                  label: 'Automatic Crash Notification',
+                                  value:
+                                    apiResponse[
+                                      'automatic_crash_notification_(acn)_/_advanced_automatic_crash_notification_(aacn)'
+                                    ],
+                                },
+                              ]}
+                            />
+
+                            {/* Pricing & Other */}
+                            <DetailSection
+                              title='Other Information'
+                              items={[
+                                {
+                                  label: 'Base Price',
+                                  value: apiResponse['base_price_($)']
+                                    ? `$${parseFloat(apiResponse['base_price_($)']).toLocaleString()}`
+                                    : undefined,
+                                },
+                                {
+                                  label: 'Vehicle Descriptor',
+                                  value: apiResponse.vehicle_descriptor,
+                                },
+                                { label: 'Error/Status', value: apiResponse.error_text },
+                              ]}
+                            />
+                          </CardContent>
+                        </CollapsibleContent>
+                      </Card>
+                    </Collapsible>
                   </div>
                 )}
               </div>
             </div>
-          </div>
-
-          {/* Instructions */}
-          <div className='text-center space-y-2'>
-            <p className='text-sm text-gray-500'>
-              The API will extract the VIN from your image and return vehicle details
-            </p>
-            <p className='text-xs text-gray-400'>Powered by AWS Textract, Bedrock, and RapidAPI</p>
           </div>
         </div>
 
@@ -220,6 +476,42 @@ export default function VinDecoder() {
           <div className='absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-indigo-200/30 to-blue-200/30 rounded-full blur-3xl'></div>
           <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-slate-200/20 to-gray-200/20 rounded-full blur-3xl'></div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// Helper component for displaying individual info items
+function InfoItem({ label, value }: { label: string; value?: string }) {
+  if (!value || value === 'Not Applicable') return null;
+
+  return (
+    <div className='space-y-1'>
+      <p className='text-sm font-medium text-gray-500'>{label}</p>
+      <p className='text-base font-semibold text-gray-900'>{value}</p>
+    </div>
+  );
+}
+
+// Helper component for detail sections
+function DetailSection({
+  title,
+  items,
+}: {
+  title: string;
+  items: Array<{ label: string; value?: string }>;
+}) {
+  const visibleItems = items.filter(item => item.value && item.value !== 'Not Applicable');
+
+  if (visibleItems.length === 0) return null;
+
+  return (
+    <div className='space-y-3'>
+      <h4 className='text-lg font-bold text-gray-800 border-b border-gray-200 pb-2'>{title}</h4>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+        {visibleItems.map(item => (
+          <InfoItem key={item.label} label={item.label} value={item.value} />
+        ))}
       </div>
     </div>
   );
