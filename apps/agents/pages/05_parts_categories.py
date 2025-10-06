@@ -65,11 +65,31 @@ if uploaded_file is not None:
 
                     st.success("Parts categories retrieved successfully!")
 
-                    # Display JSON response
-                    st.subheader("Categories Response")
+                    # Display categories in readable format
+                    st.subheader("Available Parts Categories")
 
-                    # Pretty print JSON with syntax highlighting
-                    st.json(categories_response)
+                    # Extract and format categories from new structure
+                    categories = categories_response.get("categories", {})
+
+                    if categories:
+                        for category_id, category_data in categories.items():
+                            parent_name = category_data.get("text", "Unknown Category")
+
+                            # Get child categories (dict with numeric keys)
+                            children = category_data.get("children", {})
+                            if children:
+                                # Extract text from each child category
+                                child_names = [child_data.get("text", "") for child_data in children.values()]
+                                children_text = ", ".join(child_names)
+                                st.write(f"**{parent_name}**: {children_text}")
+                            else:
+                                st.write(f"**{parent_name}**: (no subcategories)")
+                    else:
+                        st.warning("No categories found in response")
+
+                    # Add expandable section for raw JSON
+                    with st.expander("View Raw JSON Response"):
+                        st.json(categories_response)
 
                     # Add download button for JSON
                     json_str = json.dumps(categories_response, indent=2)

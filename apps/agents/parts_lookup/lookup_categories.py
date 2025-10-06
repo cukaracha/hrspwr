@@ -1,10 +1,13 @@
 import json
 import os
 from typing import Dict, Any, Optional, List
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import boto3
 import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import hashlib
+import threading
 
 
 # Constants
@@ -12,6 +15,99 @@ RAPIDAPI_KEY = "7f52966767mshdd7d2b2b14b58ddp13eeaajsn057c1530cd1c"
 RAPIDAPI_HOST = "auto-parts-catalog.p.rapidapi.com"
 TYPE_ID = 1  # Passenger cars
 LANG_ID = 4  # English
+
+# Global lock for cache file operations to prevent race conditions
+_cache_lock = threading.Lock()
+
+
+def _cached_api_request(url: str, headers: Dict[str, str], cache_ttl_hours: int = 24) -> requests.Response:
+    """
+    Make a cached API request using local JSON file storage.
+
+    Args:
+        url: The full URL to request
+        headers: Request headers dictionary
+        cache_ttl_hours: Time-to-live for cache entries in hours (default: 24)
+
+    Returns:
+        requests.Response object (either from cache or fresh API call)
+
+    Raises:
+        requests.RequestException: If API request fails
+    """
+    # Generate cache key from URL and sorted headers
+    cache_key_content = url + json.dumps(sorted(headers.items()))
+    cache_key = hashlib.md5(cache_key_content.encode()).hexdigest()
+
+    # Cache file path in same directory as this script
+    cache_file_path = os.path.join(os.path.dirname(__file__), 'api_cache.json')
+
+    # Load existing cache with thread lock to prevent race conditions
+    cache = {}
+    cache_hit = False
+    cached_response = None
+
+    with _cache_lock:
+        if os.path.exists(cache_file_path):
+            try:
+                with open(cache_file_path, 'r') as f:
+                    cache = json.load(f)
+            except Exception as e:
+                print(f"Warning: Failed to load cache file, starting fresh: {str(e)}")
+                cache = {}
+
+        # Check cache hit
+        if cache_key in cache:
+            cached_entry = cache[cache_key]
+            cached_time = datetime.fromisoformat(cached_entry['timestamp'])
+            expiry_time = cached_time + timedelta(hours=cache_ttl_hours)
+
+            if datetime.now() < expiry_time:
+                print(f"Cache hit for URL: {url}")
+                cache_hit = True
+                # Create a mock Response object from cached data
+                cached_response = requests.Response()
+                cached_response.status_code = cached_entry['status_code']
+                cached_response._content = cached_entry['content'].encode('utf-8')
+                cached_response.headers.update(cached_entry['headers'])
+
+    # Return cached response if available (outside lock to minimize lock duration)
+    if cache_hit:
+        return cached_response
+
+    # Make fresh API request (outside lock to allow parallel API calls)
+    print(f"Making REST API request: {url}")
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+
+    # Only cache successful responses (2xx status codes)
+    if 200 <= response.status_code < 300:
+        with _cache_lock:
+            # Reload cache in case it was updated by another thread
+            if os.path.exists(cache_file_path):
+                try:
+                    with open(cache_file_path, 'r') as f:
+                        cache = json.load(f)
+                except Exception as e:
+                    print(f"Warning: Failed to reload cache before writing: {str(e)}")
+                    cache = {}
+
+            cache[cache_key] = {
+                'url': url,
+                'timestamp': datetime.now().isoformat(),
+                'status_code': response.status_code,
+                'content': response.text,
+                'headers': dict(response.headers)
+            }
+
+            # Save cache to file
+            try:
+                with open(cache_file_path, 'w') as f:
+                    json.dump(cache, f, indent=2)
+            except Exception as e:
+                print(f"Warning: Failed to save cache file: {str(e)}")
+
+    return response
 
 
 def _load_prompts() -> Dict[str, str]:
@@ -125,9 +221,7 @@ def _get_manufacturer_id(make: str, type_id: int, country_filter_id: int) -> int
             "x-rapidapi-key": RAPIDAPI_KEY
         }
 
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-
+        response = _cached_api_request(url, headers)
         data = response.json()
         print(f"Found {data['countManufactures']} manufacturers")
 
@@ -174,9 +268,7 @@ def _get_model_id(vehicle_info: Dict[str, Any], type_id: int, lang_id: int,
             "x-rapidapi-key": RAPIDAPI_KEY
         }
 
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-
+        response = _cached_api_request(url, headers)
         data = response.json()
         print(f"Found {data['countModels']} models")
 
@@ -315,9 +407,7 @@ def _get_vehicle_details(vehicle_id: int, type_id: int, lang_id: int,
             "x-rapidapi-key": RAPIDAPI_KEY
         }
 
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-
+        response = _cached_api_request(url, headers)
         data = response.json()
         return data.get("vehicleTypeDetails", {})
 
@@ -355,9 +445,7 @@ def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
             "x-rapidapi-key": RAPIDAPI_KEY
         }
 
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-
+        response = _cached_api_request(url, headers)
         data = response.json()
         print(f"Found {data.get('countModelTypes', 0)} model types")
 
@@ -384,9 +472,9 @@ def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
             except (ValueError, TypeError):
                 print(f"Warning: Could not parse engine_number_of_cylinders: {engine_cylinders}")
 
-        # Fetch details for each vehicle ID and filter sequentially
-        shortlisted_vehicles = {}
-        for vehicle_id in vehicle_ids:
+        # Helper function to fetch and filter a single vehicle
+        def process_vehicle(vehicle_id: int) -> Optional[tuple]:
+            """Fetch vehicle details and apply filters. Returns (vehicle_id, details) if all filters pass."""
             try:
                 vehicle_details = _get_vehicle_details(vehicle_id, type_id, lang_id, country_filter_id)
 
@@ -412,10 +500,10 @@ def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
                             is_within_range = (model_year >= year_from)
 
                     if not is_within_range:
-                        continue
+                        return None
                 except (KeyError, ValueError, TypeError) as e:
                     print(f"  Skipping vehicle ID {vehicle_id}: Year filter error - {str(e)}")
-                    continue
+                    return None
 
                 # Filter 2: Check cylinder match
                 try:
@@ -423,10 +511,10 @@ def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
                         vehicle_cylinders = vehicle_details.get("numberOfCylinders")
                         if vehicle_cylinders is not None:
                             if int(vehicle_cylinders) != input_cylinders:
-                                continue
+                                return None
                 except (KeyError, ValueError, TypeError) as e:
                     print(f"  Skipping vehicle ID {vehicle_id}: Cylinder filter error - {str(e)}")
-                    continue
+                    return None
 
                 # Filter 3: Check fuel type match
                 try:
@@ -435,17 +523,30 @@ def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
                         if vehicle_engine_type:
                             # Case-insensitive comparison
                             if vehicle_engine_type.upper() != input_fuel_type.upper():
-                                continue
+                                return None
                 except (KeyError, ValueError, TypeError) as e:
                     print(f"  Skipping vehicle ID {vehicle_id}: Fuel type filter error - {str(e)}")
-                    continue
+                    return None
 
-                # All filters passed - add to shortlist
-                shortlisted_vehicles[vehicle_id] = vehicle_details
+                # All filters passed
+                return (vehicle_id, vehicle_details)
 
             except Exception as e:
                 print(f"Skipping vehicle ID {vehicle_id} due to error: {str(e)}")
-                continue
+                return None
+
+        # Fetch details for each vehicle ID and filter with max concurrency of 10
+        shortlisted_vehicles = {}
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            # Submit all tasks
+            future_to_vehicle_id = {executor.submit(process_vehicle, vid): vid for vid in vehicle_ids}
+
+            # Process results as they complete
+            for future in as_completed(future_to_vehicle_id):
+                result = future.result()
+                if result:
+                    vehicle_id, vehicle_details = result
+                    shortlisted_vehicles[vehicle_id] = vehicle_details
 
         if not shortlisted_vehicles:
             filters = [f"year {model_year}"]
@@ -498,9 +599,7 @@ def _get_categories(type_id: int, lang_id: int, vehicle_id: int) -> Dict[str, An
             "x-rapidapi-key": RAPIDAPI_KEY
         }
 
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-
+        response = _cached_api_request(url, headers)
         data = response.json()
         print(f"Retrieved product groups")
 
