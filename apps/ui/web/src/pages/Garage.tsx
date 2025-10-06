@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { Button } from '../components/ui/button';
 import Sidebar from '../components/Sidebar';
 import { VehicleCard, Vehicle } from '../components/ui/cards/vehiclecard/VehicleCard';
 import { CreateVehicleCard } from '../components/ui/cards/createcard/CreateVehicleCard';
 import { CardCarousel } from '../components/ui/layouts/cardcarousel/CardCarousel';
 import { NewVehicleModal } from '../components/ui/modals/NewVehicleModal';
 import { VinLookupResponse } from '../services/agentsApi';
+import { GradientBackground } from '../components/ui/backgrounds/gradientbackground/GradientBackground';
+import { MenuButton } from '../components/ui/layouts/menubutton/MenuButton';
 
 // Mock vehicles data - replace with API call later
 const mockVehicles: Vehicle[] = [
@@ -84,18 +84,7 @@ export default function Garage() {
       )}
 
       {/* Top Left Menu Button */}
-      {isAuthenticated && (
-        <div className='absolute top-6 left-6 z-30'>
-          <Button
-            variant='ghost'
-            size='sm'
-            onClick={() => setIsSidebarOpen(true)}
-            className='hover:bg-white/20 backdrop-blur-sm border border-white/20'
-          >
-            <Menu className='h-5 w-5' />
-          </Button>
-        </div>
-      )}
+      {isAuthenticated && <MenuButton onClick={() => setIsSidebarOpen(true)} />}
 
       {/* Main Content */}
       <div className='flex flex-col min-h-screen px-4 sm:px-6 md:px-8 lg:px-12'>
@@ -127,11 +116,7 @@ export default function Garage() {
       </div>
 
       {/* Background decorative elements */}
-      <div className='fixed inset-0 overflow-hidden pointer-events-none'>
-        <div className='absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl'></div>
-        <div className='absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-indigo-200/30 to-blue-200/30 rounded-full blur-3xl'></div>
-        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-slate-200/20 to-gray-200/20 rounded-full blur-3xl'></div>
-      </div>
+      <GradientBackground />
 
       {/* New Vehicle Modal */}
       <NewVehicleModal

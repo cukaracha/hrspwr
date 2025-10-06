@@ -1,7 +1,9 @@
 import * as React from 'react';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '../../../../lib/utils';
 import { GlassCard } from '../glasscard/GlassCard';
 import { GlassBadge } from '../../badges/glassbadge/GlassBadge';
+import { GlassIconButton } from '../../buttons/glassiconbutton/GlassIconButton';
 
 export interface Vehicle {
   id: string;
@@ -80,22 +82,13 @@ const VehicleCard = React.forwardRef<HTMLDivElement, VehicleCardProps>(
             </div>
 
             {/* Decorative Elements */}
-            <div className='absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='h-6 w-6 text-white'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M9 5l7 7-7 7'
-                />
-              </svg>
-            </div>
+            <GlassIconButton
+              icon={<ChevronRight />}
+              variant='light'
+              size='md'
+              position='top-right'
+              visibility='hover'
+            />
           </div>
         </div>
       </GlassCard>

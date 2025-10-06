@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { Button } from '../components/ui/button';
 import Sidebar from '../components/Sidebar';
+import { GradientBackground } from '../components/ui/backgrounds/gradientbackground/GradientBackground';
+import { MenuButton } from '../components/ui/layouts/menubutton/MenuButton';
 
 const ChatLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -17,18 +17,10 @@ const ChatLayout = () => {
       )}
 
       {/* Top Left Menu Button */}
-      {isAuthenticated && (
-        <div className='absolute top-6 left-6 z-30'>
-          <Button
-            variant='ghost'
-            size='sm'
-            onClick={() => setIsSidebarOpen(true)}
-            className='hover:bg-white/20 backdrop-blur-sm border border-white/20'
-          >
-            <Menu className='h-5 w-5' />
-          </Button>
-        </div>
-      )}
+      {isAuthenticated && <MenuButton onClick={() => setIsSidebarOpen(true)} />}
+
+      {/* Background decorative elements */}
+      <GradientBackground />
 
       {/* Main Content */}
       <main className='w-full'>
