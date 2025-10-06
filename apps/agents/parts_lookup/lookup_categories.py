@@ -702,7 +702,7 @@ def _get_categories(type_id: int, lang_id: int, vehicle_id: int) -> Dict[str, An
         raise RuntimeError(f"Categories lookup failed: {str(e)}")
 
 
-def get_parts_categories(vehicle_info: Dict[str, Any]) -> Dict[str, Any]:
+def main(vehicle_info: Dict[str, Any]) -> Dict[str, Any]:
     """
     Get parts categories for a vehicle through a 4-step API workflow.
 

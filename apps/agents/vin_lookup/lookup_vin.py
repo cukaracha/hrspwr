@@ -147,7 +147,7 @@ def _lookup_vehicle_info(vin: str) -> Dict[str, Any]:
         raise RuntimeError(f"Vehicle lookup failed: {str(e)}")
 
 
-def get_vehicle_info(image_bytes: bytes) -> Dict[str, Any]:
+def main(image_bytes: bytes) -> Dict[str, Any]:
     """
     Extract VIN from an image and look up vehicle information.
 

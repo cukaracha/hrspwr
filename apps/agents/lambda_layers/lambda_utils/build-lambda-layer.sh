@@ -11,13 +11,10 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Script directory and project root
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-LAMBDA_DIR="$PROJECT_ROOT/infra/lambda/analyze-assignment"
-LAYER_DIR="$LAMBDA_DIR/lambda_layer"
+# Use current directory for layer building
+LAYER_DIR="$(pwd)"
 
-echo -e "${YELLOW}Building Lambda Layer for analyze-assignment...${NC}"
+echo -e "${YELLOW}Building Lambda Layer...${NC}"
 
 # Check if Docker is running
 if ! docker info > /dev/null 2>&1; then
