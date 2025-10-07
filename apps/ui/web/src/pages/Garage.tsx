@@ -78,16 +78,16 @@ export default function Garage() {
   };
 
   return (
-    <div className='flex flex-col min-h-screen px-4 sm:px-6 md:px-8 lg:px-12'>
+    <div className='flex flex-col h-screen px-4 sm:px-6 md:px-8 lg:px-12'>
       {/* Header */}
-      <div className='flex-shrink-0 text-center pt-20 pb-8'>
-        <h1 className='text-5xl md:text-7xl font-bold text-foreground leading-normal pb-2'>
+      <div className='flex-shrink-0 text-center pt-8 pb-4 sm:pt-12 sm:pb-6'>
+        <h1 className='text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight'>
           My Garage
         </h1>
       </div>
 
       {/* Card Carousel */}
-      <div className='flex-1 flex items-center'>
+      <div className='flex-1 flex items-center min-h-0'>
         <CardCarousel className='w-full'>
           {vehicles.map(vehicle => (
             <VehicleCard key={vehicle.id} vehicle={vehicle} onCardClick={handleVehicleClick} />
@@ -97,7 +97,7 @@ export default function Garage() {
       </div>
 
       {/* Instructions - Mobile hint */}
-      <div className='flex-shrink-0 text-center pb-8'>
+      <div className='flex-shrink-0 text-center py-4 sm:py-6'>
         <p className='text-sm text-muted-foreground'>
           {vehicles.length > 0
             ? 'Swipe to browse your vehicles'

@@ -34,7 +34,7 @@ const VehicleCard = React.forwardRef<HTMLDivElement, VehicleCardProps>(
         ref={ref}
         variant='default'
         className={cn(
-          'flex-shrink-0 w-[calc(100vw-2rem)] max-w-[280px] h-[380px] sm:max-w-[320px] sm:h-[420px] md:max-w-[360px] md:h-[460px] overflow-hidden group',
+          'flex-shrink-0 w-[calc(100vw-2rem)] max-w-[280px] h-[320px] sm:max-w-[320px] sm:h-[360px] md:max-w-[360px] md:h-[400px] overflow-hidden group',
           className
         )}
         onClick={handleClick}
