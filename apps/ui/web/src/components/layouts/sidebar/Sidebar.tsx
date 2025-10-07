@@ -94,7 +94,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           <div className='p-4 border-t border-gray-100'>
             <GlassButton
               variant='ghost'
-              className='w-full justify-start text-left hover:bg-red-50 hover:text-red-600'
+              className='w-full justify-center text-center'
               onClick={handleSignOut}
             >
               <LogOut className='h-5 w-5 mr-3' />

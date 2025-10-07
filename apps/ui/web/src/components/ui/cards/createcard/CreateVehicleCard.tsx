@@ -40,14 +40,6 @@ const CreateVehicleCard = React.forwardRef<HTMLDivElement, CreateVehicleCardProp
               Upload VIN plate photo
             </p>
           </div>
-
-          {/* Decorative Dots */}
-          <div className='absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-300'>
-            <div className='absolute top-8 left-8 w-2 h-2 rounded-full bg-glass-text/50' />
-            <div className='absolute top-12 right-12 w-2 h-2 rounded-full bg-glass-text/50' />
-            <div className='absolute bottom-16 left-16 w-2 h-2 rounded-full bg-glass-text/50' />
-            <div className='absolute bottom-8 right-8 w-2 h-2 rounded-full bg-glass-text/50' />
-          </div>
         </div>
       </GlassCard>
     );

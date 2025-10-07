@@ -66,7 +66,7 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
       const response = await vinLookup(base64Image);
 
       // Now lookup parts categories
-      setLoadingMessage('Looking up parts categories...');
+      setLoadingMessage('Gathering vehicle data...');
       try {
         const categoriesResponse = await partsCategoriesLookup(response);
 
@@ -98,7 +98,6 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
     setError(null);
     setSuccessData(null);
     setPartsCategoriesError(null);
-    setLoadingMessage('Decoding VIN...');
 
     // Clear file input
     const fileInput = document.getElementById('modal-vin-image-input') as HTMLInputElement;
@@ -218,7 +217,7 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
                 className='w-full h-12'
               >
                 {!isLoading && <Upload className='mr-2 h-5 w-5' />}
-                {isLoading ? loadingMessage : 'Decode VIN'}
+                <span>{isLoading ? loadingMessage : 'Decode VIN'}</span>
               </GlassButton>
             </>
           )}
