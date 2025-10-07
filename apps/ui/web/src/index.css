@@ -88,8 +88,8 @@
     --ring: 224.3 76.3% 94.1%;
 
     /* Glassmorphic - Dark Theme */
-    --glass-bg: 0 0% 100% / 0.3;
-    --glass-bg-hover: 0 0% 100% / 0.35;
+    --glass-bg: 0 0% 0% / 0.3;
+    --glass-bg-hover: 0 0% 0% / 0.35;
     --glass-border: 0 0% 100% / 0.15;
     --glass-text: 210 40% 98%;
   }

@@ -81,7 +81,7 @@ export default function Garage() {
     <div className='flex flex-col min-h-screen px-4 sm:px-6 md:px-8 lg:px-12'>
       {/* Header */}
       <div className='flex-shrink-0 text-center pt-20 pb-8'>
-        <h1 className='text-5xl md:text-7xl font-bold bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent leading-normal pb-2'>
+        <h1 className='text-5xl md:text-7xl font-bold text-foreground leading-normal pb-2'>
           My Garage
         </h1>
       </div>
@@ -98,7 +98,7 @@ export default function Garage() {
 
       {/* Instructions - Mobile hint */}
       <div className='flex-shrink-0 text-center pb-8'>
-        <p className='text-sm text-gray-500'>
+        <p className='text-sm text-muted-foreground'>
           {vehicles.length > 0
             ? 'Swipe to browse your vehicles'
             : 'Get started by adding your first vehicle'}

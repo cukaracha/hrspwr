@@ -20,7 +20,7 @@ import { Alert } from '../alerts/Alert';
 export interface NewVehicleModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onVehicleAdded?: (vehicleData: VinLookupResponse, partsCategories?: any) => void;
+  onVehicleAdded?: (vehicleData: VinLookupResponse, partsCategories?: unknown) => void;
 }
 
 export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
@@ -115,7 +115,7 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
     <ModalBackdrop isOpen={isOpen} onClose={handleClose}>
       <GlassCard
         variant='default'
-        className='cursor-default hover:bg-white/10 hover:shadow-2xl active:scale-100 max-h-[90vh] overflow-y-auto'
+        className='cursor-default hover:shadow-2xl active:scale-100 max-h-[90vh] overflow-y-auto'
       >
         {/* Header */}
         <GlassCardHeader className='relative'>
@@ -153,7 +153,7 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
           ) : (
             <>
               {/* Upload Area */}
-              <div className='flex flex-col items-center justify-center border-3 border-dashed border-gray-300 rounded-2xl p-8 hover:border-blue-400 transition-all duration-300'>
+              <div className='flex flex-col items-center justify-center border-3 border-dashed border-primary rounded-2xl p-8 hover:border-primary/80 transition-all duration-300'>
                 <input
                   id='modal-vin-image-input'
                   type='file'
@@ -188,8 +188,8 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
                     </div>
                   ) : (
                     <>
-                      <div className='w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center'>
-                        <ImageIcon className='h-10 w-10 text-blue-600' />
+                      <div className='w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center'>
+                        <ImageIcon className='h-10 w-10 text-primary' />
                       </div>
                       <div className='text-center'>
                         <p className='text-lg font-semibold text-glass-text'>

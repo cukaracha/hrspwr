@@ -9,9 +9,9 @@ const glassCardVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-glass-bg shadow-lg hover:bg-glass-bg-hover hover:shadow-xl hover:border-glass-border active:scale-[0.98]',
+          'bg-glass-bg shadow-lg hover:bg-glass-bg-hover hover:shadow-xl hover:border-primary active:scale-[0.98]',
         ghost:
-          'bg-glass-bg/50 shadow-md hover:bg-glass-bg hover:shadow-lg hover:border-glass-border active:scale-[0.99]',
+          'bg-glass-bg/50 shadow-md hover:bg-glass-bg hover:shadow-lg hover:border-primary active:scale-[0.99]',
       },
       state: {
         normal: 'cursor-pointer',
