@@ -9,6 +9,7 @@ export interface ApiGatewayProps {
   vinLookupLambda: lambda.Function;
   photoAnalyzerLambda: lambda.Function;
   partsCategoriesLambda: lambda.Function;
+  partsSearchLambda: lambda.Function;
 }
 
 export class ApiGateway extends Construct {
@@ -86,6 +87,14 @@ export class ApiGateway extends Construct {
     partsCategories.addMethod(
       'POST',
       new apigateway.LambdaIntegration(props.partsCategoriesLambda),
+      defaultMethodOptions
+    );
+
+    // POST /agents/parts-search
+    const partsSearch = agents.addResource('parts-search');
+    partsSearch.addMethod(
+      'POST',
+      new apigateway.LambdaIntegration(props.partsSearchLambda),
       defaultMethodOptions
     );
   }

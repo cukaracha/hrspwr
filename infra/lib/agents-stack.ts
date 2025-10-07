@@ -10,6 +10,7 @@ export class AgentsStack extends cdk.Stack {
   public readonly vinLookupLambda: lambda.Function;
   public readonly photoAnalyzerLambda: lambda.Function;
   public readonly partsCategoriesLambda: lambda.Function;
+  public readonly partsSearchLambda: lambda.Function;
   public readonly apiKeysSecret: secretsmanager.Secret;
 
   constructor(scope: Construct, id: string, props: AgentsStackProps) {
@@ -35,5 +36,6 @@ export class AgentsStack extends cdk.Stack {
     this.vinLookupLambda = partsAgent.vinLookupLambda;
     this.photoAnalyzerLambda = partsAgent.photoAnalyzerLambda;
     this.partsCategoriesLambda = partsAgent.partsCategoriesLambda;
+    this.partsSearchLambda = partsAgent.partsSearchLambda;
   }
 }

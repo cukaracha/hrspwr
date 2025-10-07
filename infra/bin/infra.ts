@@ -30,6 +30,7 @@ const infraStack = new InfraStack(app, infraStackName, {
   vinLookupLambda: agentsStack.vinLookupLambda,
   photoAnalyzerLambda: agentsStack.photoAnalyzerLambda,
   partsCategoriesLambda: agentsStack.partsCategoriesLambda,
+  partsSearchLambda: agentsStack.partsSearchLambda,
   apiKeysSecret: agentsStack.apiKeysSecret,
   // Using CloudFront default domain for now
   // To add custom domain in the future:

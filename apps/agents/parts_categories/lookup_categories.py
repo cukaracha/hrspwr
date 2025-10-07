@@ -646,7 +646,16 @@ def main(vehicle_info: Dict[str, Any]) -> Dict[str, Any]:
             vehicle_id
         )
 
-        return categories
+        # Return structured response with metadata and categories
+        return {
+            "metadata": {
+                "countryFilterId": country_filter_id,
+                "manufacturerId": manufacturer_id,
+                "modelId": model_id,
+                "vehicleId": vehicle_id
+            },
+            "categories": categories
+        }
 
     except Exception as e:
         raise RuntimeError(f"Parts categories lookup failed: {str(e)}")
@@ -691,12 +700,12 @@ def lambda_handler(event, context):
             }
 
         # Process parts categories lookup
-        categories = main(vehicle_info)
+        result = main(vehicle_info)
 
         return {
             'statusCode': 200,
             'headers': headers,
-            'body': json.dumps(categories)
+            'body': json.dumps(result)
         }
 
     except ValueError as e:

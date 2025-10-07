@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { ModalBackdrop } from './ModalBackdrop';
 import { CloseButton } from '../buttons/closebutton/CloseButton';
@@ -33,9 +34,39 @@ export const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({
   onClose,
   vehicle,
 }) => {
+  const navigate = useNavigate();
+
   if (!vehicle) return null;
 
   const apiData = vehicle.apiData;
+
+  const handleFindParts = () => {
+    if (!vehicle.vin) {
+      alert('VIN is required to search for parts');
+      return;
+    }
+
+    if (!vehicle.partsCategories?.metadata) {
+      alert('Vehicle metadata is required to search for parts');
+      return;
+    }
+
+    // Navigate to parts search page with vehicle data
+    navigate(`/parts-search/${vehicle.vin}`, {
+      state: {
+        year: vehicle.year,
+        make: vehicle.make,
+        model: vehicle.model,
+        vin: vehicle.vin,
+        vehicleId: vehicle.partsCategories.metadata.vehicleId,
+        countryFilterId: vehicle.partsCategories.metadata.countryFilterId,
+        categories: vehicle.partsCategories.categories,
+      },
+    });
+
+    // Close the modal
+    onClose();
+  };
 
   return (
     <ModalBackdrop isOpen={isOpen} onClose={onClose}>
@@ -86,12 +117,36 @@ export const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({
             </CollapsibleCard>
           )}
 
+          {/* Vehicle Metadata - Collapsible */}
+          {vehicle.partsCategories?.metadata && (
+            <CollapsibleCard title='Vehicle Metadata' defaultOpen={false}>
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                <InfoItem
+                  label='Country Filter ID'
+                  value={vehicle.partsCategories.metadata.countryFilterId.toString()}
+                />
+                <InfoItem
+                  label='Manufacturer ID'
+                  value={vehicle.partsCategories.metadata.manufacturerId.toString()}
+                />
+                <InfoItem
+                  label='Model ID'
+                  value={vehicle.partsCategories.metadata.modelId.toString()}
+                />
+                <InfoItem
+                  label='Vehicle ID'
+                  value={vehicle.partsCategories.metadata.vehicleId.toString()}
+                />
+              </div>
+            </CollapsibleCard>
+          )}
+
           {/* Parts Categories - Collapsible */}
-          {vehicle.partsCategories && (
+          {vehicle.partsCategories?.categories && (
             <CollapsibleCard title='Parts Categories' defaultOpen={false}>
               <div className='space-y-4'>
                 <pre className='bg-black/5 rounded-lg p-4 overflow-x-auto text-xs text-glass-text/80 font-mono max-h-96 overflow-y-auto'>
-                  {JSON.stringify(vehicle.partsCategories, null, 2)}
+                  {JSON.stringify(vehicle.partsCategories.categories, null, 2)}
                 </pre>
               </div>
             </CollapsibleCard>
@@ -102,9 +157,7 @@ export const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({
             variant='default'
             size='lg'
             className='w-full h-12'
-            onClick={() => {
-              // TODO: Implement parts search functionality
-            }}
+            onClick={handleFindParts}
           >
             <Search className='mr-2 h-5 w-5' />
             Find Parts

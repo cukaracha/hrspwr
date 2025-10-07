@@ -7,9 +7,12 @@ const glassBadgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-white/20 border border-white/30 text-white',
-        ghost: 'bg-white/10 border border-white/20 text-white/90',
-        solid: 'bg-white/30 border border-white/40 text-white',
+        default:
+          'bg-white/20 dark:bg-white/20 border border-white/30 dark:border-white/30 text-gray-900 dark:text-white',
+        ghost:
+          'bg-white/10 dark:bg-white/10 border border-white/20 dark:border-white/20 text-gray-800 dark:text-white/90',
+        solid:
+          'bg-white/30 dark:bg-white/30 border border-white/40 dark:border-white/40 text-gray-900 dark:text-white',
       },
       size: {
         default: 'px-3 py-1',

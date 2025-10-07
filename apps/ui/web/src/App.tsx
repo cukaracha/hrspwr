@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import Login from './pages/Login';
 import Garage from './pages/Garage';
+import PartsSearch from './pages/PartsSearch';
 import { ProtectedRoute } from './components/utils/ProtectedRoute';
 import { queryClient } from './lib/query-client';
 import AppLayout from './components/layouts/appLayout/AppLayout';
@@ -29,6 +30,7 @@ function App() {
                   }
                 >
                   <Route path='/' element={<Garage />} />
+                  <Route path='/parts-search/:vin' element={<PartsSearch />} />
                 </Route>
 
                 <Route path='*' element={<Navigate to='/login' replace />} />

@@ -1,0 +1,2692 @@
+{
+  "categories": {
+    "100001": {
+      "text": "Body",
+      "children": {
+        "100216": {
+          "text": "Fuel Tank/Parts",
+          "children": []
+        },
+        "100217": {
+          "text": "Radiator Mounting",
+          "children": []
+        },
+        "100219": {
+          "text": "Trim/Protection/Decorative Strips/Emblems",
+          "children": {
+            "100740": {
+              "text": "Trim/Protection Strips",
+              "children": []
+            },
+            "100741": {
+              "text": "Emblems",
+              "children": []
+            }
+          }
+        },
+        "100743": {
+          "text": "Body Parts/Wing/Bumper",
+          "children": {
+            "100165": {
+              "text": "Wheelhouse",
+              "children": []
+            },
+            "100168": {
+              "text": "Floor Panel",
+              "children": []
+            },
+            "100169": {
+              "text": "Footboard/Door Pillar",
+              "children": []
+            },
+            "100181": {
+              "text": "Quarter Panel",
+              "children": []
+            },
+            "100185": {
+              "text": "Wing/parts",
+              "children": []
+            },
+            "100187": {
+              "text": "Bumper/Parts",
+              "children": []
+            },
+            "100191": {
+              "text": "Radiator Support/Grille",
+              "children": []
+            },
+            "100537": {
+              "text": "Spoilers",
+              "children": []
+            },
+            "100606": {
+              "text": "Licence Plate Holder/Bracket",
+              "children": []
+            },
+            "100699": {
+              "text": "Covers/Caps",
+              "children": []
+            },
+            "100737": {
+              "text": "Roof/Door Pillars/Frames",
+              "children": []
+            },
+            "100739": {
+              "text": "Rear-End Cowling",
+              "children": []
+            },
+            "104959": {
+              "text": "Fastening Clips",
+              "children": []
+            }
+          }
+        },
+        "100744": {
+          "text": "Glazing/Mirrors",
+          "children": {
+            "100566": {
+              "text": "Mirrors",
+              "children": []
+            },
+            "100745": {
+              "text": "Glazing",
+              "children": {
+                "100567": {
+                  "text": "Windows",
+                  "children": []
+                },
+                "100568": {
+                  "text": "Window Seals",
+                  "children": []
+                },
+                "100569": {
+                  "text": "Assembly Parts",
+                  "children": []
+                },
+                "102346": {
+                  "text": "Bonded Windows",
+                  "children": []
+                }
+              }
+            }
+          }
+        },
+        "100746": {
+          "text": "Hatches/Bonnets/Doors/Sunroof/Panoramic Roof",
+          "children": {
+            "100184": {
+              "text": "Bonnet/Parts/Noise Insulation",
+              "children": []
+            },
+            "100189": {
+              "text": "Doors/Parts",
+              "children": []
+            },
+            "100192": {
+              "text": "Tailgate/Cargo Bay Hatch & Boot Lid/Cargo Bay Cover",
+              "children": []
+            },
+            "100778": {
+              "text": "Sunroof/Parts",
+              "children": []
+            }
+          }
+        },
+        "100826": {
+          "text": "Gas Springs",
+          "children": []
+        },
+        "101340": {
+          "text": "Additional Headlight/Parts",
+          "children": {
+            "101341": {
+              "text": "Front Fog Light/Parts",
+              "children": {
+                "101342": {
+                  "text": "Front Fog Light/Insert",
+                  "children": []
+                },
+                "101344": {
+                  "text": "Fog Light Parts",
+                  "children": []
+                }
+              }
+            },
+            "101345": {
+              "text": "Spotlight/Parts",
+              "children": {
+                "101347": {
+                  "text": "Spotlight Bulb",
+                  "children": []
+                }
+              }
+            }
+          }
+        },
+        "101407": {
+          "text": "Lights",
+          "children": {
+            "101408": {
+              "text": "Tail Light Assembly/Parts",
+              "children": {
+                "101409": {
+                  "text": "Tail Light Assembly",
+                  "children": []
+                },
+                "101410": {
+                  "text": "Tail Light Assembly Parts",
+                  "children": []
+                }
+              }
+            },
+            "101411": {
+              "text": "Tail Light/Parts",
+              "children": {
+                "101412": {
+                  "text": "Tail Light",
+                  "children": []
+                },
+                "101413": {
+                  "text": "Tail Light Individual Parts",
+                  "children": []
+                },
+                "101414": {
+                  "text": "Tail Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101415": {
+              "text": "Stop Light/Parts",
+              "children": {
+                "101416": {
+                  "text": "Auxiliary Stop Light",
+                  "children": []
+                },
+                "101419": {
+                  "text": "Stop Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101420": {
+              "text": "Direction Indicator/Parts",
+              "children": {
+                "101421": {
+                  "text": "Direction Indicator",
+                  "children": []
+                },
+                "101423": {
+                  "text": "Indicator Bulb",
+                  "children": []
+                },
+                "102406": {
+                  "text": "Side Indicator",
+                  "children": []
+                }
+              }
+            },
+            "101424": {
+              "text": "Licence Plate Light/-Parts",
+              "children": {
+                "101427": {
+                  "text": "Licence Plate Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101428": {
+              "text": "Rear Fog Light/Parts",
+              "children": {
+                "101431": {
+                  "text": "Rear Fog Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101432": {
+              "text": "Reverse Light/Parts",
+              "children": {
+                "101435": {
+                  "text": "Reverse Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101441": {
+              "text": "Side Marker/End Outline Marker Light/Parts",
+              "children": {
+                "101442": {
+                  "text": "Park/Position Light",
+                  "children": []
+                },
+                "101443": {
+                  "text": "End Outline Marker Light",
+                  "children": []
+                }
+              }
+            },
+            "101452": {
+              "text": "Door Light",
+              "children": []
+            }
+          }
+        },
+        "101454": {
+          "text": "Racks/Carriers/Frames",
+          "children": []
+        },
+        "101465": {
+          "text": "Headlight/Parts",
+          "children": {
+            "101466": {
+              "text": "Headlight/Insert",
+              "children": []
+            },
+            "101467": {
+              "text": "Headlight Bulb",
+              "children": []
+            },
+            "101468": {
+              "text": "Headlight Parts",
+              "children": []
+            }
+          }
+        },
+        "101648": {
+          "text": "Vehicle Front",
+          "children": {
+            "101649": {
+              "text": "Bumper/Parts",
+              "children": []
+            },
+            "101650": {
+              "text": "Wing/parts",
+              "children": []
+            },
+            "101652": {
+              "text": "Wheelhouse",
+              "children": []
+            },
+            "101654": {
+              "text": "Bonnet/Parts/Noise Insulation",
+              "children": []
+            },
+            "101655": {
+              "text": "Windscreen",
+              "children": []
+            },
+            "101656": {
+              "text": "Headlight/Parts",
+              "children": {
+                "101657": {
+                  "text": "Headlight/Insert",
+                  "children": []
+                },
+                "101658": {
+                  "text": "Headlight Bulb",
+                  "children": []
+                },
+                "101659": {
+                  "text": "Headlight Parts",
+                  "children": []
+                }
+              }
+            },
+            "101661": {
+              "text": "Front Fog Light/Parts",
+              "children": {
+                "101662": {
+                  "text": "Front Fog Light/Insert",
+                  "children": []
+                },
+                "101664": {
+                  "text": "Fog Light Parts",
+                  "children": []
+                }
+              }
+            },
+            "101665": {
+              "text": "Spotlight/Parts",
+              "children": {
+                "101667": {
+                  "text": "Spotlight Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101669": {
+              "text": "Direction Indicator/Parts",
+              "children": {
+                "101670": {
+                  "text": "Direction Indicator",
+                  "children": []
+                },
+                "101672": {
+                  "text": "Indicator Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101673": {
+              "text": "Parts",
+              "children": {
+                "101674": {
+                  "text": "Covers/Caps",
+                  "children": []
+                },
+                "101675": {
+                  "text": "Front Fairing/ Grille",
+                  "children": []
+                },
+                "101679": {
+                  "text": "Trim/Protection Strips",
+                  "children": []
+                },
+                "101773": {
+                  "text": "Racks/Carriers/Frames",
+                  "children": []
+                },
+                "101775": {
+                  "text": "Radiator Mounting",
+                  "children": []
+                },
+                "101776": {
+                  "text": "Licence Plate Holder/Bracket",
+                  "children": []
+                },
+                "101777": {
+                  "text": "Gas Springs",
+                  "children": []
+                },
+                "101778": {
+                  "text": "Spoilers",
+                  "children": []
+                }
+              }
+            },
+            "101766": {
+              "text": "Side Marker/End Outline Marker Light/Parts",
+              "children": {
+                "101767": {
+                  "text": "Park/Position Light",
+                  "children": []
+                },
+                "101768": {
+                  "text": "End Outline Marker Light",
+                  "children": []
+                }
+              }
+            },
+            "103035": {
+              "text": "Engine Cover",
+              "children": []
+            }
+          }
+        },
+        "101690": {
+          "text": "Passenger Cabin",
+          "children": {
+            "101691": {
+              "text": "Roof/Door Pillars/Frames",
+              "children": []
+            },
+            "101692": {
+              "text": "Footboard/Door Pillar",
+              "children": []
+            },
+            "101693": {
+              "text": "Floor Panel",
+              "children": []
+            },
+            "101694": {
+              "text": "Doors/Parts",
+              "children": []
+            },
+            "101695": {
+              "text": "Sunroof/Parts",
+              "children": []
+            },
+            "101696": {
+              "text": "Quarter Panel",
+              "children": []
+            },
+            "101697": {
+              "text": "Door Window/Side Window",
+              "children": []
+            },
+            "101698": {
+              "text": "Mirrors",
+              "children": []
+            },
+            "101699": {
+              "text": "Auxiliary Stop Light",
+              "children": []
+            },
+            "101700": {
+              "text": "Parts",
+              "children": {
+                "101701": {
+                  "text": "Spoilers",
+                  "children": []
+                },
+                "101702": {
+                  "text": "Trim/Protection Strips",
+                  "children": []
+                },
+                "101703": {
+                  "text": "Gas Springs",
+                  "children": []
+                }
+              }
+            },
+            "101760": {
+              "text": "Fuel Tank/Parts",
+              "children": []
+            }
+          }
+        },
+        "101705": {
+          "text": "Vehicle Rear",
+          "children": {
+            "101706": {
+              "text": "Bumper/Parts",
+              "children": []
+            },
+            "101708": {
+              "text": "Panelling",
+              "children": []
+            },
+            "101710": {
+              "text": "Wheelhouse",
+              "children": []
+            },
+            "101715": {
+              "text": "Tail Light Assembly/Parts",
+              "children": {
+                "101716": {
+                  "text": "Tail Light Assembly",
+                  "children": []
+                },
+                "101717": {
+                  "text": "Tail Light Assembly Parts",
+                  "children": []
+                }
+              }
+            },
+            "101718": {
+              "text": "Tail Light/Parts",
+              "children": {
+                "101719": {
+                  "text": "Tail Light",
+                  "children": []
+                },
+                "101720": {
+                  "text": "Tail Light Individual Parts",
+                  "children": []
+                },
+                "101721": {
+                  "text": "Tail Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101722": {
+              "text": "Stop Light/Parts",
+              "children": {
+                "101723": {
+                  "text": "Auxiliary Stop Light",
+                  "children": []
+                },
+                "101726": {
+                  "text": "Stop Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101727": {
+              "text": "Direction Indicator/Parts",
+              "children": {
+                "101728": {
+                  "text": "Direction Indicator",
+                  "children": []
+                },
+                "101730": {
+                  "text": "Indicator Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101731": {
+              "text": "Licence Plate Light/-Parts",
+              "children": {
+                "101734": {
+                  "text": "Licence Plate Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101735": {
+              "text": "Rear Fog Light/Parts",
+              "children": {
+                "101738": {
+                  "text": "Rear Fog Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101739": {
+              "text": "Reverse Light/Parts",
+              "children": {
+                "101742": {
+                  "text": "Reverse Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "101745": {
+              "text": "Parts",
+              "children": {
+                "101746": {
+                  "text": "Covers/Caps",
+                  "children": []
+                },
+                "101747": {
+                  "text": "Spoilers",
+                  "children": []
+                },
+                "101749": {
+                  "text": "Licence Plate Holder/Bracket",
+                  "children": []
+                },
+                "101750": {
+                  "text": "Trim/Protection Strips",
+                  "children": []
+                },
+                "101752": {
+                  "text": "Gas Springs",
+                  "children": []
+                }
+              }
+            },
+            "101763": {
+              "text": "Fuel Tank/Parts",
+              "children": []
+            },
+            "101779": {
+              "text": "Wing/parts",
+              "children": []
+            },
+            "101780": {
+              "text": "Quarter Panel",
+              "children": []
+            },
+            "101782": {
+              "text": "Tailgate/Cargo Bay Hatch & Boot Lid/Cargo Bay Cover",
+              "children": []
+            },
+            "101783": {
+              "text": "Bonnet/Parts/Noise Insulation",
+              "children": []
+            },
+            "101784": {
+              "text": "Rear Window",
+              "children": []
+            },
+            "101785": {
+              "text": "Side Marker/End Outline Marker Light/Parts",
+              "children": {
+                "101786": {
+                  "text": "Park/Position Light",
+                  "children": []
+                },
+                "101787": {
+                  "text": "End Outline Marker Light",
+                  "children": []
+                }
+              }
+            },
+            "103036": {
+              "text": "Engine Cover",
+              "children": []
+            }
+          }
+        },
+        "105577": {
+          "text": "Electric Motor",
+          "children": []
+        }
+      }
+    },
+    "100002": {
+      "text": "Engine",
+      "children": {
+        "100003": {
+          "text": "Engine Timing",
+          "children": {
+            "100397": {
+              "text": "Camshaft",
+              "children": []
+            },
+            "100398": {
+              "text": "Rocker Arm/Finger Follower",
+              "children": []
+            },
+            "100399": {
+              "text": "Tappet/Push Rod/Push Rod Protection Tube",
+              "children": []
+            },
+            "100401": {
+              "text": "Timing Case/Gasket",
+              "children": []
+            },
+            "100403": {
+              "text": "Timing Chain/Tensioner/Guide",
+              "children": {
+                "100411": {
+                  "text": "Timing Chain",
+                  "children": []
+                },
+                "100413": {
+                  "text": "Timing Chain Guides",
+                  "children": []
+                },
+                "100414": {
+                  "text": "Timing Chain Tensioner",
+                  "children": []
+                },
+                "101485": {
+                  "text": "Slide Rail",
+                  "children": []
+                },
+                "103278": {
+                  "text": "Timing Chain Kit",
+                  "children": []
+                }
+              }
+            },
+            "100422": {
+              "text": "Valve Train",
+              "children": {
+                "100423": {
+                  "text": "Valves/Parts",
+                  "children": []
+                },
+                "100424": {
+                  "text": "Valve Actuation",
+                  "children": []
+                }
+              }
+            },
+            "100425": {
+              "text": "Timing Gear",
+              "children": []
+            },
+            "101833": {
+              "text": "Timing Gears",
+              "children": []
+            },
+            "104695": {
+              "text": "Belt Pulley",
+              "children": []
+            }
+          }
+        },
+        "100223": {
+          "text": "Gaskets",
+          "children": {
+            "100224": {
+              "text": "Full Gasket Set",
+              "children": []
+            },
+            "100225": {
+              "text": "Cylinder Head Gasket",
+              "children": []
+            },
+            "100227": {
+              "text": "Valve Cover Gasket",
+              "children": []
+            },
+            "100228": {
+              "text": "Valve Stem Seal",
+              "children": []
+            },
+            "100229": {
+              "text": "Intake Manifold Gasket",
+              "children": []
+            },
+            "100231": {
+              "text": "Exhaust Manifold Gasket/seal ring",
+              "children": []
+            },
+            "100233": {
+              "text": "Crankcase Gasket",
+              "children": []
+            },
+            "100234": {
+              "text": "Oil Sump Gasket",
+              "children": []
+            },
+            "100235": {
+              "text": "Timing Case Gasket",
+              "children": []
+            },
+            "100244": {
+              "text": "Turbocharger Gasket",
+              "children": []
+            },
+            "100682": {
+              "text": "Fuel Circuit Seals",
+              "children": []
+            },
+            "100683": {
+              "text": "Coolant Circuit Seals",
+              "children": []
+            },
+            "100684": {
+              "text": "Oil Circuit Seals",
+              "children": []
+            },
+            "100789": {
+              "text": "Shaft Seal/Set",
+              "children": []
+            }
+          }
+        },
+        "100245": {
+          "text": "Lubrication",
+          "children": {
+            "100470": {
+              "text": "Oil Filter",
+              "children": []
+            },
+            "100472": {
+              "text": "Oil Filter Housing/Seal",
+              "children": []
+            },
+            "100474": {
+              "text": "Oil Cooler/Attachment Parts",
+              "children": {
+                "100483": {
+                  "text": "Oil Cooler",
+                  "children": []
+                },
+                "100488": {
+                  "text": "Seal",
+                  "children": []
+                }
+              }
+            },
+            "100475": {
+              "text": "Oil Sump/Attachment Parts",
+              "children": {
+                "100489": {
+                  "text": "Oil Sump",
+                  "children": []
+                },
+                "100490": {
+                  "text": "Seal",
+                  "children": []
+                },
+                "100491": {
+                  "text": "Drain Screw",
+                  "children": []
+                }
+              }
+            },
+            "100476": {
+              "text": "Oil Pump/Attachment Parts",
+              "children": {
+                "100492": {
+                  "text": "Oil Pump",
+                  "children": []
+                },
+                "100885": {
+                  "text": "Drive Chain",
+                  "children": []
+                }
+              }
+            },
+            "100478": {
+              "text": "Oil Pressure Switch/Sensor/Valve",
+              "children": []
+            },
+            "100479": {
+              "text": "Oil Dipstick",
+              "children": []
+            },
+            "101994": {
+              "text": "Oil",
+              "children": []
+            }
+          }
+        },
+        "100373": {
+          "text": "Cylinder Head/Attachment Parts",
+          "children": {
+            "100374": {
+              "text": "Cylinder Head Gasket",
+              "children": []
+            },
+            "100375": {
+              "text": "Cylinder Head Cover/-Gasket",
+              "children": []
+            },
+            "100376": {
+              "text": "Intake-/Exhaust Manifold Gasket/-seal ring",
+              "children": []
+            },
+            "100377": {
+              "text": "Valve Guide/Stem Seal/Parts",
+              "children": []
+            },
+            "100378": {
+              "text": "Cylinder Head Bolts",
+              "children": []
+            },
+            "100379": {
+              "text": "Oil Filler Cap/Seal",
+              "children": []
+            },
+            "100788": {
+              "text": "Radiator Hoses/Gasket",
+              "children": []
+            },
+            "102450": {
+              "text": "Vacuum Pump",
+              "children": []
+            }
+          }
+        },
+        "100383": {
+          "text": "Air Supply",
+          "children": {
+            "100384": {
+              "text": "Air Filter/ Housing",
+              "children": []
+            },
+            "100386": {
+              "text": "Intake Manifold",
+              "children": []
+            },
+            "100387": {
+              "text": "Control Flap",
+              "children": []
+            },
+            "100390": {
+              "text": "Charging (supercharged/turbocharged)",
+              "children": {
+                "100391": {
+                  "text": "Charger/-parts",
+                  "children": []
+                },
+                "100392": {
+                  "text": "Charger Gasket",
+                  "children": []
+                },
+                "100393": {
+                  "text": "Charge Air Cooler",
+                  "children": []
+                },
+                "100394": {
+                  "text": "Charge Air Control",
+                  "children": []
+                },
+                "102076": {
+                  "text": "Charge Air Hose",
+                  "children": []
+                }
+              }
+            },
+            "100704": {
+              "text": "Throttle Valve/Sensor",
+              "children": {
+                "102339": {
+                  "text": "Throttle Body",
+                  "children": []
+                }
+              }
+            },
+            "100818": {
+              "text": "Charger Management",
+              "children": []
+            },
+            "102235": {
+              "text": "Radiator Hoses",
+              "children": []
+            }
+          }
+        },
+        "100514": {
+          "text": "Crankcase",
+          "children": {
+            "100533": {
+              "text": "Crankcase",
+              "children": []
+            },
+            "105862": {
+              "text": "Breather",
+              "children": []
+            }
+          }
+        },
+        "100515": {
+          "text": "Crankshaft Drive",
+          "children": {
+            "100517": {
+              "text": "Crankshaft",
+              "children": {
+                "100522": {
+                  "text": "Crankshaft Bearing",
+                  "children": []
+                },
+                "100759": {
+                  "text": "Thrust Washers/Thrust Bearing",
+                  "children": []
+                }
+              }
+            },
+            "100518": {
+              "text": "Flywheel",
+              "children": []
+            },
+            "100519": {
+              "text": "Connecting Rod",
+              "children": {
+                "100524": {
+                  "text": "Connecting Rod",
+                  "children": []
+                },
+                "100525": {
+                  "text": "Connecting Rod Bearing",
+                  "children": []
+                },
+                "100528": {
+                  "text": "Connecting Rod Bolt/Nut",
+                  "children": []
+                }
+              }
+            },
+            "100520": {
+              "text": "Piston",
+              "children": {
+                "100529": {
+                  "text": "Piston",
+                  "children": []
+                },
+                "100530": {
+                  "text": "Piston Complete",
+                  "children": []
+                },
+                "100531": {
+                  "text": "Piston Ring Set",
+                  "children": []
+                }
+              }
+            },
+            "100521": {
+              "text": "Radial Shaft Seal/Set",
+              "children": []
+            },
+            "706358": {
+              "text": "Tools",
+              "children": []
+            }
+          }
+        },
+        "100535": {
+          "text": "Engine Mounting System",
+          "children": {
+            "100538": {
+              "text": "Engine Mounting",
+              "children": []
+            },
+            "100539": {
+              "text": "Engine Mounting Rubber Buffer",
+              "children": []
+            }
+          }
+        },
+        "100541": {
+          "text": "Exhaust Emission Control",
+          "children": {
+            "100542": {
+              "text": "Exhaust Gas Recirculation",
+              "children": {
+                "100543": {
+                  "text": "Pressure Transducer",
+                  "children": []
+                },
+                "100545": {
+                  "text": "EGR Exhaust Control",
+                  "children": []
+                },
+                "100549": {
+                  "text": "Valves, exhaust gas recirculation",
+                  "children": []
+                },
+                "100551": {
+                  "text": "EGR Valve/Intake Manifold",
+                  "children": []
+                },
+                "102993": {
+                  "text": "EGR Module",
+                  "children": []
+                },
+                "103235": {
+                  "text": "Gaskets",
+                  "children": []
+                },
+                "103237": {
+                  "text": "Cooler",
+                  "children": []
+                }
+              }
+            },
+            "100552": {
+              "text": "Secondary Air Injection",
+              "children": {
+                "100556": {
+                  "text": "Secondary Air Valve",
+                  "children": []
+                }
+              }
+            },
+            "100729": {
+              "text": "Lambda Control",
+              "children": []
+            }
+          }
+        },
+        "100700": {
+          "text": "Complete/Partial Engine",
+          "children": {
+            "100701": {
+              "text": "Complete Engine",
+              "children": []
+            }
+          }
+        },
+        "100754": {
+          "text": "Engine Electrics",
+          "children": []
+        },
+        "103037": {
+          "text": "Engine Cover",
+          "children": []
+        },
+        "103129": {
+          "text": "Tools",
+          "children": []
+        },
+        "103397": {
+          "text": "Engine Guard/Skid Plate",
+          "children": []
+        },
+        "103437": {
+          "text": "Tuning",
+          "children": []
+        },
+        "104302": {
+          "text": "Belt Drive",
+          "children": {
+            "104308": {
+              "text": "V-Ribbed Belt/Set",
+              "children": {
+                "104309": {
+                  "text": "V-Ribbed Belt",
+                  "children": []
+                },
+                "104310": {
+                  "text": "V-Ribbed Belt Set",
+                  "children": []
+                },
+                "104311": {
+                  "text": "Tensioner Pulley",
+                  "children": []
+                },
+                "104312": {
+                  "text": "Deflection Pulley/Guide Pulley",
+                  "children": []
+                },
+                "104314": {
+                  "text": "Belt Tensioner (Tensioner Unit)",
+                  "children": []
+                }
+              }
+            },
+            "104328": {
+              "text": "Accessories/Small Parts",
+              "children": []
+            },
+            "104329": {
+              "text": "Belt Pulley",
+              "children": []
+            },
+            "104330": {
+              "text": "Alternator Freewheel Clutch",
+              "children": []
+            }
+          }
+        },
+        "104377": {
+          "text": "Cylinders/Pistons",
+          "children": []
+        }
+      }
+    },
+    "100004": {
+      "text": "Exhaust System",
+      "children": {
+        "100046": {
+          "text": "Exhaust System Complete",
+          "children": []
+        },
+        "100047": {
+          "text": "Catalytic Converter",
+          "children": []
+        },
+        "100048": {
+          "text": "Oxygen Sensor",
+          "children": []
+        },
+        "100195": {
+          "text": "Baffle",
+          "children": []
+        },
+        "100222": {
+          "text": "Assembly Parts",
+          "children": {
+            "100317": {
+              "text": "Individual Assembly Parts",
+              "children": {
+                "100321": {
+                  "text": "Seal",
+                  "children": []
+                },
+                "100323": {
+                  "text": "Pipe Clamp",
+                  "children": []
+                },
+                "100325": {
+                  "text": "Rubber Buffer",
+                  "children": []
+                },
+                "100327": {
+                  "text": "Holder",
+                  "children": []
+                },
+                "100329": {
+                  "text": "Clamping Piece",
+                  "children": []
+                },
+                "100333": {
+                  "text": "Bolt/Screw/Nut/Rings",
+                  "children": []
+                },
+                "100716": {
+                  "text": "Welded Sleeve",
+                  "children": []
+                }
+              }
+            }
+          }
+        },
+        "100318": {
+          "text": "Soot/Particulate Filter",
+          "children": []
+        },
+        "100714": {
+          "text": "Heat Shield",
+          "children": []
+        },
+        "100715": {
+          "text": "Manifold",
+          "children": []
+        },
+        "100872": {
+          "text": "Charger",
+          "children": []
+        },
+        "103019": {
+          "text": "Urea Injection",
+          "children": {
+            "103020": {
+              "text": "Dosage Module",
+              "children": []
+            },
+            "103021": {
+              "text": "Injector",
+              "children": []
+            },
+            "103022": {
+              "text": "Feed Module",
+              "children": []
+            },
+            "103062": {
+              "text": "Sensor",
+              "children": []
+            },
+            "103089": {
+              "text": "Tank Unit",
+              "children": []
+            },
+            "706472": {
+              "text": "Urea",
+              "children": []
+            }
+          }
+        },
+        "103414": {
+          "text": "Sensor/Probe",
+          "children": []
+        }
+      }
+    },
+    "100005": {
+      "text": "Filters",
+      "children": {
+        "100259": {
+          "text": "Oil Filter",
+          "children": []
+        },
+        "100260": {
+          "text": "Air Filter",
+          "children": []
+        },
+        "100261": {
+          "text": "Fuel Filter",
+          "children": []
+        },
+        "100263": {
+          "text": "Cabin Air Filter",
+          "children": []
+        },
+        "706725": {
+          "text": "Hydraulic Filter",
+          "children": []
+        }
+      }
+    },
+    "100006": {
+      "text": "Braking System",
+      "children": {
+        "100026": {
+          "text": "Brake Master Cylinder",
+          "children": []
+        },
+        "100027": {
+          "text": "Brake Caliper",
+          "children": {
+            "100806": {
+              "text": "Brake Caliper Parts",
+              "children": []
+            },
+            "100807": {
+              "text": "Brake Caliper Mounting",
+              "children": []
+            }
+          }
+        },
+        "100028": {
+          "text": "Wheel Cylinders",
+          "children": []
+        },
+        "100029": {
+          "text": "Brake Fluid Reservoir/parts",
+          "children": []
+        },
+        "100034": {
+          "text": "Handbrake",
+          "children": []
+        },
+        "100035": {
+          "text": "Brake Hoses",
+          "children": []
+        },
+        "100038": {
+          "text": "Drive Dynamics Control",
+          "children": []
+        },
+        "100039": {
+          "text": "Vacuum Pump",
+          "children": []
+        },
+        "100626": {
+          "text": "Disc Brake",
+          "children": {
+            "100030": {
+              "text": "Brake Pad",
+              "children": []
+            },
+            "100032": {
+              "text": "Brake Disc",
+              "children": []
+            },
+            "100630": {
+              "text": "Accessories/Parts",
+              "children": []
+            },
+            "102244": {
+              "text": "Brake Kit",
+              "children": []
+            }
+          }
+        },
+        "100627": {
+          "text": "Drum Brake",
+          "children": {
+            "100031": {
+              "text": "Brake Lining/Shoe",
+              "children": []
+            },
+            "100634": {
+              "text": "Accessories/Parts",
+              "children": []
+            },
+            "102965": {
+              "text": "Wheel Cylinders",
+              "children": []
+            }
+          }
+        },
+        "100631": {
+          "text": "Wear Indicator",
+          "children": []
+        },
+        "102208": {
+          "text": "Brake Fluid",
+          "children": []
+        },
+        "102224": {
+          "text": "High Performance Brakes",
+          "children": {
+            "102227": {
+              "text": "High Performance Brake Pad",
+              "children": []
+            }
+          }
+        },
+        "102248": {
+          "text": "Stop Light Switch",
+          "children": []
+        }
+      }
+    },
+    "100007": {
+      "text": "Cooling System",
+      "children": {
+        "100088": {
+          "text": "Water Pump/Gasket",
+          "children": {
+            "100089": {
+              "text": "Seal",
+              "children": []
+            },
+            "100091": {
+              "text": "Water Pump",
+              "children": []
+            },
+            "104956": {
+              "text": "Thermal Management Module",
+              "children": []
+            }
+          }
+        },
+        "100094": {
+          "text": "Thermostat/Seal",
+          "children": {
+            "100095": {
+              "text": "Thermostat",
+              "children": []
+            },
+            "100096": {
+              "text": "Seal",
+              "children": []
+            }
+          }
+        },
+        "100099": {
+          "text": "Hoses/Pipes/Flanges",
+          "children": {
+            "100100": {
+              "text": "Radiator Hoses",
+              "children": []
+            },
+            "100840": {
+              "text": "Flanges",
+              "children": []
+            }
+          }
+        },
+        "100102": {
+          "text": "Radiator/Oil Cooler",
+          "children": {
+            "100103": {
+              "text": "Radiator/Parts",
+              "children": []
+            },
+            "100104": {
+              "text": "Interior Heat Exchanger",
+              "children": []
+            },
+            "100108": {
+              "text": "Oil Cooler",
+              "children": []
+            },
+            "100112": {
+              "text": "Expansion Tank",
+              "children": []
+            }
+          }
+        },
+        "100334": {
+          "text": "Switch/Sensor",
+          "children": []
+        },
+        "100337": {
+          "text": "Radiator Fan",
+          "children": []
+        },
+        "100338": {
+          "text": "Air Cooling",
+          "children": []
+        },
+        "102205": {
+          "text": "Antifreeze",
+          "children": []
+        }
+      }
+    },
+    "100008": {
+      "text": "Spark/Glow Ignition",
+      "children": {
+        "100152": {
+          "text": "Glow Plug",
+          "children": []
+        },
+        "100247": {
+          "text": "Control Unit/Relay/Sensors",
+          "children": []
+        },
+        "100249": {
+          "text": "Pulse Generator",
+          "children": []
+        }
+      }
+    },
+    "100010": {
+      "text": "Electrics",
+      "children": {
+        "100041": {
+          "text": "Alternator/Parts",
+          "children": {
+            "100350": {
+              "text": "Alternator",
+              "children": []
+            },
+            "100352": {
+              "text": "Generator/ Alternator Parts",
+              "children": []
+            }
+          }
+        },
+        "100042": {
+          "text": "Battery",
+          "children": []
+        },
+        "100043": {
+          "text": "Lights",
+          "children": {
+            "100145": {
+              "text": "Direction Indicator/Parts",
+              "children": {
+                "100463": {
+                  "text": "Direction Indicator",
+                  "children": []
+                },
+                "100498": {
+                  "text": "Indicator Bulb",
+                  "children": []
+                }
+              }
+            },
+            "100147": {
+              "text": "Licence Plate Light/-Parts",
+              "children": {
+                "100499": {
+                  "text": "Licence Plate Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "100275": {
+              "text": "Tail Light Assembly/Parts",
+              "children": {
+                "100454": {
+                  "text": "Tail Light Assembly",
+                  "children": []
+                },
+                "100456": {
+                  "text": "Tail Light Assembly Parts",
+                  "children": []
+                },
+                "101495": {
+                  "text": "Tail Light Assembly Bulb",
+                  "children": []
+                }
+              }
+            },
+            "100284": {
+              "text": "Stop Light/Parts",
+              "children": {
+                "100496": {
+                  "text": "Stop Light Bulb",
+                  "children": []
+                },
+                "100867": {
+                  "text": "Auxiliary Stop Light",
+                  "children": []
+                }
+              }
+            },
+            "100285": {
+              "text": "Rear Fog Light/Parts",
+              "children": {
+                "100500": {
+                  "text": "Rear Fog Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "100287": {
+              "text": "Reverse Light/Parts",
+              "children": {
+                "100501": {
+                  "text": "Reverse Light Bulb",
+                  "children": []
+                }
+              }
+            },
+            "100290": {
+              "text": "Side Marker/End Outline Marker Light/Parts",
+              "children": {
+                "100468": {
+                  "text": "Park/Position Light",
+                  "children": []
+                },
+                "100469": {
+                  "text": "End Outline Marker Light",
+                  "children": []
+                }
+              }
+            },
+            "100870": {
+              "text": "Daytime Running Light",
+              "children": []
+            }
+          }
+        },
+        "100143": {
+          "text": "Headlight/Parts",
+          "children": {
+            "100279": {
+              "text": "Headlight Levelling",
+              "children": []
+            },
+            "100427": {
+              "text": "Headlight Bulb",
+              "children": []
+            },
+            "100430": {
+              "text": "Headlight Parts",
+              "children": []
+            },
+            "100433": {
+              "text": "Headlight/Insert",
+              "children": []
+            },
+            "100723": {
+              "text": "Xenon Light",
+              "children": []
+            },
+            "706742": {
+              "text": "Spotlight Bulb",
+              "children": []
+            }
+          }
+        },
+        "100295": {
+          "text": "Reflectors/Side Reflectors",
+          "children": []
+        },
+        "100307": {
+          "text": "Light Switches/Relays/Controls",
+          "children": {
+            "100509": {
+              "text": "Light Switch/ Lever",
+              "children": []
+            },
+            "100724": {
+              "text": "Controls",
+              "children": []
+            }
+          }
+        },
+        "100320": {
+          "text": "Signal Horn/Trumpet Horn",
+          "children": []
+        },
+        "100322": {
+          "text": "Instruments",
+          "children": {
+            "100553": {
+              "text": "Sensors/Switches",
+              "children": []
+            }
+          }
+        },
+        "100353": {
+          "text": "Starter System",
+          "children": {
+            "100359": {
+              "text": "Starter",
+              "children": []
+            }
+          }
+        },
+        "100708": {
+          "text": "Central Electrics",
+          "children": []
+        },
+        "100727": {
+          "text": "Control Units",
+          "children": []
+        },
+        "100785": {
+          "text": "Relay",
+          "children": []
+        },
+        "100787": {
+          "text": "Additional Headlight/Parts",
+          "children": {
+            "100276": {
+              "text": "Spotlight/Parts",
+              "children": {
+                "100442": {
+                  "text": "Spotlight Bulb",
+                  "children": []
+                }
+              }
+            },
+            "100277": {
+              "text": "Front Fog Light/Parts",
+              "children": {
+                "100440": {
+                  "text": "Front Fog Light/Insert",
+                  "children": []
+                },
+                "100444": {
+                  "text": "Fog Light Parts",
+                  "children": []
+                }
+              }
+            },
+            "100869": {
+              "text": "Dynamic Bending Light/Parts",
+              "children": []
+            }
+          }
+        },
+        "102747": {
+          "text": "Sensors",
+          "children": []
+        },
+        "103066": {
+          "text": "Cable Set/individual parts",
+          "children": []
+        },
+        "706659": {
+          "text": "Fuses",
+          "children": []
+        }
+      }
+    },
+    "100011": {
+      "text": "Suspension/Damping",
+      "children": {
+        "100113": {
+          "text": "Coil Springs",
+          "children": []
+        },
+        "100121": {
+          "text": "Shock Absorber",
+          "children": []
+        },
+        "100340": {
+          "text": "Level Control/Suspension Hydraulics",
+          "children": []
+        },
+        "100370": {
+          "text": "Suspension Kit, complete",
+          "children": []
+        },
+        "100371": {
+          "text": "Suspension Strut/Shock Absorber Mount",
+          "children": []
+        },
+        "100381": {
+          "text": "Suspension Strut/Shock Absorber/Parts",
+          "children": {
+            "100372": {
+              "text": "Assembly Parts",
+              "children": []
+            }
+          }
+        },
+        "101830": {
+          "text": "Coil Spring Suspension",
+          "children": []
+        },
+        "101884": {
+          "text": "Air Suspension",
+          "children": []
+        }
+      }
+    },
+    "100012": {
+      "text": "Steering",
+      "children": {
+        "100198": {
+          "text": "Joints",
+          "children": []
+        },
+        "100199": {
+          "text": "Steering Gear/Pump",
+          "children": []
+        },
+        "100201": {
+          "text": "Bellow/Seal",
+          "children": []
+        },
+        "100594": {
+          "text": "Steering Linkage",
+          "children": []
+        },
+        "100601": {
+          "text": "Tie Rod Assembly/ Parts",
+          "children": {
+            "100197": {
+              "text": "Tie Rod Assembly",
+              "children": []
+            },
+            "100603": {
+              "text": "Parts, tie rod assy.",
+              "children": []
+            }
+          }
+        }
+      }
+    },
+    "100013": {
+      "text": "Axle Mounting/ Steering/ Wheels",
+      "children": {
+        "100206": {
+          "text": "Wheel Hub/Mounting",
+          "children": {
+            "100578": {
+              "text": "Wheel Hub",
+              "children": []
+            },
+            "100579": {
+              "text": "Wheel Bearing",
+              "children": []
+            }
+          }
+        },
+        "100207": {
+          "text": "Steering Knuckle/Repair Kit",
+          "children": {
+            "100589": {
+              "text": "Repair Kit",
+              "children": []
+            }
+          }
+        },
+        "100208": {
+          "text": "Steering Link/Control/Trailing Arm Mounting",
+          "children": {
+            "100571": {
+              "text": "Steering Links (control arm, trailing link, diagonal arm)",
+              "children": []
+            },
+            "100572": {
+              "text": "Mounting/Fastening",
+              "children": []
+            }
+          }
+        },
+        "100209": {
+          "text": "Struts/Rods",
+          "children": []
+        },
+        "100210": {
+          "text": "Stabiliser Bar/Fastening Parts",
+          "children": {
+            "100577": {
+              "text": "Coupling Rod",
+              "children": []
+            },
+            "100590": {
+              "text": "Self-Aligning Support",
+              "children": []
+            },
+            "100596": {
+              "text": "Fasteners",
+              "children": []
+            }
+          }
+        },
+        "100211": {
+          "text": "Joints",
+          "children": {
+            "100581": {
+              "text": "Ball Joint",
+              "children": []
+            }
+          }
+        },
+        "100212": {
+          "text": "Axle Cross Member/Axle Beam/Axle Beam Mounting",
+          "children": {
+            "100586": {
+              "text": "Axle Mounting",
+              "children": []
+            },
+            "100761": {
+              "text": "Axle Cross Member/Subframe",
+              "children": []
+            }
+          }
+        },
+        "100213": {
+          "text": "Wheel/Wheel Fastening",
+          "children": []
+        },
+        "100735": {
+          "text": "Mounting, suspension strut",
+          "children": []
+        },
+        "100834": {
+          "text": "Tyre-Pressure Monitoring System",
+          "children": []
+        },
+        "102733": {
+          "text": "Track Widening",
+          "children": []
+        },
+        "103159": {
+          "text": "Tools",
+          "children": []
+        }
+      }
+    },
+    "100014": {
+      "text": "Wheel Drive",
+      "children": {
+        "100062": {
+          "text": "Drive Shaft",
+          "children": []
+        },
+        "100066": {
+          "text": "Assembly Parts",
+          "children": []
+        },
+        "100070": {
+          "text": "Spider Assembly",
+          "children": []
+        },
+        "100071": {
+          "text": "Joint/Set",
+          "children": []
+        },
+        "100074": {
+          "text": "Bellow",
+          "children": []
+        }
+      }
+    },
+    "100015": {
+      "text": "Towbar/Attachment Parts",
+      "children": {
+        "100607": {
+          "text": "Trailer Hitch",
+          "children": []
+        },
+        "100608": {
+          "text": "Electric Parts",
+          "children": []
+        },
+        "100609": {
+          "text": "Parts",
+          "children": []
+        }
+      }
+    },
+    "100016": {
+      "text": "Belt Drive",
+      "children": {
+        "100082": {
+          "text": "V-Ribbed Belt/Set",
+          "children": {
+            "100431": {
+              "text": "V-Ribbed Belt",
+              "children": []
+            },
+            "100432": {
+              "text": "V-Ribbed Belt Set",
+              "children": []
+            },
+            "100434": {
+              "text": "Tensioner Pulley",
+              "children": []
+            },
+            "100435": {
+              "text": "Deflection Pulley/Guide Pulley",
+              "children": []
+            },
+            "100441": {
+              "text": "Belt Tensioner (Tensioner Unit)",
+              "children": []
+            }
+          }
+        },
+        "101482": {
+          "text": "Accessories/Small Parts",
+          "children": []
+        },
+        "101971": {
+          "text": "Belt Pulley",
+          "children": []
+        },
+        "102239": {
+          "text": "Alternator Freewheel Clutch",
+          "children": []
+        }
+      }
+    },
+    "100018": {
+      "text": "Window Cleaning",
+      "children": {
+        "100133": {
+          "text": "Wiper Blade/-Rubber",
+          "children": []
+        },
+        "100135": {
+          "text": "Washer Fluid Pump",
+          "children": []
+        },
+        "100610": {
+          "text": "Water Tank/ Pipe, windscreen",
+          "children": []
+        },
+        "100611": {
+          "text": "Washer Fluid Jet",
+          "children": []
+        }
+      }
+    },
+    "100019": {
+      "text": "Maintenance Service Parts",
+      "children": {
+        "100597": {
+          "text": "Service Intervals",
+          "children": []
+        },
+        "100598": {
+          "text": "Additional Repairs",
+          "children": []
+        }
+      }
+    },
+    "100050": {
+      "text": "Clutch/Attachment Parts",
+      "children": {
+        "100057": {
+          "text": "Flywheel",
+          "children": []
+        },
+        "100079": {
+          "text": "Clutch Control",
+          "children": {
+            "100060": {
+              "text": "Slave Cylinder",
+              "children": []
+            }
+          }
+        },
+        "103156": {
+          "text": "Tools",
+          "children": []
+        },
+        "104813": {
+          "text": "Hydraulic Fluid",
+          "children": []
+        }
+      }
+    },
+    "100214": {
+      "text": "Fuel Supply System",
+      "children": {
+        "100250": {
+          "text": "Fuel Tank/Accessories",
+          "children": []
+        },
+        "100251": {
+          "text": "Pump/Accessories",
+          "children": {
+            "100717": {
+              "text": "Fuel Pump",
+              "children": []
+            },
+            "100718": {
+              "text": "Accessories/Parts",
+              "children": []
+            }
+          }
+        },
+        "100253": {
+          "text": "Fuel Filter/Housing",
+          "children": []
+        },
+        "100258": {
+          "text": "Fuel Lines",
+          "children": []
+        },
+        "100267": {
+          "text": "Fuel Delivery Unit Complete",
+          "children": []
+        }
+      }
+    },
+    "100238": {
+      "text": "Transmission",
+      "children": {
+        "100239": {
+          "text": "Manual Transmission",
+          "children": {
+            "100769": {
+              "text": "Gaskets/Seals",
+              "children": []
+            },
+            "100772": {
+              "text": "Transmission Mounting",
+              "children": []
+            },
+            "101808": {
+              "text": "Transmission Control",
+              "children": []
+            }
+          }
+        },
+        "100240": {
+          "text": "Automatic Transmission",
+          "children": {
+            "100770": {
+              "text": "Gaskets/Seals",
+              "children": []
+            },
+            "100773": {
+              "text": "Transmission Mounting",
+              "children": []
+            },
+            "100775": {
+              "text": "Transmission Housing/Parts",
+              "children": []
+            },
+            "100776": {
+              "text": "Transmission Control/Hydraulics",
+              "children": []
+            },
+            "101814": {
+              "text": "Torque Converter",
+              "children": []
+            },
+            "101853": {
+              "text": "Oil Sump/Attachment Parts",
+              "children": {
+                "101854": {
+                  "text": "Oil Sump",
+                  "children": []
+                },
+                "101855": {
+                  "text": "Seal",
+                  "children": []
+                }
+              }
+            },
+            "103109": {
+              "text": "Cooler",
+              "children": []
+            },
+            "103475": {
+              "text": "Oil Change Parts Kit",
+              "children": []
+            }
+          }
+        },
+        "706233": {
+          "text": "Oil",
+          "children": []
+        }
+      }
+    },
+    "100241": {
+      "text": "Heating/Ventilation",
+      "children": {
+        "100346": {
+          "text": "Cabin Air Filter",
+          "children": []
+        },
+        "100347": {
+          "text": "Interior Heat Exchanger",
+          "children": []
+        },
+        "100349": {
+          "text": "Blower/Parts",
+          "children": []
+        },
+        "100725": {
+          "text": "Control Units",
+          "children": []
+        },
+        "100777": {
+          "text": "Hoses/Pipes",
+          "children": []
+        },
+        "102219": {
+          "text": "Valves/Controls",
+          "children": []
+        },
+        "706407": {
+          "text": "Auxiliary Water Pump",
+          "children": []
+        }
+      }
+    },
+    "100243": {
+      "text": "Air Conditioning",
+      "children": {
+        "100354": {
+          "text": "Compressor/Parts",
+          "children": []
+        },
+        "100355": {
+          "text": "Condenser",
+          "children": []
+        },
+        "100356": {
+          "text": "Evaporator",
+          "children": []
+        },
+        "100358": {
+          "text": "Valves",
+          "children": []
+        },
+        "100360": {
+          "text": "Hoses/Pipe",
+          "children": []
+        },
+        "100366": {
+          "text": "Switch",
+          "children": []
+        },
+        "100794": {
+          "text": "Sensors",
+          "children": []
+        }
+      }
+    },
+    "100254": {
+      "text": "Fuel Mixture Formation",
+      "children": {
+        "100790": {
+          "text": "Exhaust Emission Control",
+          "children": {
+            "100791": {
+              "text": "Exhaust Gas Recirculation",
+              "children": {
+                "100811": {
+                  "text": "EGR Valve/Intake Manifold",
+                  "children": []
+                },
+                "100812": {
+                  "text": "EGR Pressure Transducer",
+                  "children": []
+                },
+                "100815": {
+                  "text": "EGR Exhaust Control",
+                  "children": []
+                },
+                "100816": {
+                  "text": "Valves, exhaust gas recirculation",
+                  "children": []
+                },
+                "102992": {
+                  "text": "EGR Module",
+                  "children": []
+                },
+                "103239": {
+                  "text": "Gaskets",
+                  "children": []
+                },
+                "103241": {
+                  "text": "Cooler",
+                  "children": []
+                }
+              }
+            },
+            "100792": {
+              "text": "Secondary Air Injection",
+              "children": {
+                "100822": {
+                  "text": "Secondary Air Valve",
+                  "children": []
+                }
+              }
+            },
+            "100793": {
+              "text": "Lambda Control",
+              "children": []
+            },
+            "103047": {
+              "text": "Sensor/Probe",
+              "children": []
+            }
+          }
+        },
+        "102793": {
+          "text": "Mixture Formation",
+          "children": {
+            "102795": {
+              "text": "Seal",
+              "children": []
+            },
+            "102796": {
+              "text": "Throttle Valve/Throttle Body/Vacuum Pipe",
+              "children": []
+            },
+            "102799": {
+              "text": "Injector/Nozzle/Nozzle and Holder Assembly/UI",
+              "children": []
+            },
+            "102800": {
+              "text": "Nozzle and Holder Assembly/Nozzle Parts",
+              "children": []
+            },
+            "102801": {
+              "text": "Accelerator Pedal",
+              "children": []
+            },
+            "102803": {
+              "text": "Fuel Injection Pump/High Pressure Pump",
+              "children": []
+            },
+            "102804": {
+              "text": "Fuel Line/Distribution/Allocation",
+              "children": []
+            },
+            "102806": {
+              "text": "Mass Air Flow Sensor/Volume Air Flow Sensor",
+              "children": []
+            },
+            "102807": {
+              "text": "Repair Kit",
+              "children": []
+            },
+            "102809": {
+              "text": "Sensor/Probe",
+              "children": []
+            },
+            "102810": {
+              "text": "Control Unit",
+              "children": []
+            },
+            "102811": {
+              "text": "Valves/Valve Unit",
+              "children": []
+            },
+            "103150": {
+              "text": "Tools",
+              "children": []
+            }
+          }
+        }
+      }
+    },
+    "100335": {
+      "text": "Comfort Systems",
+      "children": {
+        "100614": {
+          "text": "Parking Heater",
+          "children": []
+        },
+        "100615": {
+          "text": "Cruise Control",
+          "children": []
+        },
+        "100617": {
+          "text": "Central Locking",
+          "children": []
+        },
+        "100618": {
+          "text": "park distance control/Back-up Alarm",
+          "children": []
+        },
+        "100625": {
+          "text": "Pumps",
+          "children": []
+        },
+        "100751": {
+          "text": "Window Regulator",
+          "children": []
+        },
+        "100836": {
+          "text": "Door Closing Aid/Door Actuation",
+          "children": []
+        },
+        "100850": {
+          "text": "Rain Sensor",
+          "children": []
+        },
+        "102736": {
+          "text": "Engine Preheater System (electric)",
+          "children": []
+        },
+        "104155": {
+          "text": "Tailgate Actuation",
+          "children": []
+        },
+        "104156": {
+          "text": "Motor/Relay/Switch",
+          "children": {
+            "104157": {
+              "text": "Window Regulator",
+              "children": []
+            },
+            "104159": {
+              "text": "Mirror",
+              "children": []
+            },
+            "104163": {
+              "text": "Cruise Control System",
+              "children": []
+            },
+            "105582": {
+              "text": "Tailgate",
+              "children": []
+            }
+          }
+        },
+        "706510": {
+          "text": "Keyless System",
+          "children": []
+        },
+        "706789": {
+          "text": "Control Unit",
+          "children": []
+        }
+      }
+    },
+    "100339": {
+      "text": "Information/ Communication Systems",
+      "children": {
+        "100693": {
+          "text": "Instruments",
+          "children": []
+        },
+        "100694": {
+          "text": "Audio System",
+          "children": []
+        },
+        "100695": {
+          "text": "Aerial",
+          "children": []
+        },
+        "100696": {
+          "text": "Communication",
+          "children": []
+        }
+      }
+    },
+    "100341": {
+      "text": "Interior Equipment",
+      "children": {
+        "100673": {
+          "text": "Seats",
+          "children": []
+        },
+        "100730": {
+          "text": "Accessories",
+          "children": []
+        },
+        "102689": {
+          "text": "Armrest",
+          "children": []
+        },
+        "102691": {
+          "text": "Window Regulator",
+          "children": []
+        },
+        "102692": {
+          "text": "Floor Mats",
+          "children": []
+        },
+        "102694": {
+          "text": "Handles",
+          "children": []
+        },
+        "102697": {
+          "text": "Boot",
+          "children": []
+        },
+        "102706": {
+          "text": "Panelling",
+          "children": []
+        },
+        "104958": {
+          "text": "Fastening Clips",
+          "children": []
+        }
+      }
+    },
+    "100342": {
+      "text": "Headlight Cleaning",
+      "children": []
+    },
+    "100343": {
+      "text": "Carrier Equipment",
+      "children": {
+        "100367": {
+          "text": "Roof Rack",
+          "children": []
+        }
+      }
+    },
+    "100400": {
+      "text": "Axle Drive",
+      "children": {
+        "100415": {
+          "text": "Differential",
+          "children": []
+        },
+        "100416": {
+          "text": "Transfer Case",
+          "children": []
+        },
+        "100703": {
+          "text": "Propshaft",
+          "children": {
+            "100707": {
+              "text": "Universal Joint",
+              "children": []
+            },
+            "100805": {
+              "text": "Propshaft",
+              "children": []
+            },
+            "100839": {
+              "text": "Bearing/Mounting",
+              "children": []
+            }
+          }
+        },
+        "101996": {
+          "text": "Oil",
+          "children": []
+        }
+      }
+    },
+    "100417": {
+      "text": "Security Systems",
+      "children": {
+        "100762": {
+          "text": "Air Bag System",
+          "children": []
+        },
+        "706455": {
+          "text": "Driver Assistance System",
+          "children": []
+        }
+      }
+    },
+    "100685": {
+      "text": "Locking System",
+      "children": {
+        "100686": {
+          "text": "Central Locking System",
+          "children": []
+        },
+        "100687": {
+          "text": "Exterior Locks",
+          "children": []
+        },
+        "100691": {
+          "text": "Handles",
+          "children": []
+        },
+        "706506": {
+          "text": "Spanner",
+          "children": []
+        }
+      }
+    },
+    "100733": {
+      "text": "Accessories",
+      "children": {
+        "100854": {
+          "text": "Cigarette Lighter",
+          "children": []
+        },
+        "100857": {
+          "text": "Floor Mats",
+          "children": []
+        },
+        "100860": {
+          "text": "Armrest",
+          "children": []
+        },
+        "100862": {
+          "text": "Boot/Cargo Area/Loading surface",
+          "children": []
+        },
+        "103443": {
+          "text": "Wind Deflector",
+          "children": []
+        },
+        "103485": {
+          "text": "Snow Chains",
+          "children": []
+        },
+        "104736": {
+          "text": "Marten Protection",
+          "children": []
+        },
+        "706519": {
+          "text": "Other",
+          "children": []
+        }
+      }
+    },
+    "103099": {
+      "text": "Wheels/Tyres",
+      "children": {
+        "103100": {
+          "text": "Tyre",
+          "children": []
+        },
+        "103102": {
+          "text": "Accessories",
+          "children": []
+        },
+        "103479": {
+          "text": "Tyre-Pressure Monitoring System",
+          "children": []
+        }
+      }
+    },
+    "103168": {
+      "text": "Compressed-air System",
+      "children": {
+        "103197": {
+          "text": "Hoses/Connector Pipes",
+          "children": []
+        }
+      }
+    },
+    "706209": {
+      "text": "Hybrid/Electric Drive",
+      "children": {
+        "706210": {
+          "text": "Cooling System",
+          "children": {
+            "706215": {
+              "text": "Radiator for electric motor",
+              "children": []
+            },
+            "706706": {
+              "text": "Water pump for electrical drive",
+              "children": []
+            },
+            "706747": {
+              "text": "Hoses/Pipes/Flanges",
+              "children": []
+            },
+            "706816": {
+              "text": "Sensors",
+              "children": []
+            }
+          }
+        }
+      }
+    },
+    "706365": {
+      "text": "Special Tools",
+      "children": {
+        "706380": {
+          "text": "Special Tools, axle mounting/steering/wheels",
+          "children": {
+            "706383": {
+              "text": "Joints",
+              "children": []
+            },
+            "706388": {
+              "text": "Caster/Camber Adjustment",
+              "children": []
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -11,6 +11,7 @@ interface InfraStackProps extends cdk.StackProps {
   vinLookupLambda: lambda.Function;
   photoAnalyzerLambda: lambda.Function;
   partsCategoriesLambda: lambda.Function;
+  partsSearchLambda: lambda.Function;
   apiKeysSecret: secretsmanager.Secret;
 }
 
@@ -33,6 +34,7 @@ export class InfraStack extends cdk.Stack {
       vinLookupLambda: props.vinLookupLambda,
       photoAnalyzerLambda: props.photoAnalyzerLambda,
       partsCategoriesLambda: props.partsCategoriesLambda,
+      partsSearchLambda: props.partsSearchLambda,
     });
 
     // Store only the string values

@@ -14,6 +14,7 @@ export class PartsAgent extends Construct {
   public readonly vinLookupLambda: lambda.Function;
   public readonly photoAnalyzerLambda: lambda.Function;
   public readonly partsCategoriesLambda: lambda.Function;
+  public readonly partsSearchLambda: lambda.Function;
   public readonly apiCacheTable: dynamodb.Table;
 
   constructor(scope: Construct, id: string, props: PartsAgentProps) {
@@ -27,6 +28,16 @@ export class PartsAgent extends Construct {
       ),
       compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       description: 'Lambda utilities layer for agent functions',
+    });
+
+    // Create Lambda Layer for LangGraph
+    const langgraphLayer = new lambda.LayerVersion(this, 'LanggraphLayer', {
+      layerVersionName: 'Hp-Langgraph-Layer',
+      code: lambda.Code.fromAsset(
+        path.join(__dirname, '../../../apps/agents/lambda_layers/langgraph/lambda_layer.zip')
+      ),
+      compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
+      description: 'LangGraph layer for AI agent workflows',
     });
 
     // Create DynamoDB table for API response caching
@@ -82,16 +93,33 @@ export class PartsAgent extends Construct {
       handler: 'lookup_categories.lambda_handler',
     });
 
+    // Create Parts Search Lambda (with LangGraph layer)
+    this.partsSearchLambda = new lambda.Function(this, 'PartsSearchLambda', {
+      functionName: 'Hp-PartsSearchAgent-Lambda',
+      runtime: lambda.Runtime.PYTHON_3_12,
+      timeout: cdk.Duration.minutes(5),
+      memorySize: 1024,
+      layers: [lambdaUtilsLayer, langgraphLayer],
+      environment: {
+        SECRET_ARN: props.apiKeysSecret.secretArn,
+        API_CACHE_TABLE: this.apiCacheTable.tableName,
+      },
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../../apps/agents/parts_lookup')),
+      handler: 'lookup_parts.lambda_handler',
+    });
+
     // Grant all Lambdas access to:
     // 1. DynamoDB table (read/write)
     this.apiCacheTable.grantReadWriteData(this.vinLookupLambda);
     this.apiCacheTable.grantReadWriteData(this.photoAnalyzerLambda);
     this.apiCacheTable.grantReadWriteData(this.partsCategoriesLambda);
+    this.apiCacheTable.grantReadWriteData(this.partsSearchLambda);
 
     // 2. Secrets Manager (read)
     props.apiKeysSecret.grantRead(this.vinLookupLambda);
     props.apiKeysSecret.grantRead(this.photoAnalyzerLambda);
     props.apiKeysSecret.grantRead(this.partsCategoriesLambda);
+    props.apiKeysSecret.grantRead(this.partsSearchLambda);
 
     // 3. Bedrock model invocation
     const bedrockPolicy = new iam.PolicyStatement({
@@ -102,5 +130,6 @@ export class PartsAgent extends Construct {
     this.vinLookupLambda.addToRolePolicy(bedrockPolicy);
     this.photoAnalyzerLambda.addToRolePolicy(bedrockPolicy);
     this.partsCategoriesLambda.addToRolePolicy(bedrockPolicy);
+    this.partsSearchLambda.addToRolePolicy(bedrockPolicy);
   }
 }
