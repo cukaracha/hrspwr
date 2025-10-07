@@ -65,7 +65,7 @@ export default function Garage() {
       year: vehicleData.model_year || 'Unknown',
       make: vehicleData.make || 'Unknown',
       model: vehicleData.model || 'Unknown',
-      trim: vehicleData.trim,
+      trim: vehicleData.trim || undefined,
       vin: vehicleData.vin,
       apiData: vehicleData, // Store full API response
       partsCategories, // Store parts categories

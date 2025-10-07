@@ -3,11 +3,11 @@ import { fetchAuthSession } from '@aws-amplify/auth';
 const API_URL = import.meta.env.VITE_API_URL;
 
 /**
- * Response from the VIN lookup API
+ * Response from the VIN lookup API (RapidAPI TecDoc VIN Decoder)
  */
 export interface VinLookupResponse {
   vin: string;
-  [key: string]: unknown; // Allow additional fields from RapidAPI response
+  [key: string]: any; // Allow additional fields from RapidAPI response
 }
 
 /**
@@ -33,7 +33,7 @@ export interface VehicleMetadata {
  */
 export interface PartsCategoriesResponse {
   metadata: VehicleMetadata;
-  categories: unknown; // Raw parts categories tree from RapidAPI
+  categories: any; // Raw parts categories tree from RapidAPI
 }
 
 /**
