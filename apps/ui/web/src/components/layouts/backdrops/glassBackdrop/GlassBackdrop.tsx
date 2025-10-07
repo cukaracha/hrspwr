@@ -20,9 +20,9 @@ export const GlassBackdrop: React.FC<GlassBackdropProps> = ({
     <div
       className={cn(
         'fixed inset-0 bg-glass-bg backdrop-blur-md animate-in fade-in duration-200',
-        `z-${zIndex}`,
         className
       )}
+      style={{ zIndex }}
       onClick={onClick}
     />
   );

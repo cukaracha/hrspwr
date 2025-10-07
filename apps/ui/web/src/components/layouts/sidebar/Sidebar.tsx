@@ -43,7 +43,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   return (
     <>
       {/* Backdrop */}
-      <GlassBackdrop isOpen={isOpen} onClick={onClose} zIndex={40} />
+      <GlassBackdrop isOpen={isOpen} onClick={onClose} zIndex={45} />
 
       {/* Sidebar */}
       <div
@@ -53,7 +53,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       >
         <div className='flex flex-col h-full'>
           {/* Header */}
-          <div className='flex items-center justify-between p-6 border-b border-border relative'>
+          <div className='flex items-center justify-between h-[65px] sm:h-[81px] px-6 border-b border-border relative'>
             <h2 className='text-xl font-semibold text-foreground'>Menu</h2>
             <CloseButton onClick={onClose} variant='ghost' position='relative' />
           </div>

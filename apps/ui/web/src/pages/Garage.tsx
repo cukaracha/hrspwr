@@ -78,14 +78,7 @@ export default function Garage() {
   };
 
   return (
-    <div className='flex flex-col h-screen px-4 sm:px-6 md:px-8 lg:px-12'>
-      {/* Header */}
-      <div className='flex-shrink-0 text-center pt-8 pb-4 sm:pt-12 sm:pb-6'>
-        <h1 className='text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight'>
-          My Garage
-        </h1>
-      </div>
-
+    <div className='flex flex-col h-[calc(100vh-4rem)] sm:h-[calc(100vh-5rem)] px-4 sm:px-6 md:px-8 lg:px-12'>
       {/* Card Carousel */}
       <div className='flex-1 flex items-center min-h-0'>
         <CardCarousel className='w-full'>
