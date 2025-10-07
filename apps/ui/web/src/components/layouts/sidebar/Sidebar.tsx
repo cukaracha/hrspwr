@@ -4,6 +4,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { GlassButton } from '../../ui/buttons/glassbutton/GlassButton';
 import { CloseButton } from '../../ui/buttons/closebutton/CloseButton';
 import { ThemeToggle } from '../../ui/toggles/themeToggle/ThemeToggle';
+import { GlassBackdrop } from '../backdrops/glassBackdrop/GlassBackdrop';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -42,13 +43,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   return (
     <>
       {/* Backdrop */}
-      {isOpen && (
-        <div className='fixed inset-0 bg-black/20 backdrop-blur-sm z-40' onClick={onClose} />
-      )}
+      <GlassBackdrop isOpen={isOpen} onClick={onClose} zIndex={40} />
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-background shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
+        className={`fixed top-0 left-0 h-full w-80 bg-white/70 dark:bg-black/70 backdrop-blur-md border-r border-glass-border shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >

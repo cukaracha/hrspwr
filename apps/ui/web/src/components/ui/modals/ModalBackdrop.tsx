@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cn } from '../../../lib/utils';
+import { GlassBackdrop } from '../../layouts/backdrops/glassBackdrop/GlassBackdrop';
 
 export interface ModalBackdropProps {
   isOpen: boolean;
@@ -21,10 +22,7 @@ export const ModalBackdrop: React.FC<ModalBackdropProps> = ({
   return (
     <>
       {/* Backdrop */}
-      <div
-        className='fixed inset-0 bg-glass-bg backdrop-blur-md z-50 animate-in fade-in duration-200'
-        onClick={onClose}
-      />
+      <GlassBackdrop isOpen={isOpen} onClick={onClose} zIndex={50} />
 
       {/* Modal Container */}
       <div className='fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none'>

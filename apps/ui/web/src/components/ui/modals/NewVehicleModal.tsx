@@ -11,6 +11,7 @@ import {
   vinLookup,
   fileToBase64,
   VinLookupResponse,
+  PartsCategoriesResponse,
   partsCategoriesLookup,
 } from '../../../services/agentsApi';
 import { ModalBackdrop } from './ModalBackdrop';
@@ -20,7 +21,10 @@ import { Alert } from '../alerts/Alert';
 export interface NewVehicleModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onVehicleAdded?: (vehicleData: VinLookupResponse, partsCategories?: unknown) => void;
+  onVehicleAdded?: (
+    vehicleData: VinLookupResponse,
+    partsCategories?: PartsCategoriesResponse
+  ) => void;
 }
 
 export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({

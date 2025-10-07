@@ -21,7 +21,10 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
           variant='ghost'
           size='sm'
           onClick={onClick}
-          className={cn('hover:bg-white/20 backdrop-blur-sm border border-white/20', className)}
+          className={cn(
+            'hover:bg-white/20 backdrop-blur-sm border-transparent hover:border-white/20',
+            className
+          )}
           {...props}
         >
           <Menu className='h-5 w-5' />
