@@ -13,6 +13,8 @@ import { GlassMenu, GlassMenuItem } from '../components/ui/menus/glassmenu/Glass
 import { Alert } from '../components/ui/alerts/Alert';
 import { GlassBadge } from '../components/ui/badges/glassbadge/GlassBadge';
 import { fileToBase64, photoAnalyzer, partsLookup, PartLookupResult } from '../services/agentsApi';
+import { VehicleSelectionModal } from '../components/ui/modals/VehicleSelectionModal';
+import { Vehicle } from '../components/ui/cards/vehiclecard/VehicleCard';
 
 interface VehicleData {
   year: string;
@@ -29,6 +31,67 @@ interface PartResultCache {
   [partName: string]: PartLookupResult;
 }
 
+// Mock vehicles data - TODO: Replace with actual vehicle context/API
+const mockVehicles: Vehicle[] = [
+  {
+    id: '1',
+    year: '2023',
+    make: 'Tesla',
+    model: 'Model 3',
+    trim: 'Performance',
+    imageUrl:
+      'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&auto=format&fit=crop&q=60',
+    vin: '5YJ3E1EA5KF123456',
+    partsCategories: {
+      metadata: {
+        countryFilterId: 1,
+        manufacturerId: 100,
+        modelId: 1000,
+        vehicleId: 10000,
+      },
+      categories: {},
+    },
+  },
+  {
+    id: '2',
+    year: '2022',
+    make: 'BMW',
+    model: 'M4',
+    trim: 'Competition',
+    imageUrl:
+      'https://images.unsplash.com/photo-1617531653520-bd466c28f515?w=800&auto=format&fit=crop&q=60',
+    vin: 'WBS8M9C51N5L12345',
+    partsCategories: {
+      metadata: {
+        countryFilterId: 1,
+        manufacturerId: 200,
+        modelId: 2000,
+        vehicleId: 20000,
+      },
+      categories: {},
+    },
+  },
+  {
+    id: '3',
+    year: '2021',
+    make: 'Porsche',
+    model: '911',
+    trim: 'Carrera S',
+    imageUrl:
+      'https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=800&auto=format&fit=crop&q=60',
+    vin: 'WP0AB2A99MS123456',
+    partsCategories: {
+      metadata: {
+        countryFilterId: 1,
+        manufacturerId: 300,
+        modelId: 3000,
+        vehicleId: 30000,
+      },
+      categories: {},
+    },
+  },
+];
+
 export default function PartsSearch() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -44,6 +107,8 @@ export default function PartsSearch() {
   const [partsCache, setPartsCache] = React.useState<PartResultCache>({});
   const [isLoadingParts, setIsLoadingParts] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [isVehicleModalOpen, setIsVehicleModalOpen] = React.useState(false);
+  const [currentVehicleId, setCurrentVehicleId] = React.useState<string | undefined>(undefined);
 
   // Redirect if no vehicle data
   React.useEffect(() => {
@@ -51,6 +116,48 @@ export default function PartsSearch() {
       navigate('/');
     }
   }, [vehicleData, navigate]);
+
+  // Set current vehicle ID based on VIN match
+  React.useEffect(() => {
+    if (vehicleData?.vin) {
+      const matchedVehicle = mockVehicles.find(v => v.vin === vehicleData.vin);
+      if (matchedVehicle) {
+        setCurrentVehicleId(matchedVehicle.id);
+      }
+    }
+  }, [vehicleData]);
+
+  // Handle vehicle selection from modal
+  const handleVehicleSelect = (vehicle: Vehicle) => {
+    if (!vehicle.partsCategories?.metadata) {
+      setError('Selected vehicle is missing metadata');
+      return;
+    }
+
+    // Navigate to parts search page with new vehicle data
+    navigate(`/parts-search/${vehicle.vin}`, {
+      state: {
+        year: vehicle.year,
+        make: vehicle.make,
+        model: vehicle.model,
+        vin: vehicle.vin,
+        vehicleId: vehicle.partsCategories.metadata.vehicleId,
+        countryFilterId: vehicle.partsCategories.metadata.countryFilterId,
+        categories: vehicle.partsCategories.categories,
+        imageUrl: vehicle.imageUrl,
+      },
+    });
+
+    // Update current vehicle ID
+    setCurrentVehicleId(vehicle.id);
+
+    // Reset parts search state
+    setSelectedFile(null);
+    setDetectedParts([]);
+    setSelectedPart('');
+    setPartsCache({});
+    setError(null);
+  };
 
   // Handle photo analysis
   const handleAnalyzePhoto = async () => {
@@ -133,46 +240,58 @@ export default function PartsSearch() {
   return (
     <div className='container mx-auto px-4 py-8 space-y-6 max-w-2xl'>
       {/* Vehicle Info Card */}
-      <GlassCard variant='default' className='overflow-hidden p-0'>
-        <div className='flex items-stretch'>
+      <GlassCard
+        variant='default'
+        className='overflow-hidden p-0 cursor-pointer transition-all duration-200 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]'
+        onClick={() => setIsVehicleModalOpen(true)}
+      >
+        <div className='flex flex-col sm:flex-row items-stretch relative max-h-48 sm:max-h-32'>
           {/* Vehicle Thumbnail */}
           {vehicleData.imageUrl && (
-            <div className='flex-shrink-0 w-32 sm:w-40 bg-gradient-to-br from-blue-500 to-purple-600'>
+            <div className='flex-shrink-0 w-full h-48 sm:w-40 sm:h-32 bg-gradient-to-br from-blue-500 to-purple-600'>
               <img
                 src={vehicleData.imageUrl}
                 alt={`${vehicleData.year} ${vehicleData.make} ${vehicleData.model}`}
-                className='w-full h-full object-cover'
+                className='w-full h-full object-cover object-center'
               />
             </div>
           )}
 
           {/* Vehicle Details */}
-          <div className='flex flex-col justify-center p-4 pl-6 flex-1'>
-            <div className='flex items-center gap-2 mb-2'>
+          <div className='flex flex-col justify-center p-3 sm:pl-4 flex-1 bg-gradient-to-t from-black/60 to-transparent sm:bg-none absolute sm:relative bottom-0 sm:bottom-auto w-full sm:w-auto'>
+            <div className='flex items-center gap-2 mb-1'>
               <GlassBadge>{vehicleData.year}</GlassBadge>
             </div>
-            <div className='flex items-center gap-2 mb-2'>
-              <h3 className='text-2xl font-bold text-glass-text leading-none'>
+            <div className='flex items-center gap-2 mb-1'>
+              <h3 className='text-xl sm:text-lg font-bold text-white sm:text-glass-text leading-none shadow-lg sm:shadow-none'>
                 {vehicleData.make}
               </h3>
-              <p className='text-2xl font-semibold text-glass-text/90 leading-none'>
+              <p className='text-xl sm:text-lg font-semibold text-white/90 sm:text-glass-text/90 leading-none shadow-lg sm:shadow-none'>
                 {vehicleData.model}
               </p>
             </div>
-            <div className='text-sm text-glass-text/70 font-mono'>VIN: {vehicleData.vin}</div>
+            <div className='text-xs sm:text-sm text-white/70 sm:text-glass-text/70 font-mono shadow-lg sm:shadow-none truncate'>
+              VIN: {vehicleData.vin}
+            </div>
+            <div className='text-xs text-white/50 sm:text-glass-text/50 mt-1 italic shadow-lg sm:shadow-none'>
+              Click to change vehicle
+            </div>
           </div>
         </div>
       </GlassCard>
 
       {/* Photo Upload Section */}
-      <GlassCard variant='default'>
-        <GlassCardHeader>
-          <GlassCardTitle className='text-2xl flex items-center gap-2'>
-            <Upload className='h-6 w-6' />
+      <GlassCard
+        variant='default'
+        className='p-4 hover:bg-glass-bg hover:shadow-lg hover:border-glass-border active:scale-100'
+      >
+        <GlassCardHeader className='p-0 pb-4'>
+          <GlassCardTitle className='text-lg sm:text-xl flex items-center gap-2'>
+            <Upload className='h-5 w-5' />
             Upload Parts Photo
           </GlassCardTitle>
         </GlassCardHeader>
-        <GlassCardContent className='space-y-4'>
+        <GlassCardContent className='space-y-4 p-0'>
           <GlassDropzone
             value={selectedFile}
             onFileSelect={setSelectedFile}
@@ -286,6 +405,15 @@ export default function PartsSearch() {
           </GlassCardContent>
         </GlassCard>
       )}
+
+      {/* Vehicle Selection Modal */}
+      <VehicleSelectionModal
+        isOpen={isVehicleModalOpen}
+        onClose={() => setIsVehicleModalOpen(false)}
+        vehicles={mockVehicles}
+        currentVehicleId={currentVehicleId}
+        onVehicleSelect={handleVehicleSelect}
+      />
     </div>
   );
 }
