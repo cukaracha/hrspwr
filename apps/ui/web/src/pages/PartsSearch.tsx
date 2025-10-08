@@ -22,6 +22,7 @@ interface VehicleData {
   vehicleId: number;
   countryFilterId: number;
   categories: unknown;
+  imageUrl?: string;
 }
 
 interface PartResultCache {
@@ -130,22 +131,37 @@ export default function PartsSearch() {
   }
 
   return (
-    <div className='container mx-auto px-4 py-8 space-y-6'>
+    <div className='container mx-auto px-4 py-8 space-y-6 max-w-2xl'>
       {/* Vehicle Info Card */}
-      <GlassCard variant='default'>
-        <GlassCardHeader>
-          <GlassCardTitle className='text-2xl'>Vehicle Information</GlassCardTitle>
-        </GlassCardHeader>
-        <GlassCardContent>
-          <div className='flex flex-wrap items-center gap-4'>
-            <GlassBadge>{vehicleData.year}</GlassBadge>
-            <div className='flex-1 min-w-[200px]'>
-              <h3 className='text-2xl font-bold text-glass-text'>{vehicleData.make}</h3>
-              <p className='text-xl font-semibold text-glass-text/90'>{vehicleData.model}</p>
+      <GlassCard variant='default' className='overflow-hidden p-0'>
+        <div className='flex items-stretch'>
+          {/* Vehicle Thumbnail */}
+          {vehicleData.imageUrl && (
+            <div className='flex-shrink-0 w-32 sm:w-40 bg-gradient-to-br from-blue-500 to-purple-600'>
+              <img
+                src={vehicleData.imageUrl}
+                alt={`${vehicleData.year} ${vehicleData.make} ${vehicleData.model}`}
+                className='w-full h-full object-cover'
+              />
+            </div>
+          )}
+
+          {/* Vehicle Details */}
+          <div className='flex flex-col justify-center p-4 pl-6 flex-1'>
+            <div className='flex items-center gap-2 mb-2'>
+              <GlassBadge>{vehicleData.year}</GlassBadge>
+            </div>
+            <div className='flex items-center gap-2 mb-2'>
+              <h3 className='text-2xl font-bold text-glass-text leading-none'>
+                {vehicleData.make}
+              </h3>
+              <p className='text-2xl font-semibold text-glass-text/90 leading-none'>
+                {vehicleData.model}
+              </p>
             </div>
             <div className='text-sm text-glass-text/70 font-mono'>VIN: {vehicleData.vin}</div>
           </div>
-        </GlassCardContent>
+        </div>
       </GlassCard>
 
       {/* Photo Upload Section */}

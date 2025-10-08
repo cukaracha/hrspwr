@@ -5,7 +5,7 @@ import { cn } from '../../../../lib/utils';
 import { Loader2 } from 'lucide-react';
 
 const glassButtonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-medium transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glass-border focus-visible:ring-offset-2 focus-visible:ring-offset-transparent backdrop-blur-md border border-glass-border text-glass-text relative overflow-hidden',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glass-border focus-visible:ring-offset-2 focus-visible:ring-offset-transparent backdrop-blur-md border border-glass-border text-glass-text relative overflow-hidden',
   {
     variants: {
       variant: {
@@ -21,8 +21,8 @@ const glassButtonVariants = cva(
       },
       size: {
         default: 'h-10 px-4 py-2',
-        sm: 'h-9 rounded-xl px-3 text-xs',
-        lg: 'h-11 rounded-2xl px-8 text-base',
+        sm: 'h-9 px-3 text-xs',
+        lg: 'h-11 px-8 text-base',
         icon: 'h-10 w-10',
       },
     },

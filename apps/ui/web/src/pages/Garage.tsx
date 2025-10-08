@@ -17,6 +17,15 @@ const mockVehicles: Vehicle[] = [
     imageUrl:
       'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&auto=format&fit=crop&q=60',
     vin: '5YJ3E1EA5KF123456',
+    partsCategories: {
+      metadata: {
+        countryFilterId: 1,
+        manufacturerId: 100,
+        modelId: 1000,
+        vehicleId: 10000,
+      },
+      categories: {},
+    },
   },
   {
     id: '2',
@@ -27,6 +36,15 @@ const mockVehicles: Vehicle[] = [
     imageUrl:
       'https://images.unsplash.com/photo-1617531653520-bd466c28f515?w=800&auto=format&fit=crop&q=60',
     vin: 'WBS8M9C51N5L12345',
+    partsCategories: {
+      metadata: {
+        countryFilterId: 1,
+        manufacturerId: 200,
+        modelId: 2000,
+        vehicleId: 20000,
+      },
+      categories: {},
+    },
   },
   {
     id: '3',
@@ -37,6 +55,15 @@ const mockVehicles: Vehicle[] = [
     imageUrl:
       'https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=800&auto=format&fit=crop&q=60',
     vin: 'WP0AB2A99MS123456',
+    partsCategories: {
+      metadata: {
+        countryFilterId: 1,
+        manufacturerId: 300,
+        modelId: 3000,
+        vehicleId: 30000,
+      },
+      categories: {},
+    },
   },
 ];
 

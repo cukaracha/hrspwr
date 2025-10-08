@@ -6,7 +6,7 @@ import { GlassBanner } from '../banners/glassbanner/GlassBanner';
 
 // Map routes to page titles
 const routeTitles: Record<string, string> = {
-  '/': 'Home',
+  '/': 'My Garage',
   '/garage': 'My Garage',
   '/browse': 'Browse',
   '/settings': 'Settings',
@@ -17,7 +17,14 @@ export default function AppLayout() {
   const location = useLocation();
 
   // Get current page title based on route
-  const pageTitle = routeTitles[location.pathname] || 'App';
+  const getPageTitle = () => {
+    if (location.pathname.startsWith('/parts-search')) {
+      return 'Parts Search';
+    }
+    return routeTitles[location.pathname] || 'App';
+  };
+
+  const pageTitle = getPageTitle();
 
   return (
     <div className='min-h-screen'>

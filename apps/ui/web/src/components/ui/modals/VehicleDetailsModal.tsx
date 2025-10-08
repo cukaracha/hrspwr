@@ -61,6 +61,7 @@ export const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({
         vehicleId: vehicle.partsCategories.metadata.vehicleId,
         countryFilterId: vehicle.partsCategories.metadata.countryFilterId,
         categories: vehicle.partsCategories.categories,
+        imageUrl: vehicle.imageUrl,
       },
     });
 

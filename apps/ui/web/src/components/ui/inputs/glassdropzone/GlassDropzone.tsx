@@ -126,7 +126,7 @@ export const GlassDropzone = React.forwardRef<HTMLDivElement, GlassDropzoneProps
         <div
           className={cn(
             'relative flex flex-col items-center justify-center',
-            'border-3 border-dashed rounded-2xl p-8',
+            'border-2 border-dashed rounded-2xl p-8',
             'transition-all duration-300',
             'bg-white/5 backdrop-blur-sm',
             dragActive && !disabled && 'border-primary bg-primary/10 scale-[1.02]',

@@ -126,6 +126,10 @@
 
   /* Global gradient for glass components */
   .glass-gradient {
+    background: linear-gradient(to bottom right, rgb(229 231 235 / 0.8), rgb(229 231 235 / 0.8), rgb(229 231 235 / 0.8));
+  }
+
+  .dark .glass-gradient {
     background: linear-gradient(to bottom right, rgb(59 130 246 / 0.3), rgb(168 85 247 / 0.3), rgb(99 102 241 / 0.3));
   }
 
