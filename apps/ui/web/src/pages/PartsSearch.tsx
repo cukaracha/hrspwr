@@ -286,7 +286,7 @@ export default function PartsSearch() {
         className='p-4 hover:bg-glass-bg hover:shadow-lg hover:border-glass-border active:scale-100'
       >
         <GlassCardHeader className='p-0 pb-4'>
-          <GlassCardTitle className='text-lg sm:text-xl flex items-center gap-2'>
+          <GlassCardTitle className='text-lg sm:text-xl flex items-center justify-center gap-2'>
             <Upload className='h-5 w-5' />
             Upload Parts Photo
           </GlassCardTitle>

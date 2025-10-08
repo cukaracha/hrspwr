@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Upload, Image as ImageIcon, Check } from 'lucide-react';
+import { Upload, Check, Car } from 'lucide-react';
 import { GlassButton } from '../buttons/glassbutton/GlassButton';
 import { GlassCard, GlassCardContent } from '../cards/glasscard/GlassCard';
 import {
@@ -12,6 +12,7 @@ import {
 import { ModalBackdrop } from './ModalBackdrop';
 import { CloseButton } from '../buttons/closebutton/CloseButton';
 import { Alert } from '../alerts/Alert';
+import { GlassDropzone } from '../inputs/glassdropzone/GlassDropzone';
 
 export interface NewVehicleModalProps {
   isOpen: boolean;
@@ -28,23 +29,15 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
   onVehicleAdded,
 }) => {
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [loadingMessage, setLoadingMessage] = React.useState('Decoding VIN...');
   const [error, setError] = React.useState<string | null>(null);
   const [successData, setSuccessData] = React.useState<VinLookupResponse | null>(null);
   const [partsCategoriesError, setPartsCategoriesError] = React.useState<string | null>(null);
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-      setError(null);
-
-      // Create preview URL
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
-    }
+  const handleFileSelect = (file: File | null) => {
+    setSelectedFile(file);
+    setError(null);
   };
 
   const handleDecodeVin = async () => {
@@ -97,16 +90,9 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
 
   const handleClear = () => {
     setSelectedFile(null);
-    setPreviewUrl(null);
     setError(null);
     setSuccessData(null);
     setPartsCategoriesError(null);
-
-    // Clear file input
-    const fileInput = document.getElementById('modal-vin-image-input') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = '';
-    }
   };
 
   const handleClose = () => {
@@ -121,13 +107,14 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
         className='cursor-default hover:shadow-2xl active:scale-100 max-h-[90vh] overflow-y-auto relative'
       >
         {/* Close Button */}
-        <div className='absolute top-0 right-0 z-10'>
+        <div className='absolute top-2 right-2 z-10'>
           <CloseButton onClick={handleClose} position='relative' />
         </div>
 
         {/* Header */}
-        <div className='relative p-4 pb-0'>
-          <h2 className='text-lg sm:text-xl md:text-2xl font-bold text-glass-text text-center pr-12'>
+        <div className='relative p-6'>
+          <h2 className='text-lg sm:text-xl md:text-2xl font-bold text-glass-text text-center flex items-center justify-center gap-2'>
+            <Car className='h-6 w-6' />
             Add New Vehicle
           </h2>
         </div>
@@ -171,56 +158,13 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
           ) : (
             <>
               {/* Upload Area */}
-              <div className='flex flex-col items-center justify-center border-3 border-dashed border-primary rounded-2xl p-8 hover:border-primary/80 transition-all duration-300'>
-                <input
-                  id='modal-vin-image-input'
-                  type='file'
-                  accept='image/*'
-                  onChange={handleFileSelect}
-                  className='hidden'
-                />
-                <label
-                  htmlFor='modal-vin-image-input'
-                  className='cursor-pointer flex flex-col items-center space-y-4 w-full'
-                >
-                  {previewUrl ? (
-                    <div className='relative w-full'>
-                      <img
-                        src={previewUrl}
-                        alt='VIN plate preview'
-                        className='max-w-full max-h-64 mx-auto rounded-lg shadow-lg'
-                      />
-                      <div className='absolute top-2 right-2'>
-                        <GlassButton
-                          type='button'
-                          size='sm'
-                          variant='ghost'
-                          onClick={e => {
-                            e.preventDefault();
-                            handleClear();
-                          }}
-                        >
-                          Clear
-                        </GlassButton>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      <div className='w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center'>
-                        <ImageIcon className='h-10 w-10 text-primary' />
-                      </div>
-                      <div className='text-center'>
-                        <p className='text-lg font-semibold text-glass-text'>
-                          Click to upload VIN plate image
-                        </p>
-                        <p className='text-sm text-glass-text/60 mt-1'>
-                          PNG, JPG, or JPEG (max 5MB)
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </label>
-              </div>
+              <GlassDropzone
+                onFileSelect={handleFileSelect}
+                accept='image/*'
+                maxSize={5}
+                value={selectedFile}
+                disabled={isLoading}
+              />
 
               {/* Error Display */}
               {error && <Alert variant='error' message={error} />}

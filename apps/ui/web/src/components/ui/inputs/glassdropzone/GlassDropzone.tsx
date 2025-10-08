@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image as ImageIcon, X } from 'lucide-react';
+import { Image as ImageIcon, Trash2 } from 'lucide-react';
 import { cn } from '../../../../lib/utils';
 import { GlassButton } from '../../buttons/glassbutton/GlassButton';
 
@@ -126,7 +126,7 @@ export const GlassDropzone = React.forwardRef<HTMLDivElement, GlassDropzoneProps
         <div
           className={cn(
             'relative flex flex-col items-center justify-center',
-            'border-2 border-dashed rounded-2xl p-8',
+            'border border-dashed rounded-2xl p-3',
             'transition-all duration-300',
             'bg-white/5 backdrop-blur-sm',
             dragActive && !disabled && 'border-primary bg-primary/10 scale-[1.02]',
@@ -149,27 +149,24 @@ export const GlassDropzone = React.forwardRef<HTMLDivElement, GlassDropzoneProps
             className='hidden'
           />
 
+          {!disabled && previewUrl && (
+            <GlassButton
+              type='button'
+              size='sm'
+              variant='ghost'
+              onClick={handleClear}
+              className='absolute top-2 right-2 h-8 w-8 p-0 z-10'
+            >
+              <Trash2 className='h-4 w-4' />
+            </GlassButton>
+          )}
+
           {previewUrl ? (
-            <div className='relative w-full'>
-              <img
-                src={previewUrl}
-                alt='Preview'
-                className='max-w-full max-h-64 mx-auto rounded-lg shadow-lg'
-              />
-              {!disabled && (
-                <div className='absolute top-2 right-2'>
-                  <GlassButton
-                    type='button'
-                    size='sm'
-                    variant='ghost'
-                    onClick={handleClear}
-                    className='h-8 w-8 p-0'
-                  >
-                    <X className='h-4 w-4' />
-                  </GlassButton>
-                </div>
-              )}
-            </div>
+            <img
+              src={previewUrl}
+              alt='Preview'
+              className='max-w-full max-h-64 mx-auto rounded-lg shadow-lg'
+            />
           ) : (
             <>
               <div className='w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-4'>

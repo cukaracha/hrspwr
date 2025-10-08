@@ -22,7 +22,7 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <div className={cn('border-t border-glass-border', className)}>
         <CollapsibleTrigger asChild>
-          <button className='flex items-center justify-between w-full text-left py-6 hover:opacity-80 transition-opacity'>
+          <button className='flex items-center justify-between w-full text-left py-8 hover:opacity-80 transition-opacity'>
             <h4 className='text-xl font-bold text-glass-text'>{title}</h4>
             <ChevronDown
               className={cn(
@@ -33,7 +33,7 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
           </button>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className='pb-6'>{children}</div>
+          <div className='pb-8'>{children}</div>
         </CollapsibleContent>
       </div>
     </Collapsible>
