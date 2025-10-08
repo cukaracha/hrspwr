@@ -260,7 +260,7 @@ export default function PartsSearch() {
           {/* Vehicle Details */}
           <div className='flex flex-col justify-center p-3 sm:pl-4 flex-1 bg-gradient-to-t from-black/60 to-transparent sm:bg-none absolute sm:relative bottom-0 sm:bottom-auto w-full sm:w-auto'>
             <div className='flex items-center gap-2 mb-1'>
-              <GlassBadge>{vehicleData.year}</GlassBadge>
+              <GlassBadge variant='primary'>{vehicleData.year}</GlassBadge>
             </div>
             <div className='flex items-center gap-2 mb-1'>
               <h3 className='text-xl sm:text-lg font-bold text-white sm:text-glass-text leading-none shadow-lg sm:shadow-none'>

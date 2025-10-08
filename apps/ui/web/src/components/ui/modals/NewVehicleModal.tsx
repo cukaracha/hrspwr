@@ -1,12 +1,7 @@
 import * as React from 'react';
-import { Upload, Image as ImageIcon } from 'lucide-react';
+import { Upload, Image as ImageIcon, Check } from 'lucide-react';
 import { GlassButton } from '../buttons/glassbutton/GlassButton';
-import {
-  GlassCard,
-  GlassCardContent,
-  GlassCardHeader,
-  GlassCardTitle,
-} from '../cards/glasscard/GlassCard';
+import { GlassCard, GlassCardContent } from '../cards/glasscard/GlassCard';
 import {
   vinLookup,
   fileToBase64,
@@ -60,7 +55,7 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
 
     setIsLoading(true);
     setError(null);
-    setLoadingMessage('Decoding VIN...');
+    setLoadingMessage('Extracting VIN...');
 
     try {
       // Convert file to base64
@@ -69,8 +64,12 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
       // Call VIN lookup API
       const response = await vinLookup(base64Image);
 
+      // Show "Decoding VIN..." for 3 seconds
+      setLoadingMessage('Decoding VIN...');
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
       // Now lookup parts categories
-      setLoadingMessage('Gathering vehicle data...');
+      setLoadingMessage('Gathering data...');
       try {
         const categoriesResponse = await partsCategoriesLookup(response);
 
@@ -119,24 +118,39 @@ export const NewVehicleModal: React.FC<NewVehicleModalProps> = ({
     <ModalBackdrop isOpen={isOpen} onClose={handleClose}>
       <GlassCard
         variant='default'
-        className='cursor-default hover:shadow-2xl active:scale-100 max-h-[90vh] overflow-y-auto'
+        className='cursor-default hover:shadow-2xl active:scale-100 max-h-[90vh] overflow-y-auto relative'
       >
+        {/* Close Button */}
+        <div className='absolute top-0 right-0 z-10'>
+          <CloseButton onClick={handleClose} position='relative' />
+        </div>
+
         {/* Header */}
-        <GlassCardHeader className='relative'>
-          <GlassCardTitle className='text-3xl'>Add New Vehicle</GlassCardTitle>
-          <CloseButton onClick={handleClose} />
-        </GlassCardHeader>
+        <div className='relative p-4 pb-0'>
+          <h2 className='text-lg sm:text-xl md:text-2xl font-bold text-glass-text text-center pr-12'>
+            Add New Vehicle
+          </h2>
+        </div>
 
         {/* Content */}
-        <GlassCardContent className='space-y-6'>
+        <GlassCardContent className='space-y-6 p-4'>
           {/* Success State */}
           {successData ? (
             <>
-              <Alert
-                variant='success'
-                title='Vehicle Added Successfully!'
-                message={`${successData.model_year || ''} ${successData.make || ''} ${successData.model || ''}`.trim()}
-              />
+              {/* Centered Success Display */}
+              <div className='flex flex-col items-center justify-center py-8 space-y-4'>
+                <div className='w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center'>
+                  <Check className='h-10 w-10 text-green-600' />
+                </div>
+                <div className='text-center'>
+                  <p className='text-lg font-semibold text-glass-text'>
+                    Vehicle Added Successfully!
+                  </p>
+                  <p className='text-sm text-glass-text/80 mt-1'>
+                    {`${successData.model_year || ''} ${successData.make || ''} ${successData.model || ''}`.trim()}
+                  </p>
+                </div>
+              </div>
               {/* Warning for partial failure */}
               {partsCategoriesError && (
                 <Alert
