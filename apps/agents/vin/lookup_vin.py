@@ -4,7 +4,7 @@ import base64
 from typing import Dict, Any
 import boto3
 from lib.secrets import load_secrets
-from lib import bedrock
+from lib import openai_client
 
 
 def _load_prompts() -> Dict[str, str]:
@@ -27,7 +27,7 @@ def _load_prompts() -> Dict[str, str]:
 
 def _extract_vin_with_textract(image_bytes: bytes) -> str:
     """
-    Extract VIN string from image using Textract and Bedrock.
+    Extract VIN string from image using Textract and OpenAI.
 
     Args:
         image_bytes: Image bytes containing VIN plate
@@ -36,7 +36,7 @@ def _extract_vin_with_textract(image_bytes: bytes) -> str:
         VIN string (17 characters)
 
     Raises:
-        RuntimeError: If Textract or Bedrock invocation fails
+        RuntimeError: If Textract or OpenAI invocation fails
     """
     try:
         # Call Textract to detect text
@@ -45,22 +45,22 @@ def _extract_vin_with_textract(image_bytes: bytes) -> str:
             Document={'Bytes': image_bytes}
         )
 
-        # Use Bedrock to extract VIN from Textract output
+        # Use OpenAI to extract VIN from Textract output
         prompts = _load_prompts()
 
         # Prepare message with Textract output
         message_content = f"{prompts['extract_vin_from_textract']}\n\nTextract Output:\n{json.dumps(textract_response, indent=2)}"
 
-        # Format messages for Bedrock
+        # Format messages for OpenAI
         messages = [
             {
                 "role": "user",
-                "content": [{"text": message_content}]
+                "content": message_content
             }
         ]
 
-        # Call Bedrock to extract VIN
-        vin = bedrock._converse(messages)
+        # Call OpenAI to extract VIN
+        vin = openai_client.invoke_model_text(messages)
 
         # Validate VIN format (17 characters, alphanumeric)
         if len(vin) != 17:
@@ -125,7 +125,7 @@ def main(image_bytes: bytes) -> Dict[str, Any]:
 
     This orchestrates the complete workflow:
     1. Run Textract on the image to detect text
-    2. Use Bedrock to extract the VIN from Textract output
+    2. Use OpenAI to extract the VIN from Textract output
     3. Look up vehicle information using the VIN
     4. Return dictionary with VIN and vehicle info
 

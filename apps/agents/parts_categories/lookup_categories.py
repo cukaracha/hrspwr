@@ -5,7 +5,7 @@ import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from lib.secrets import load_secrets
 from lib.restapi import _cached_api_request
-from lib import bedrock
+from lib import openai_client
 
 
 # Constants
@@ -228,13 +228,13 @@ def _get_model_id(vehicle_info: Dict[str, Any], type_id: int, lang_id: int,
             models=shortlisted_models
         )
 
-        messages = [{"role": "user", "content": [{"text": prompt}]}]
-        print(f"Calling Bedrock to select best model...")
-        response_text = bedrock._converse(messages)
-        print(f"Bedrock response: {response_text}")
+        messages = [{"role": "user", "content": prompt}]
+        print(f"Calling OpenAI to select best model...")
+        response_text = openai_client.invoke_model_text(messages)
+        print(f"OpenAI response: {response_text}")
 
         # Extract modelId from XML tags
-        model_id = int(bedrock._parse_xml_tag(response_text, "modelId"))
+        model_id = int(openai_client._parse_xml_tag(response_text, "modelId"))
 
         # Find the selected model for logging
         selected_model = next((m for m in year_filtered if m["modelId"] == model_id), None)
@@ -509,13 +509,13 @@ def _get_vehicle_id(vehicle_info: Dict[str, Any], type_id: int, model_id: int,
             vehicles=shortlisted_vehicles_text
         )
 
-        messages = [{"role": "user", "content": [{"text": prompt}]}]
-        print(f"Calling Bedrock to select best vehicle from {len(shortlisted_vehicles)} candidates...")
-        response_text = bedrock._converse(messages)
-        print(f"Bedrock response: {response_text}")
+        messages = [{"role": "user", "content": prompt}]
+        print(f"Calling OpenAI to select best vehicle from {len(shortlisted_vehicles)} candidates...")
+        response_text = openai_client.invoke_model_text(messages)
+        print(f"OpenAI response: {response_text}")
 
         # Extract vehicleId from XML tags
-        selected_vehicle_id = int(bedrock._parse_xml_tag(response_text, "vehicleId"))
+        selected_vehicle_id = int(openai_client._parse_xml_tag(response_text, "vehicleId"))
 
         # Find the selected vehicle for logging
         selected_vehicle = shortlisted_vehicles.get(selected_vehicle_id)

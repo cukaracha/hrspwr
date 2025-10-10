@@ -120,16 +120,5 @@ export class PartsAgent extends Construct {
     props.apiKeysSecret.grantRead(this.photoAnalyzerLambda);
     props.apiKeysSecret.grantRead(this.partsCategoriesLambda);
     props.apiKeysSecret.grantRead(this.partsSearchLambda);
-
-    // 3. Bedrock model invocation
-    const bedrockPolicy = new iam.PolicyStatement({
-      actions: ['bedrock:*'],
-      resources: ['*'],
-    });
-
-    this.vinLookupLambda.addToRolePolicy(bedrockPolicy);
-    this.photoAnalyzerLambda.addToRolePolicy(bedrockPolicy);
-    this.partsCategoriesLambda.addToRolePolicy(bedrockPolicy);
-    this.partsSearchLambda.addToRolePolicy(bedrockPolicy);
   }
 }

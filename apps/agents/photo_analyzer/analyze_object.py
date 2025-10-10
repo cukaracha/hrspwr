@@ -3,7 +3,7 @@ import os
 import base64
 from typing import List
 from lib.secrets import load_secrets
-from lib import bedrock
+from lib import openai_client
 
 
 def _load_prompts() -> dict:
@@ -26,7 +26,7 @@ def _load_prompts() -> dict:
 
 def detect_objects(image_bytes: bytes) -> List[str]:
     """
-    Detect all automotive parts in an image using Bedrock vision.
+    Detect all automotive parts in an image using OpenAI vision.
 
     Args:
         image_bytes: Input image as bytes
@@ -40,32 +40,16 @@ def detect_objects(image_bytes: bytes) -> List[str]:
     try:
         prompts = _load_prompts()
 
-        messages = [
-            {
-                'role': 'user',
-                'content': [
-                    {
-                        'image': {
-                            'format': 'png',
-                            'source': {
-                                'bytes': image_bytes
-                            }
-                        }
-                    },
-                    {
-                        'text': prompts['detect_objects']
-                    }
-                ]
-            }
-        ]
+        # Combine system prompt and user prompt into single instructions
+        instructions = f"{prompts['system']}\n\n{prompts['detect_objects']}"
 
-        result = bedrock._converse(
-            messages, system_prompt=prompts['system'])
+        # Call OpenAI vision API
+        result = openai_client.analyze_image(image_bytes, instructions)
         print(f"LLM detected objects: {result}")
 
         # Parse parts from XML tags
         try:
-            parts_content = bedrock._parse_xml_tag(result, 'parts')
+            parts_content = openai_client._parse_xml_tag(result, 'parts')
             parts = [part.strip()
                      for part in parts_content.split('\n') if part.strip()]
             return parts
@@ -78,7 +62,7 @@ def detect_objects(image_bytes: bytes) -> List[str]:
 
 def main(image_bytes: bytes) -> List[str]:
     """
-    Main workflow: detect objects in image using Amazon Bedrock.
+    Main workflow: detect objects in image using OpenAI Vision.
 
     Args:
         image_bytes: Input image as bytes (may contain multiple parts)

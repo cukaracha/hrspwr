@@ -40,7 +40,7 @@ export default function AppLayout() {
 
       {/* Background */}
       <div
-        className='fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat'
+        className='fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat blur-sm'
         style={{ backgroundImage: 'url(/backgrounds/bg5.png)' }}
       />
     </div>

@@ -19,10 +19,11 @@ export class AgentsStack extends cdk.Stack {
     // Create AWS Secret for API keys (used by agent Lambdas)
     this.apiKeysSecret = new secretsmanager.Secret(this, 'ApiKeysSecret', {
       secretName: 'Hp-ApiKeys-Secret',
-      description: 'API Keys for RapidAPI',
+      description: 'API Keys for RapidAPI and OpenAI',
       secretStringValue: cdk.SecretValue.unsafePlainText(
         JSON.stringify({
           RAPIDAPI_KEY: '',
+          OPENAI_API_KEY: '',
         })
       ),
     });

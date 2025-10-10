@@ -1,6 +1,6 @@
 import json
 import os
-from lib import bedrock
+from lib import openai_client
 from lib.restapi import _cached_api_request
 
 
@@ -24,7 +24,7 @@ def _load_prompts() -> dict:
 
 def infer_category_node(state):
     """
-    Use Bedrock LLM to infer the most appropriate category for the part description.
+    Use OpenAI LLM to infer the most appropriate category for the part description.
 
     Args:
         state: Current agent state containing part_description and categories
@@ -42,35 +42,51 @@ def infer_category_node(state):
             categories=state['categories']
         )
 
-        # Build messages list - include chat history if this is a retry
-        messages = []
+        # Build messages list - include system prompt and chat history if this is a retry
+        messages = [
+            {
+                'role': 'system',
+                'content': prompts['system']
+            }
+        ]
 
         # Add previous chat history (if retrying after invalid category)
         if state.get('chat_history'):
-            messages.extend(state['chat_history'])
+            # Convert chat history from Bedrock format to OpenAI format
+            for msg in state['chat_history']:
+                if msg['role'] == 'user':
+                    messages.append({
+                        'role': 'user',
+                        'content': msg['content'][0]['text'] if isinstance(msg['content'], list) else msg['content']
+                    })
+                elif msg['role'] == 'assistant':
+                    messages.append({
+                        'role': 'assistant',
+                        'content': msg['content'][0]['text'] if isinstance(msg['content'], list) else msg['content']
+                    })
 
         # Add current user message
         messages.append({
             'role': 'user',
-            'content': [{'text': user_prompt}]
+            'content': user_prompt
         })
 
-        # Call Bedrock
-        result = bedrock._converse(messages, system_prompt=prompts['system'])
+        # Call OpenAI
+        result = openai_client.invoke_model_text(messages)
         print(f"LLM category inference result: {result}")
 
         # Parse subcategory_id from XML tags
-        category_id = bedrock._parse_xml_tag(result, 'subcategory_id')
+        category_id = openai_client._parse_xml_tag(result, 'subcategory_id')
 
-        # Update chat history with assistant's response
+        # Update chat history with assistant's response (using OpenAI format)
         updated_history = state.get('chat_history', []).copy()
         updated_history.append({
             'role': 'user',
-            'content': [{'text': user_prompt}]
+            'content': user_prompt
         })
         updated_history.append({
             'role': 'assistant',
-            'content': [{'text': result}]
+            'content': result
         })
 
         return {
@@ -143,7 +159,7 @@ def get_parts_list_node(state):
             updated_history = state.get('chat_history', []).copy()
             updated_history.append({
                 'role': 'user',
-                'content': [{'text': prompts['invalid_category']}]
+                'content': prompts['invalid_category']
             })
 
             return {
@@ -168,7 +184,7 @@ def get_parts_list_node(state):
         updated_history = state.get('chat_history', []).copy()
         updated_history.append({
             'role': 'user',
-            'content': [{'text': prompts['invalid_category']}]
+            'content': prompts['invalid_category']
         })
 
         return {
@@ -316,7 +332,7 @@ def _extract_parts(parts_list):
 
 def match_part_node(state):
     """
-    Use Bedrock LLM to match the part description to the most appropriate part
+    Use OpenAI LLM to match the part description to the most appropriate part
     from the retrieved parts list.
 
     Args:
@@ -362,18 +378,24 @@ def match_part_node(state):
             parts_list=parts_text
         )
 
-        # Build messages
-        messages = [{
-            'role': 'user',
-            'content': [{'text': user_prompt}]
-        }]
+        # Build messages with system prompt
+        messages = [
+            {
+                'role': 'system',
+                'content': prompts['system']
+            },
+            {
+                'role': 'user',
+                'content': user_prompt
+            }
+        ]
 
-        # Call Bedrock
-        result = bedrock._converse(messages, system_prompt=prompts['system'])
+        # Call OpenAI
+        result = openai_client.invoke_model_text(messages)
         print(f"LLM part matching result: {result}")
 
         # Parse replacement part from XML tags
-        replacement_part = bedrock._parse_xml_tag(result, 'replacement')
+        replacement_part = openai_client._parse_xml_tag(result, 'replacement')
 
         # Validate the replacement part is in the unique parts list (case-insensitive)
         if not replacement_part:
