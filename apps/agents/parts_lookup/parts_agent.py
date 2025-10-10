@@ -8,6 +8,7 @@ class AgentState(TypedDict):
     part_description: str
     categories: str
     category_id: str
+    category_name: str
     parts_list: List[Dict[str, Any]]
     chat_history: List[Dict[str, Any]]
     retry_count: int
@@ -127,6 +128,7 @@ def run_workflow(part_description: str, categories: str, vehicle_id: int, countr
         part_description=part_description,
         categories=categories,
         category_id='',
+        category_name='',
         parts_list=[],
         chat_history=[],
         retry_count=0,
@@ -160,6 +162,7 @@ def run_workflow(part_description: str, categories: str, vehicle_id: int, countr
         result['retry_count'] = final_state.get('retry_count', 0)
         result['oem_numbers'] = final_state.get('oem_numbers', [])
         result['s3image_uri'] = final_state.get('s3image_uri', '')
+        result['category_name'] = final_state.get('category_name', '')
 
         return result
 

@@ -143,12 +143,12 @@ def _search_single_part(part_description: str, categories: str, vehicle_id: int,
         }
 
 
-def main(parts_to_search: List[str], vehicle_id: int, country_filter_id: int, categories: Dict[str, Any]) -> List[Dict[str, Any]]:
+def main(parts_to_search: List[str], vehicle_id: int, country_filter_id: int, categories: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
     """
     Search for multiple parts concurrently using the parts lookup agent.
 
     This function spins up multiple parts agents in parallel to search for each part
-    concurrently and returns the consolidated parts list.
+    concurrently and returns the consolidated parts dictionary.
 
     Args:
         parts_to_search: List of part description strings
@@ -157,41 +157,53 @@ def main(parts_to_search: List[str], vehicle_id: int, country_filter_id: int, ca
         categories: Dictionary containing category hierarchy
 
     Returns:
-        List of dictionaries, each containing:
+        Dictionary where keys are part descriptions and values are dictionaries containing:
         - part_description: str - Original part description
         - status: str - 'SUCCESS', 'NO_MATCH', 'ERROR', or 'MAX_RETRIES'
-        - part: dict - Matched part details (if status is SUCCESS)
-        - category: str - Selected category (if status is SUCCESS)
+        - part_name: str - Matched part name (if status is SUCCESS)
+        - category_id: str - Selected category ID (if status is SUCCESS)
+        - category_name: str - Selected category name (if status is SUCCESS)
         - message: str - Error or status message (if applicable)
         - retry_count: int - Number of retries attempted
+        - oem_numbers: list - OEM part numbers (if available)
+        - s3image_uri: str - S3 image URI (if available)
 
     Example:
         >>> parts = ["front brake pad", "air filter", "engine oil"]
         >>> results = main(parts, vehicle_id=19942, country_filter_id=1, categories=categories_dict)
         >>> print(results)
-        [
-            {
+        {
+            "front brake pad": {
                 'part_description': 'front brake pad',
                 'status': 'SUCCESS',
-                'part': {...},
-                'category': 'Braking System',
-                'retry_count': 0
+                'part_name': 'Front Brake Pad Set',
+                'category_id': '100006',
+                'category_name': 'Braking System',
+                'retry_count': 0,
+                'oem_numbers': ['34116858910'],
+                's3image_uri': 'https://...'
             },
-            {
+            "air filter": {
                 'part_description': 'air filter',
                 'status': 'SUCCESS',
-                'part': {...},
-                'category': 'Filters',
-                'retry_count': 0
+                'part_name': 'Air Filter Element',
+                'category_id': '100023',
+                'category_name': 'Filters',
+                'retry_count': 0,
+                'oem_numbers': ['13717532754'],
+                's3image_uri': 'https://...'
             },
-            {
+            "engine oil": {
                 'part_description': 'engine oil',
                 'status': 'SUCCESS',
-                'part': {...},
-                'category': 'Engine',
-                'retry_count': 0
+                'part_name': 'Engine Oil 5W-30',
+                'category_id': '100025',
+                'category_name': 'Engine',
+                'retry_count': 0,
+                'oem_numbers': ['83212365950'],
+                's3image_uri': 'https://...'
             }
-        ]
+        }
 
     Raises:
         ValueError: If parts_to_search is empty or invalid
@@ -202,7 +214,7 @@ def main(parts_to_search: List[str], vehicle_id: int, country_filter_id: int, ca
     # Convert categories dictionary to markdown format
     categories_md = get_categories_md(categories)
 
-    results = []
+    results = {}
 
     # Execute all part searches concurrently using ThreadPoolExecutor
     max_workers = min(len(parts_to_search), 10)  # Limit to 10 concurrent searches
@@ -219,17 +231,17 @@ def main(parts_to_search: List[str], vehicle_id: int, country_filter_id: int, ca
             part_description = future_to_part[future]
             try:
                 result = future.result()
-                results.append(result)
+                results[part_description] = result
             except Exception as e:
                 print(f"Exception occurred for part '{part_description}': {str(e)}")
-                results.append({
+                results[part_description] = {
                     'part_description': part_description,
                     'status': 'ERROR',
                     'message': f"Unexpected error: {str(e)}",
                     'retry_count': 0,
                     'oem_numbers': [],
                     's3image_uri': ''
-                })
+                }
 
     print(f"Completed searching for {len(results)} parts")
     return results
@@ -263,7 +275,23 @@ def lambda_handler(event, context):
         }
 
     Returns:
-        API Gateway response with list of search results
+        API Gateway response with dictionary of search results, where keys are part descriptions:
+        {
+            "results": {
+                "front brake pad": {
+                    "part_description": "front brake pad",
+                    "status": "SUCCESS",
+                    "part_name": "Front Brake Pad Set",
+                    "category_id": "100006",
+                    "category_name": "Braking System",
+                    "retry_count": 0,
+                    "oem_numbers": ["34116858910"],
+                    "s3image_uri": "https://..."
+                },
+                "air filter": {...}
+            },
+            "total_parts": 2
+        }
     """
     # CORS headers
     headers = {

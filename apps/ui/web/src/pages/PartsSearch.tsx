@@ -110,6 +110,9 @@ export default function PartsSearch() {
   const [isVehicleModalOpen, setIsVehicleModalOpen] = React.useState(false);
   const [currentVehicleId, setCurrentVehicleId] = React.useState<string | undefined>(undefined);
 
+  // Ref for scrolling to detected parts card
+  const detectedPartsCardRef = React.useRef<HTMLDivElement>(null);
+
   // Redirect if no vehicle data
   React.useEffect(() => {
     if (!vehicleData) {
@@ -178,9 +181,18 @@ export default function PartsSearch() {
 
       if (response.parts && response.parts.length > 0) {
         setDetectedParts(response.parts);
+        setSelectedPart(response.parts[0]);
 
-        // Immediately fetch parts details for all detected parts
-        await fetchPartsDetails(response.parts);
+        // Scroll to detected parts card
+        setTimeout(() => {
+          detectedPartsCardRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }, 100);
+
+        // Fetch parts details in background (don't await)
+        fetchPartsDetails(response.parts);
       } else {
         setError('No parts detected in the image. Please try another photo.');
       }
@@ -205,18 +217,8 @@ export default function PartsSearch() {
         vehicleData.categories
       );
 
-      // Cache the results using the ORIGINAL part names from photo analyzer
-      const cache: PartResultCache = {};
-      response.results.forEach((result, index) => {
-        const originalPartName = parts[index];
-        cache[originalPartName] = result;
-      });
-      setPartsCache(cache);
-
-      // Automatically select the first part
-      if (parts.length > 0) {
-        setSelectedPart(parts[0]);
-      }
+      // API response is already keyed by original part names, use directly
+      setPartsCache(response.results);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch parts details');
     } finally {
@@ -318,7 +320,7 @@ export default function PartsSearch() {
 
       {/* Parts Selection and Details */}
       {detectedParts.length > 0 && (
-        <GlassCard variant='default'>
+        <GlassCard variant='default' ref={detectedPartsCardRef}>
           <GlassCardHeader>
             <GlassCardTitle className='text-2xl'>Detected Parts</GlassCardTitle>
           </GlassCardHeader>
@@ -333,7 +335,6 @@ export default function PartsSearch() {
                 value={selectedPart}
                 onChange={setSelectedPart}
                 placeholder='Choose a part...'
-                loading={isLoadingParts}
               />
             </div>
 
@@ -348,19 +349,48 @@ export default function PartsSearch() {
                   <>
                     {currentPartDetails.status === 'SUCCESS' ? (
                       <div className='space-y-4'>
+                        {/* Category */}
+                        {currentPartDetails.category_name && (
+                          <div className='space-y-1'>
+                            <h4 className='text-sm font-semibold text-glass-text/60 uppercase tracking-wide'>
+                              Category
+                            </h4>
+                            <p className='text-base text-glass-text'>
+                              {currentPartDetails.category_name}
+                            </p>
+                          </div>
+                        )}
+
                         {/* Part Name */}
-                        <div>
-                          <h3 className='text-xl font-bold text-glass-text mb-2'>
-                            {currentPartDetails.part.part_name}
-                          </h3>
-                        </div>
+                        {currentPartDetails.part_name && (
+                          <div className='space-y-1'>
+                            <h4 className='text-sm font-semibold text-glass-text/60 uppercase tracking-wide'>
+                              Part Name
+                            </h4>
+                            <p className='text-base text-glass-text'>
+                              {currentPartDetails.part_name}
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Description */}
+                        {currentPartDetails.part_description && (
+                          <div className='space-y-1'>
+                            <h4 className='text-sm font-semibold text-glass-text/60 uppercase tracking-wide'>
+                              Description
+                            </h4>
+                            <p className='text-base text-glass-text'>
+                              {currentPartDetails.part_description}
+                            </p>
+                          </div>
+                        )}
 
                         {/* OEM Part Numbers */}
-                        {currentPartDetails.oem_numbers.length > 0 && (
-                          <div className='space-y-2'>
-                            <h4 className='text-sm font-semibold text-glass-text/80 uppercase tracking-wide'>
-                              OEM Part Numbers
-                            </h4>
+                        <div className='space-y-1'>
+                          <h4 className='text-sm font-semibold text-glass-text/60 uppercase tracking-wide'>
+                            OEM Part Numbers
+                          </h4>
+                          {currentPartDetails.oem_numbers.length > 0 ? (
                             <div className='flex flex-wrap gap-2'>
                               {currentPartDetails.oem_numbers.map((oemNumber, index) => (
                                 <GlassBadge key={index} className='font-mono'>
@@ -368,19 +398,23 @@ export default function PartsSearch() {
                                 </GlassBadge>
                               ))}
                             </div>
-                          </div>
-                        )}
+                          ) : (
+                            <p className='text-sm text-glass-text/50 italic'>
+                              No OEM part numbers available
+                            </p>
+                          )}
+                        </div>
 
                         {/* Sample Image */}
                         {currentPartDetails.s3image_uri && (
-                          <div className='space-y-2'>
-                            <h4 className='text-sm font-semibold text-glass-text/80 uppercase tracking-wide'>
+                          <div className='space-y-1'>
+                            <h4 className='text-sm font-semibold text-glass-text/60 uppercase tracking-wide'>
                               Sample Image
                             </h4>
                             <div className='rounded-xl overflow-hidden border border-glass-border bg-white/5'>
                               <img
                                 src={currentPartDetails.s3image_uri}
-                                alt={currentPartDetails.part.part_name}
+                                alt={currentPartDetails.part_name}
                                 className='w-full h-auto max-h-96 object-contain'
                               />
                             </div>
@@ -389,7 +423,7 @@ export default function PartsSearch() {
                       </div>
                     ) : (
                       <Alert
-                        variant='warning'
+                        variant='error'
                         title='Part Not Found'
                         message={
                           currentPartDetails.message || 'Unable to find details for this part.'

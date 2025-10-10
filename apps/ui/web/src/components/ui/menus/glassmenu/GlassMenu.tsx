@@ -66,14 +66,14 @@ export const GlassMenu = React.forwardRef<HTMLDivElement, GlassMenuProps>(
           className={cn(
             'w-full flex items-center justify-between',
             'px-4 py-3 rounded-xl',
-            'bg-white/10 backdrop-blur-md',
+            'bg-white/50 backdrop-blur-md',
             'border border-glass-border',
             'text-glass-text font-medium',
             'transition-all duration-200',
             'focus:outline-none focus:ring-2 focus:ring-primary/50',
-            !disabled && !loading && 'hover:bg-white/15 hover:border-primary/50 cursor-pointer',
+            !disabled && !loading && 'hover:bg-white/60 hover:border-primary/50 cursor-pointer',
             (disabled || loading) && 'opacity-50 cursor-not-allowed',
-            isOpen && 'bg-white/15 border-primary/50'
+            isOpen && 'bg-white/60 border-primary/50'
           )}
         >
           <span className={cn('truncate', !selectedItem && 'text-glass-text/50')}>
@@ -97,7 +97,7 @@ export const GlassMenu = React.forwardRef<HTMLDivElement, GlassMenuProps>(
           <div
             className={cn(
               'absolute z-50 w-full mt-2',
-              'bg-white/10 backdrop-blur-md',
+              'bg-white/50 backdrop-blur-md',
               'border border-glass-border rounded-xl',
               'shadow-2xl',
               'max-h-64 overflow-y-auto',

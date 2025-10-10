@@ -257,10 +257,12 @@ export async function photoAnalyzer(base64Image: string): Promise<PhotoAnalyzerR
  * Part lookup result from the parts search API
  */
 export interface PartLookupResult {
-  part: {
-    part_name: string;
-  };
+  part_description: string;
   status: string;
+  part_name: string;
+  category_id: string;
+  category_name: string;
+  retry_count: number;
   oem_numbers: string[];
   s3image_uri: string;
   message?: string;
@@ -270,7 +272,10 @@ export interface PartLookupResult {
  * Response from the parts lookup API
  */
 export interface PartsLookupResponse {
-  results: PartLookupResult[];
+  results: {
+    [partName: string]: PartLookupResult;
+  };
+  total_parts: number;
 }
 
 /**

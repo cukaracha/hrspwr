@@ -75,8 +75,9 @@ def infer_category_node(state):
         result = openai_client.invoke_model_text(messages)
         print(f"LLM category inference result: {result}")
 
-        # Parse subcategory_id from XML tags
+        # Parse subcategory_id and category name from XML tags
         category_id = openai_client._parse_xml_tag(result, 'subcategory_id')
+        category_name = openai_client._parse_xml_tag(result, 'category')
 
         # Update chat history with assistant's response (using OpenAI format)
         updated_history = state.get('chat_history', []).copy()
@@ -92,6 +93,7 @@ def infer_category_node(state):
         return {
             **state,
             'category_id': category_id,
+            'category_name': category_name,
             'chat_history': updated_history,
             'error': ''
         }
@@ -215,8 +217,7 @@ def get_part_details_node(state):
         # Extract required data from state
         parts_list = state.get('parts_list', [])
         result = state.get('result', {})
-        part_info = result.get('part', {})
-        part_name = part_info.get('part_name', '')
+        part_name = result.get('part_name', '')
         country_filter_id = state.get('country_filter_id')
 
         if not part_name:
@@ -360,7 +361,7 @@ def match_part_node(state):
                 **state,
                 'result': {
                     'status': 'SUCCESS',
-                    'part': {'part_name': unique_parts[0]},
+                    'part_name': unique_parts[0],
                     'category_id': state['category_id']
                 },
                 'error': ''
@@ -420,7 +421,7 @@ def match_part_node(state):
             **state,
             'result': {
                 'status': 'SUCCESS',
-                'part': {'part_name': replacement_part.strip()},
+                'part_name': replacement_part.strip(),
                 'category_id': state['category_id']
             },
             'error': ''

@@ -1,7 +1,7 @@
 {
   "system": "You are an expert automotive parts specialist with decades of experience in identifying and categorizing car parts. You have comprehensive knowledge of automotive part categories and can accurately match part descriptions to the correct categories and specific parts.",
 
-  "infer_category": "<part>\n{part_description}\n</part>\n\n<categories>\n{categories}\n</categories>\n\nYou are given a part description in <part></part> tags above and a list of available part categories in <categories></categories> tags above. The categories are formatted as \"# Parent Category\n- subcategory (subcategory ID)\n...\n\"\n\nYour task is to analyze the part description and select the most appropriate subcategory from the list.\n\nOutput the selected subcategory ID within <subcategory_id></subcategory_id> tags.",
+  "infer_category": "<part>\n{part_description}\n</part>\n\n<categories>\n{categories}\n</categories>\n\nYou are given a part description in <part></part> tags above and a list of available part categories in <categories></categories> tags above. The categories are formatted as \"# Parent Category Name\n- subcategory name (subcategory ID)\n...\n\"\n\nYour task is to analyze the part description and select the most appropriate parent category name and subcategory ID from the list.\n\nOutput the selected parent category name within <category></category> tags and the subcategory ID within <subcategory_id></subcategory_id> tags.",
 
   "invalid_category": "The category you selected is currently unavailable or returned no parts. Please analyze the part description again and select a different category that might contain this part. Consider alternative categorizations or related systems where this part might be found.",
 
